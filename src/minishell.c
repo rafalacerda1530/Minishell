@@ -6,7 +6,7 @@
 /*   By: fbonini- <fbonini-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:04:41 by Rarodrig          #+#    #+#             */
-/*   Updated: 2021/12/08 22:17:28 by fbonini-         ###   ########.fr       */
+/*   Updated: 2021/12/08 22:33:20 by fbonini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	(void) argc;
 	(void) argv;
+	(void) envp;
 	char	*line;
 
 
