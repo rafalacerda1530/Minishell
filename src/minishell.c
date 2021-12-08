@@ -3,23 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fbonini- <fbonini-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:04:41 by Rarodrig          #+#    #+#             */
-/*   Updated: 2021/12/06 23:49:49 by coder            ###   ########.fr       */
+/*   Updated: 2021/12/08 22:17:28 by fbonini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv, char **envp)
 {
-    char *line;
+	(void) argc;
+	(void) argv;
+	char	*line;
+
 
     while (1)
     {
         line = readline("minishell > ");
-        
     }
-    return 0;
+	return 0;
 }
