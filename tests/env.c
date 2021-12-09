@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbonini- <fbonini-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 18:28:54 by fbonini-          #+#    #+#             */
-/*   Updated: 2021/12/08 22:16:50 by fbonini-         ###   ########.fr       */
+/*   Updated: 2021/12/09 14:22:09 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test.h"
 
+/* ---------------------------------------------     --------------------------------------------- */
+/* --------------------------------------------- Env --------------------------------------------- */
+/* ---------------------------------------------     --------------------------------------------- */
 t_env_list	*ft_alloc_env_list(void)
 {
 	t_env_list	*env_list;
@@ -60,6 +63,7 @@ t_env	*ft_alloc_env(t_env_list *env_list, char *envp)
 	env->prev = env;
 	return (env);
 }
+
 
 void	ft_fill_env_list(t_env_list *env_list, char **envp)
 {
@@ -126,21 +130,18 @@ void	ft_free_env_list(t_env_list *env_list)
 	free(env_list);
 }
 
-int	main(int argc, char **argv, char **envp)
+void	print_env(t_env_list *env_list, char **envp)
 {
-	t_mem	mem;
 	t_env	*env;
 	int		total;
 
-	printf("the envp is %s\n", envp[0]);
-	ft_alloc_mem(&mem);
-	ft_fill_env_list(mem.env_list,envp);
 	env = NULL;
-	env = mem.env_list->last;
+	env = env_list->last;
+	printf("the envp is %s\n", envp[0]);
 	printf("The key is: %s	the content is: %s\n", env->key, env->content);
 	printf("\n\n------Get PWD--------\n");
-	total = mem.env_list->total;
-	env = mem.env_list->first;
+	total = env_list->total;
+	env = env_list->first;
 	while (total != 0)
 	{
 		if (strncmp(env->key,"PWD", 3) == 0)  // Using STRING.H
@@ -148,6 +149,99 @@ int	main(int argc, char **argv, char **envp)
 		env = env->next;
 		total--;
 	}
+}
+/* ---------------------------------------------     --------------------------------------------- */
+/* --------------------------------------------- Env --------------------------------------------- */
+/* ---------------------------------------------     --------------------------------------------- */
+
+
+/* ---------------------------------------------     --------------------------------------------- */
+/* ----------------------------------------- Basic Shell ----------------------------------------- */
+/* ---------------------------------------------     --------------------------------------------- */
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	cont;
+
+	cont = 0;
+	while (*s != 0)
+	{
+		++s;
+		cont++;
+	}
+	return (cont);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*nstr;
+	size_t	i;
+	size_t	cont;
+
+	i = ft_strlen(s1);
+	nstr = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	cont = 0;
+	if (nstr == NULL)
+		return (NULL);
+	if (!s1 || !s2)
+		return (NULL);
+	while (s1[cont])
+	{
+		nstr[cont] = s1[cont];
+		cont++;
+	}
+	i = 0;
+	while (s2[i])
+	{
+		nstr[cont] = s2[i];
+		i++;
+		cont++;
+	}
+	nstr[cont] = '\0';
+	return (nstr);
+}
+
+void	ft_read_input(char **input)
+{
+	char	*prompt;
+	char	intro[3];
+	char	*msg;
+
+	intro[0] = '$';
+	intro[1] = ' ';
+	intro[2] = '\0';
+	prompt = NULL;
+	prompt = getcwd(prompt, 0);
+	msg = ft_strjoin(prompt, intro);
+	*input = readline(msg);
+	free(prompt);
+}
+
+void	ft_create_shell(void)
+{
+	char	*input;
+
+	while (1)
+	{
+		input = NULL;
+		ft_read_input(&input);
+		if (input)
+			free(input);
+	}
+}
+
+/* ---------------------------------------------     --------------------------------------------- */
+/* ----------------------------------------- Basic Shell ----------------------------------------- */
+/* ---------------------------------------------     --------------------------------------------- */
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_mem	mem;
+
+	ft_alloc_mem(&mem);
+	ft_fill_env_list(mem.env_list,envp);
+	ft_create_shell();
+	// print_env(mem.env_list, envp);
 	ft_free_env_list(mem.env_list);
 	return (0);
 }

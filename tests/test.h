@@ -4,7 +4,10 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 #include <string.h>
+
 
 typedef struct s_env
 {
