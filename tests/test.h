@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include <string.h>
+#include <string.h> // need to delete, can't use
 
 
 typedef struct s_env

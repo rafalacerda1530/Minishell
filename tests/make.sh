@@ -1,0 +1,1 @@
+clang  env.c -L/usr/include -lreadline -o minitest
