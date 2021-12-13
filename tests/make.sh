@@ -1,1 +1,1 @@
-clang  env.c -L/usr/include -lreadline -o minitest
+clang -Wall -Wextra -Werror env.c -L/usr/include -lreadline -o minitest

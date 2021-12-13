@@ -1,0 +1,212 @@
+readline
+what it does?
+- read prompt
+- need to free the char *.
+
+rl_clear_history
+what it does?
+- clear history commands
+
+rl_on_new_line
+what it does?
+- ?????????????????
+
+rl_replace_line
+what it does?
+- ?????????????????
+
+rl_redisplay
+what it does?
+- ?????????????????
+
+add_history
+what it does?
+- add command to history commands
+
+access
+what it does?
+- check user's permissions for a file
+
+open
+what it does?
+- open and possibly create a file.
+
+read
+what it does?
+- read a file descriptor.
+
+close
+what it does?
+- close a file descriptor.
+
+
+\/----------------------------- \/PIPE\/ -----------------------------\/
+fork
+what it does?
+-	creates a new process by duplicating the calling process.
+	The new process is referred to as the child process.
+	The calling process is referred to as the parent process.
+- Return:	On success, the PID of the child process is returned in the
+			parent, and 0 is returned in the child.
+			On failure, -1 is returned in the parent, no child process is created,
+			and errno is set to indicate the error.
+
+/---------------------------------\
+The wait() system call:
+suspends execution of the
+calling thread until one of
+its children terminates)
+
+wait
+what it does?
+- wait for process to change state.
+- Return:	on success, returns the process ID of the terminated child
+			on failure, -1 is returned.
+/---------------------------------\
+
+/---------------------------------\
+The waitpid() system call:
+suspends execution of the calling
+thread until a child specified
+by pid argument has changed state.
+
+waitpid
+what it does?
+- wait for process to change state
+- Return:	on success, returns the process ID of the child whose state has changed
+			 On failure, -1 is returned.
+
+/---------------------------------\
+
+wait3
+what it does?
+
+wait4
+what it does?
+
+/\----------------------------- /\PIPE/\ -----------------------------/\
+
+signal
+what it does?
+- ANSI C signal handling
+
+sigaction
+what it does?
+- 	examine and change a signal action
+
+kill
+what it does?
+- 	send signal to a process
+
+getcwd
+what it does?
+- get current working directory (pwd)
+
+chdir
+what it does?
+- change working directory (cd)
+
+stat
+what it does?
+- get file status by pathname (ls)
+
+lstat
+what it does?
+-	get file status by pathname (ls)
+	except that if path is a symbolic link
+
+fstat
+what it does?
+- get file status by file descriptor name (ls)
+
+unlink
+what it does?
+- remove a specified file (rm)
+
+execve
+what it does?
+-  execute program
+
+dup
+what it does?
+- duplicate a file descriptor (>)
+
+dup2
+what it does?
+- duplicate a file descriptor (>>)
+
+pipe
+what it does?
+- create pipe
+
+opendir
+what it does?
+- open a directory
+
+readdir
+what it does?
+- read a directory
+
+closedir
+what it does?
+- close a directory
+
+strerror
+what it does?
+- return string describing error number
+
+perror
+what it does?
+- print a system error message
+
+isatty
+what it does?
+- test whether a file descriptor refers to a terminal
+
+ttyname
+what it does?
+- return name of a terminal
+
+ttyslot
+what it does?
+- find the slot of the current user's terminal in some file
+
+ioctl
+what it does?
+- control device
+
+getenv
+what it does?
+- get an environment variable
+
+tcsetattr
+what it does?
+- ?????????????????
+
+tcgetattr
+what it does?
+- ?????????????????
+
+tgetent
+what it does?
+- ?????????????????
+
+tgetflag
+what it does?
+- ?????????????????
+
+tgetnum
+what it does?
+- ?????????????????
+
+tgetstr
+what it does?
+- ?????????????????
+
+tgoto
+what it does?
+- ?????????????????
+
+tputs
+what it does?
+- ?????????????????

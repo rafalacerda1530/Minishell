@@ -1,6 +1,0 @@
-the envp is ALIDA_SI_WORKSPACE_HTTP_PORT_8080_TCP_PROTO=tcp
-The key is: ALIDA_SI_WORKSPACE_HTTP_PORT_8080_TCP_PROTO	the content is: tcp
-
-
-------Get PWD--------
-PWD			/home/coder/minishell/tests

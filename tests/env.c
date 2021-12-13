@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbonini- <fbonini-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 18:28:54 by fbonini-          #+#    #+#             */
-/*   Updated: 2021/12/09 18:34:44 by fbonini-         ###   ########.fr       */
+/*   Updated: 2021/12/13 18:25:02 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_env_list	*ft_alloc_env_list(void)
 	return (env_list);
 }
 
-t_env	*ft_alloc_env(t_env_list *env_list, char *envp)
+t_env	*ft_alloc_env(char *envp)
 {
 	t_env	*env;
 	int		key_size;
@@ -64,14 +64,13 @@ t_env	*ft_alloc_env(t_env_list *env_list, char *envp)
 	return (env);
 }
 
-
 void	ft_fill_env_list(t_env_list *env_list, char **envp)
 {
 	t_env	*env;
 
 	while (*envp != 0)
 	{
-		env = ft_alloc_env(env_list, *envp);
+		env = ft_alloc_env(*envp);
 		if (env_list->total == 0)
 			env_list->last = env;
 		else
@@ -151,6 +150,19 @@ void	print_env(t_env_list *env_list, char **envp)
 
 
 /* ---------------------------------------------     --------------------------------------------- */
+/* ------------------------------------------- Parse --------------------------------------------- */
+/* ---------------------------------------------     --------------------------------------------- */
+
+// int	ft_parse_input(char *input)
+// {
+	
+// }
+/* ---------------------------------------------     --------------------------------------------- */
+/* ------------------------------------------- Parse --------------------------------------------- */
+/* ---------------------------------------------     --------------------------------------------- */
+
+
+/* ---------------------------------------------     --------------------------------------------- */
 /* ------------------------------------------- History ------------------------------------------- */
 /* ---------------------------------------------     --------------------------------------------- */
 
@@ -223,21 +235,26 @@ void	ft_read_input(char **input)
 	prompt = getcwd(prompt, 0);
 	msg = ft_strjoin(prompt, intro);
 	*input = readline(msg);
+	free(msg);
 	free(prompt);
 }
 
 void	ft_create_shell(void)
 {
 	char	*input;
+	// int		parse;
 
 	while (1)
 	{
 		input = NULL;
 		ft_read_input(&input);
 		ft_create_history(input);
+		// parse = ft_parse_input(input);
+		printf("The input was:\n%s\n", input);
 		if (input)
 			free(input);
 	}
+	rl_clear_history();
 }
 
 /* ---------------------------------------------     --------------------------------------------- */
@@ -262,10 +279,13 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_mem	mem;
 
+	(void) argc;
+	(void) argv;
+	(void) envp;
 	ft_alloc_mem(&mem);
-	ft_fill_env_list(mem.env_list,envp);
+	// ft_fill_env_list(mem.env_list,envp);
+	// // print_env(mem.env_list, envp);
+	// ft_free_env_list(mem.env_list);
 	ft_create_shell();
-	// print_env(mem.env_list, envp);
-	ft_free_env_list(mem.env_list);
 	return (0);
 }
