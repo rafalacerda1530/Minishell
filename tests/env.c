@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 18:28:54 by fbonini-          #+#    #+#             */
-/*   Updated: 2021/12/15 18:12:57 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/15 23:11:02 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,37 @@
 /* ---------------------------------------------     --------------------------------------------- */
 /* --------------------------------------------- Env --------------------------------------------- */
 /* ---------------------------------------------     --------------------------------------------- */
+
+
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	cont;
+
+	cont = 0;
+	while (*s != 0)
+	{
+		++s;
+		cont++;
+	}
+	return (cont);
+}
+size_t	ft_strlcpy(char *dst, const char *src, size_t n)
+{
+	size_t	cont;
+
+	if (n == 0)
+		return (ft_strlen(src));
+	cont = 0;
+	while (cont < (n - 1) && src[cont])
+	{
+		dst[cont] = src[cont];
+		cont++;
+	}
+	dst[cont] = '\0';
+	return (ft_strlen(src));
+}
+
 t_env_list	*ft_alloc_env_list(void)
 {
 	t_env_list	*env_list;
@@ -198,33 +229,34 @@ t_tolken	*ft_alloc_tolken(char *input)
 	while(input[i] == ' ')
 	{
 		i++;
-		// printf("Aqui\n");
 	}
 	while (input[i + key] != ' ')
 	{
 		key++;
 	}
-	while (input[i + key + content + 1] != '\0')
+	while (input[i + key + content] != '\0')
 	{
-		if (input[i + key + content + 1] == '"')
+		if (input[i + key + content ] == '"')
 		{
-			while (input[i + key + content + 1] != '"')
+			content++;
+			while (input[i + key + content] != '"')
 				content++;
 		}
-		if (input[i + key + content + 1] == '\'')
+		else if(input[i + key + content] == '\'')
 		{
-			while (input[i + key + content + 1] != '\'')
+			content++;
+			while (input[i + key + content] != '\'')
 				content++;
 		}
-		if (input[i + key + content + 1] == '|')
-			break;
+		else if (input[i + key + content ] == '|')
+		 	break;
 		content++;
 	}
 	tolken = (t_tolken *) malloc (sizeof(t_tolken));
 	tolken->key = (char *) malloc ((key + 1) * sizeof(char));
-	strncpy(tolken->key, &input[i], key);// Using STRING.
-	tolken->content = (char *) malloc ((content + 1) * sizeof(char));
-	strncpy(tolken->content, &input[i + key + 1], content); // Using STRING.H
+	ft_strlcpy(tolken->key, &input[i], key + 1);// Using STRING.
+	tolken->content = (char *) malloc ((content) * sizeof(char));
+	ft_strlcpy(tolken->content, &input[i + key], content + 1); // Using STRING.H
 	tolken->size = key + content;
 	tolken->next = tolken;
 	tolken->prev = tolken;
@@ -238,10 +270,10 @@ t_tolken	*ft_alloc_tolken(char *input)
 void	ft_fill_tolken_list(t_tolken_list *tolken_list, char *input)
 {
 	t_tolken	*tolken;
-	int			i;
+	size_t			i;
 
 	i = 0;
-	while (input[i] != '\0')
+	while (i < ft_strlen(input))
 	{
 		tolken = ft_alloc_tolken(&input[i]);
 		if (tolken_list->total == 0)
@@ -342,18 +374,6 @@ void	ft_create_history(char *input)
 /* ----------------------------------------- Basic Shell ----------------------------------------- */
 /* ---------------------------------------------     --------------------------------------------- */
 
-size_t	ft_strlen(const char *s)
-{
-	size_t	cont;
-
-	cont = 0;
-	while (*s != 0)
-	{
-		++s;
-		cont++;
-	}
-	return (cont);
-}
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
