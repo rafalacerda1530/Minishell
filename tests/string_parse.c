@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:37:28 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/16 19:09:25 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/16 19:18:12 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,14 +221,20 @@ char	*ft_strjoin_char(char *s1, char const s2)
 	return (add);
 }
 
+char	*ft_check_dollar(char *str)
+{
+	char *ret;
+
+
+	return (ret);
+}
+
 void	ft_echo(char *str)
 {
 	int	i;
-	int	j;
 	int	quoted;
 	char *print;
 	char *tmp;
-	// char *tmp2;
 
 	i = 0;
 	quoted = 0;
@@ -269,29 +275,8 @@ void	ft_echo(char *str)
 	free(print);
 }
 
-// ["]bem  aa["] aaaa "01234"
-
-/*
-	char *str;
-	char *tmp;
-
-	print = Oi td
-	tmp = Oi td
-	print = Oi td + bem aa
-
-	 aaaa - str03
-	01234 - str04
-
-
-*/
 int	main(void)
 {
 	ft_echo("echo oi \"ab'c\" oi 'a\"aa' \"io\" ");
 	return 0;
 }
-
-/*
-
-echo oi "aa'a"
-
-*/
