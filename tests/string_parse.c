@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:37:28 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/16 18:57:17 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/16 19:09:25 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,15 +237,26 @@ void	ft_echo(char *str)
 		str++;
 	while (str[i] != '\0')
 	{
-		if (str[i] == '"' || str[i] == '\'')
+		if (str[i] == '"' && (quoted == 0 || quoted == 2))
+		{
 			i++;
+			if (quoted == 0)
+				quoted = 2;
+			else
+				quoted = 0;
+		}
+		if (str[i] == '\'' && (quoted == 0 || quoted == 1))
+		{
+			i++;
+			if (quoted == 0)
+				quoted = 1;
+			else
+				quoted = 0;
+		}
 		if (print == NULL)
 		{
 			print = (char *) malloc (sizeof(char));
 			print[0] = str[i];
-			// tmp = print;
-			// free(print);
-			// print = tmp;
 			i++;
 		}
 		tmp = ft_strjoin_char(print, str[i]);
@@ -253,10 +264,9 @@ void	ft_echo(char *str)
 		print = ft_strdup(tmp);
 		free(tmp);
 		i++;
-		// j++;
 	}
 	printf("O str eh:\n%s\n", print);
-	// free(print);
+	free(print);
 }
 
 // ["]bem  aa["] aaaa "01234"
@@ -276,7 +286,7 @@ void	ft_echo(char *str)
 */
 int	main(void)
 {
-	ft_echo("echo oi \"abc\" oi");
+	ft_echo("echo oi \"ab'c\" oi 'a\"aa' \"io\" ");
 	return 0;
 }
 
