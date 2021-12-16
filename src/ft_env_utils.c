@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:10:07 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/16 12:14:52 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/16 13:03:22 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void	ft_create_env_strings(t_env *env, int key_size, int content_size, char *env
 	// {
 		// Free Error msg
 	// }
-	ft_strlcpy(env->key, envp, key_size);
+	ft_strlcpy(env->key, envp, key_size + 1);
 	env->content = (char *) malloc ((content_size + 1) * sizeof(char));
 	// if (!env->content)
 	// {
 		// Free Error msg
-	ft_strlcpy(env->content, &envp[key_size + 1], content_size);
+	ft_strlcpy(env->content, &envp[key_size + 1], content_size + 1);
 }
