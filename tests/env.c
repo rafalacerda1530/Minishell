@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 18:28:54 by fbonini-          #+#    #+#             */
-/*   Updated: 2021/12/15 23:11:02 by coder            ###   ########.fr       */
+/*   Updated: 2021/12/16 11:43:56 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,18 +254,14 @@ t_tolken	*ft_alloc_tolken(char *input)
 	}
 	tolken = (t_tolken *) malloc (sizeof(t_tolken));
 	tolken->key = (char *) malloc ((key + 1) * sizeof(char));
-	ft_strlcpy(tolken->key, &input[i], key + 1);// Using STRING.
+	ft_strlcpy(tolken->key, &input[i], key + 1);
 	tolken->content = (char *) malloc ((content) * sizeof(char));
-	ft_strlcpy(tolken->content, &input[i + key], content + 1); // Using STRING.H
+	ft_strlcpy(tolken->content, &input[i + key], content + 1);
 	tolken->size = key + content;
 	tolken->next = tolken;
 	tolken->prev = tolken;
 	return (tolken);
 }
-
-// input[0]
-// &input[| + 1]
-// &input[| + 1]
 
 void	ft_fill_tolken_list(t_tolken_list *tolken_list, char *input)
 {
@@ -454,11 +450,7 @@ void	ft_create_shell(t_mem *mem)
 /* --------------------------------------- Memory Control ---------------------------------------- */
 /* ---------------------------------------------     --------------------------------------------- */
 
-void	ft_alloc_mem(t_mem *mem)
-{
-	// mem->env_list = ft_alloc_env_list();
-	mem->tolken_list = ft_alloc_tolken_list();
-}
+
 
 /* ---------------------------------------------     --------------------------------------------- */
 /* --------------------------------------- Memory Control ---------------------------------------- */
