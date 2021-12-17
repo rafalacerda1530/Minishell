@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:37:28 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/17 17:17:07 by coder            ###   ########.fr       */
+/*   Updated: 2021/12/17 17:22:40 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -322,6 +322,7 @@ char	*ft_check_dollar(char *str)
 					
 				}
 			}
+			free(tmp_key);
 			// if (str[i + 1] == '\0')
 			// 	break;
 		}
@@ -396,6 +397,7 @@ void	ft_echo(char *str)
 
 int	main(void)
 {
-	ft_echo("echo oi \"ab'c\" oi 'a\"aa' \"io\" \"'$TESTE'\"");
+	// ft_echo("echo oi \"ab'c\" oi 'a\"aa' \"io\" \"'$TESTE'\"");
+	ft_echo("echo A $ABC A \"'$TESTE'\" ");
 	return 0;
 }
