@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:37:28 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/16 19:18:12 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/17 17:17:07 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,28 @@
 #include <unistd.h>
 #include <stdlib.h>
 // #include "../includes/42_libft/libft.h"
+
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t			cont;
+	unsigned char	*n_s1;
+	unsigned char	*n_s2;
+
+	n_s1 = (unsigned char *) s1;
+	n_s2 = (unsigned char *) s2;
+	cont = 0;
+	while ((n_s1[cont] != '\0' || n_s2[cont] != '\0') && cont < n)
+	{
+		if (n_s1[cont] != n_s2[cont])
+		{
+			return (n_s1[cont] - n_s2[cont]);
+		}
+		cont++;
+	}
+	return (0);
+}
+
 
 size_t	ft_strlen(const char *s)
 {
@@ -165,7 +187,8 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 // 				else
 // 				{
 // 					tmp2 = (char *) malloc (j * sizeof(char));
-// 					ft_memcpy(tmp2, &str[i - j + 1], j - 1);
+// 					
+
 // 					printf("Tmp2:%s\n", tmp2);
 // 					print = ft_strjoin(tmp,tmp2);
 // 					free(tmp);
@@ -221,27 +244,40 @@ char	*ft_strjoin_char(char *s1, char const s2)
 	return (add);
 }
 
+/*
+	while(str[i])
+	{
+		if (str[i] == "'")
+		{
+			if (quoted == 0)
+				quoted = 1;
+			else
+				quoted = 0;
+		}
+			echo aBC DEF "$OLDPWD"
+		if (str[i] == $ && quoted != 1)	
+			função...
+	}		
+*/
+
 char	*ft_check_dollar(char *str)
 {
 	char *ret;
-
-
-	return (ret);
-}
-
-void	ft_echo(char *str)
-{
-	int	i;
-	int	quoted;
-	char *print;
-	char *tmp;
+	char *content;
+	char *key;
+	char *tmp_key;
+	char *tmp; 
+	int i;
+	int j;
+	int quoted;
 
 	i = 0;
-	quoted = 0;
 	j = 0;
-	while (*str == ' ')
-		str++;
-	while (str[i] != '\0')
+	quoted = 0;
+	ret = NULL;
+	key = "TESTE";
+	content = "/Desktop/Minishell/Minishell/tests";
+	while(str[i] != '\0')
 	{
 		if (str[i] == '"' && (quoted == 0 || quoted == 2))
 		{
@@ -259,10 +295,93 @@ void	ft_echo(char *str)
 			else
 				quoted = 0;
 		}
+		if(str[i] == '$' && quoted != 1)
+		{
+			i++;
+			j = 0;
+			while(str[i] != ' ' &&  str[i] != '\'')
+			{
+				if(str[i] == '\0')
+					break;
+				i++;
+				j++;
+			}
+			printf("i = %d\n j = %d\n", i , j);
+			tmp_key  = (char *) malloc (sizeof(char) * (j + 1));
+			ft_memcpy(tmp_key, &str[i - j], j);
+			if (ft_strncmp(tmp_key, key, j) == 0)
+			{
+				j = 0;
+				while(content[j] != '\0')
+				{
+					tmp = ft_strjoin_char(ret, content[j]);
+					free(ret);
+					ret = ft_strdup(tmp);
+					free(tmp);
+					j++;
+					
+				}
+			}
+			// if (str[i + 1] == '\0')
+			// 	break;
+		}
+		if (ret == NULL)
+		{
+			ret = (char *) malloc (sizeof(char) + 1);
+			ret[0] = str[i];
+			ret[1] = '\0';
+			i++; 
+		}
+		tmp = ft_strjoin_char(ret, str[i]);
+		free(ret);
+		ret = ft_strdup(tmp);
+		free(tmp);
+		if (str[i] != '\0')
+			i++;
+	}
+	return (ret);
+}
+
+void	ft_echo(char *str)
+{
+	int	i;
+	int	quoted;
+	char *print;
+	char *tmp;
+
+	i = 0;
+	quoted = 0;
+	while (*str == ' ')
+		str++;
+	tmp = ft_strdup(str);
+	// free(str);
+	str =  ft_check_dollar(tmp);
+	free(tmp);
+	print = NULL;
+	tmp = NULL;
+	while (str[i] != '\0')
+	{
+		// if (str[i] == '"' && (quoted == 0 || quoted == 2))
+		// {
+		// 	i++;
+		// 	if (quoted == 0)
+		// 		quoted = 2;
+		// 	else
+		// 		quoted = 0;
+		// }
+		// if (str[i] == '\'' && (quoted == 0 || quoted == 1))
+		// {
+		// 	i++;
+		// 	if (quoted == 0)
+		// 		quoted = 1;
+		// 	else
+		// 		quoted = 0;
+		// }
 		if (print == NULL)
 		{
-			print = (char *) malloc (sizeof(char));
+			print = (char *) malloc (sizeof(char) + 1);
 			print[0] = str[i];
+			print[1] = '\0';
 			i++;
 		}
 		tmp = ft_strjoin_char(print, str[i]);
@@ -277,6 +396,6 @@ void	ft_echo(char *str)
 
 int	main(void)
 {
-	ft_echo("echo oi \"ab'c\" oi 'a\"aa' \"io\" ");
+	ft_echo("echo oi \"ab'c\" oi 'a\"aa' \"io\" \"'$TESTE'\"");
 	return 0;
 }
