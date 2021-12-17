@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:37:28 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/17 17:22:40 by coder            ###   ########.fr       */
+/*   Updated: 2021/12/17 18:51:10 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,7 +295,7 @@ char	*ft_check_dollar(char *str)
 			else
 				quoted = 0;
 		}
-		if(str[i] == '$' && quoted != 1)
+		if(str[i] == '$' && quoted != 1 && str[i + 1] != '\'' && str[i + 1] != '"')
 		{
 			i++;
 			j = 0;
@@ -306,7 +306,6 @@ char	*ft_check_dollar(char *str)
 				i++;
 				j++;
 			}
-			printf("i = %d\n j = %d\n", i , j);
 			tmp_key  = (char *) malloc (sizeof(char) * (j + 1));
 			ft_memcpy(tmp_key, &str[i - j], j);
 			if (ft_strncmp(tmp_key, key, j) == 0)
@@ -333,13 +332,16 @@ char	*ft_check_dollar(char *str)
 			ret[1] = '\0';
 			i++; 
 		}
-		tmp = ft_strjoin_char(ret, str[i]);
-		free(ret);
-		ret = ft_strdup(tmp);
-		free(tmp);
 		if (str[i] != '\0')
+		{
+			tmp = ft_strjoin_char(ret, str[i]);
+			free(ret);
+			ret = ft_strdup(tmp);
+			free(tmp);
 			i++;
+		}
 	}
+	
 	return (ret);
 }
 
@@ -349,35 +351,28 @@ void	ft_echo(char *str)
 	int	quoted;
 	char *print;
 	char *tmp;
+	int n;
 
 	i = 0;
+	n = 0;
 	quoted = 0;
 	while (*str == ' ')
 		str++;
+	if (str[i] == '-' && str[i + 1] ==  'n')
+	{
+		str++;
+		str++;
+		while (*str == ' ')
+			str++;
+		n = 1;
+	}
 	tmp = ft_strdup(str);
-	// free(str);
 	str =  ft_check_dollar(tmp);
 	free(tmp);
 	print = NULL;
 	tmp = NULL;
 	while (str[i] != '\0')
 	{
-		// if (str[i] == '"' && (quoted == 0 || quoted == 2))
-		// {
-		// 	i++;
-		// 	if (quoted == 0)
-		// 		quoted = 2;
-		// 	else
-		// 		quoted = 0;
-		// }
-		// if (str[i] == '\'' && (quoted == 0 || quoted == 1))
-		// {
-		// 	i++;
-		// 	if (quoted == 0)
-		// 		quoted = 1;
-		// 	else
-		// 		quoted = 0;
-		// }
 		if (print == NULL)
 		{
 			print = (char *) malloc (sizeof(char) + 1);
@@ -391,13 +386,18 @@ void	ft_echo(char *str)
 		free(tmp);
 		i++;
 	}
-	printf("O str eh:\n%s\n", print);
+	if (n == 1)
+		printf("O str eh: %s", print);
+	else
+		printf("O str eh: %s\n", print);
 	free(print);
 }
 
 int	main(void)
 {
 	// ft_echo("echo oi \"ab'c\" oi 'a\"aa' \"io\" \"'$TESTE'\"");
-	ft_echo("echo A $ABC A \"'$TESTE'\" ");
+	// ft_echo("A $ABC A \"'$TESTE'\" ");
+	// ft_echo("A $ABC A \"'$\"TESTE'\" ");
+	// ft_echo("-n \"abcccccc\"\n");
 	return 0;
 }
