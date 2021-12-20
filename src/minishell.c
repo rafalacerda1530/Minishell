@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:04:41 by Rarodrig          #+#    #+#             */
-/*   Updated: 2021/12/19 15:46:28 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/20 18:42:52 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int argc, char **argv, char **envp)
 	(void) argc;
 	(void) argv;
 	ft_alloc_mem(&mem);
-	ft_fill_env_list(mem.env_list,envp);
+	ft_fill_env_list(mem.env_list, envp);
 	print_env(mem.env_list, envp);
 	ft_create_shell(&mem);
 	ft_free_env_list(mem.env_list);

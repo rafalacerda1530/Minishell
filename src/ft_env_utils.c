@@ -6,21 +6,21 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:10:07 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/16 13:03:22 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/20 18:42:20 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_get_env_sizes(int *key_size, int *content_size, char *envp)
+void	ft_get_env_sizes(int *key_size, int *size, char *envp)
 {
 	while (envp[*key_size] != '=')
 		(*key_size)++;
-	while (envp[*key_size + *content_size + 1] != '\0')
-		(*content_size)++;
+	while (envp[*key_size + *size + 1] != '\0')
+		(*size)++;
 }
 
-void	ft_create_env_strings(t_env *env, int key_size, int content_size, char *envp)
+void	ft_create_env_strings(t_env *env, int key_size, int size, char *envp)
 {
 	env->key = (char *) malloc ((key_size + 1) * sizeof(char));
 	// if (!env->key)
@@ -28,9 +28,9 @@ void	ft_create_env_strings(t_env *env, int key_size, int content_size, char *env
 		// Free Error msg
 	// }
 	ft_strlcpy(env->key, envp, key_size + 1);
-	env->content = (char *) malloc ((content_size + 1) * sizeof(char));
+	env->content = (char *) malloc ((size + 1) * sizeof(char));
 	// if (!env->content)
 	// {
 		// Free Error msg
-	ft_strlcpy(env->content, &envp[key_size + 1], content_size + 1);
+	ft_strlcpy(env->content, &envp[key_size + 1], size + 1);
 }
