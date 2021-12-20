@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:04:41 by Rarodrig          #+#    #+#             */
-/*   Updated: 2021/12/16 13:02:28 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/19 15:46:28 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_env(t_env_list *env_list, char **envp)
 	env = env_list->last;
 	printf("\n----------------------Printando variaveis de ambiente------------------------\n");
 	printf("the envp is %s\n", envp[0]);
-	printf("The key is: %s	the content is: %s\n", env->key, env->content);
+	printf("The key is: %s\nthe Env is: %s\n------\n", env->key, env->content);
 	// printf("\n\n------Get PWD--------\n");
 	total = env_list->total;
 	env = env_list->last;
@@ -39,6 +39,7 @@ void	print_env(t_env_list *env_list, char **envp)
 
 void	ft_alloc_mem(t_mem *mem)
 {
+	mem->print = NULL;
 	mem->env_list = ft_alloc_env_list();
 	mem->tolken_list = ft_alloc_tolken_list();
 }

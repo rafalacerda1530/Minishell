@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:16:58 by Rarodrig          #+#    #+#             */
-/*   Updated: 2021/12/16 12:57:40 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/20 12:32:23 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_tolken_list
 
 typedef struct s_mem
 {
+	char			*print;
 	t_env_list		*env_list;
 	t_tolken_list	*tolken_list;
 }			t_mem;
@@ -74,5 +75,14 @@ void			ft_create_tolken_strings(t_tolken *tolken, int key, int content, char *in
 
 void			ft_free_tolken_list(t_tolken_list *tolken_list);
 void			ft_free_env_list(t_env_list *env_list);
+
+char			*ft_strjoin_first(char c);
+char			*ft_strjoin_char(char *s1, char const c);
+
+void			ft_echo(t_mem *mem, char *str, t_env_list *env_list);
+void			ft_add_char(char **tmp, char **ret, char c);
+int				ft_get_key_size(char *str, int *i);
+void			ft_strjoin_env(char **ret, char *content);
+int				ft_true_dollar(char *str, int i, int quote);
 
 #endif

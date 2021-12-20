@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:42:41 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/16 13:16:01 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/19 20:35:50 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	ft_create_shell(t_mem *mem)
 		ft_read_input(&input);
 		ft_create_history(input);
 		ft_fill_tolken_list(mem->tolken_list, input);
-		print_tolken(mem->tolken_list);
+		// // print_tolken(mem->tolken_list);
+		ft_echo(mem, mem->tolken_list->last->content, mem->env_list);
 		if (input)
 		{
 			ft_free_tolken_list(mem->tolken_list);

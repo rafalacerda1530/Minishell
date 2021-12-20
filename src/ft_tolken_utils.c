@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:02:17 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/16 13:46:57 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/16 15:35:23 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ int	ft_check_quotes(char *input)
 	if (input[i] == '"')
 	{
 		i++;
-		while (input[i] != '"')
+		while (input[i] != '"' && input[i] != '\0')
 			i++;
 	}
 	else if(input[i] == '\'')
 	{
 		i++;
-		while (input[i] != '\'')
+		while (input[i] != '\'' && input[i] != '\0')
 			(i)++;
 	}
 	return (i);
