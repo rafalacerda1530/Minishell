@@ -6,7 +6,7 @@
 /*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:42:41 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/21 23:22:52 by coder            ###   ########.fr       */
+/*   Updated: 2021/12/21 23:32:42 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int get_old(t_mem *mem)
 {
 	t_env *aux = NULL;
 	char str[4096];
-	char *str_aux;
+	char *str_aux = NULL;
 	int i;
 
 	i =  mem->env_list->total;
@@ -43,30 +43,26 @@ int get_old(t_mem *mem)
     {
         if (!ft_strcmp(aux->key, "OLDPWD"))
         {
-			str_aux = aux->content;
-			printf("mizera = %s\n", str_aux);
-			printf("oldpwd = %s\n", aux->content);
+			str_aux = ft_strdup(aux->content);
 			aux->content = getcwd(str, 4096);
-			printf("oldpwd = %s\n", aux->content);
             break;
         }
         aux = aux->next;
 		i--;
     }
-	printf("mizera = %s\n", str_aux);
 	i =  mem->env_list->total;
 	aux = mem->env_list->last;
 	while(i > 0)
     {
         if (!ft_strcmp(aux->key, "PWD"))
         {
+			free(aux->content);
 			aux->content = str_aux;
             break;
         }
         aux = aux->next;
 		i--;
     }
-	printf("str_aux = %s\n", str_aux);
 	chdir(str_aux);
 	return (0);
 }
