@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:16:58 by Rarodrig          #+#    #+#             */
-/*   Updated: 2021/12/20 12:32:23 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/21 16:13:18 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,6 @@ void			ft_add_char(char **tmp, char **ret, char c);
 int				ft_get_key_size(char *str, int *i);
 void			ft_strjoin_env(char **ret, char *content);
 int				ft_true_dollar(char *str, int i, int quote);
+int 			ft_pwd(void);
 
 #endif
