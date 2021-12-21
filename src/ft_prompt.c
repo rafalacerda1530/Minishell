@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_prompt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:42:41 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/21 16:21:00 by coder            ###   ########.fr       */
+/*   Updated: 2021/12/21 15:57:04 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,14 @@ void	ft_create_history(char *input)
 		add_history(input);
 }
 
+void	ft_actions(t_mem *mem)
+{
+	int	key;
+
+	key = ft_check_key(mem->tolken_list->first->key, mem->keys);
+	ft_use_built_in(mem->built_in->function[key]);
+}
+
 void	ft_create_shell(t_mem *mem)
 {
 	char	*input;
@@ -65,13 +73,14 @@ void	ft_create_shell(t_mem *mem)
 		input = NULL;
 		ft_read_input(&input);
 		ft_create_history(input);
-		//ft_fill_tolken_list(mem->tolken_list, input); /* AJUSTAR QUANDO A KEY VEM SEM CONTENT */
+		ft_fill_tolken_list(mem->tolken_list, input);
+		ft_actions(mem);
 		//ft_pwd();
 		// // print_tolken(mem->tolken_list);
 		//ft_echo(mem, mem->tolken_list->last->content, mem->env_list);
 		if (input)
 		{
-			// ft_free_tolken_list(mem->tolken_list);
+			ft_free_tolken_list(mem->tolken_list); /* AJUSTAR QUANDO A KEY VEM SEM CONTENT */
 			free(input);
 		}
 	}

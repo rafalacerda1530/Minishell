@@ -86,6 +86,12 @@ int	ft_pwd(void)
 	return 0;
 }
 
+int	ft_cd(void)
+{
+	printf("Function cd\n");
+	return 0;
+}
+
 int	ft_export(void)
 {
 	printf("Function export\n");
@@ -134,9 +140,9 @@ int	ft_d_arrow_left(void)
 	return 0;
 }
 
-int	ft_built_in_error(void)
+int	ft_execv(void)
 {
-	printf("Function error\n");
+	printf("Function execv\n");
 	return 0;
 }
 

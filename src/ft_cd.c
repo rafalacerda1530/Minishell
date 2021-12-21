@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   teste.c                                            :+:      :+:    :+:   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/21 15:52:31 by coder             #+#    #+#             */
-/*   Updated: 2021/12/21 16:08:37 by coder            ###   ########.fr       */
+/*   Created: 2021/12/21 16:04:21 by fbonini           #+#    #+#             */
+/*   Updated: 2021/12/21 16:05:48 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "test.h"
+#include "../minishell.h"
 
-int ft_pwd(void)
+int	ft_cd(void)
 {
-    char *path[2021];
-    char *resul;
-
-    resul = getcwd(*path, 2021);
-
-    printf("teste = %s\n", resul);
-    
-    return (0);
+	printf("Function cd\n");
+	return 0;
 }
