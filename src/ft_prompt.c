@@ -3,14 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   ft_prompt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:42:41 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/21 16:29:09 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/21 23:22:52 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+// char *get_value(t_mem *mem, char *key)
+// {
+// 	int i;
+// 	t_env aux;
+
+// 	aux = mem->env_list->last;
+// 	i = env_list->total;
+// 	while(i > 0)
+//     {
+//         if (!ft_strcmp(aux->key, key))
+//         {
+//            return(aux->content);
+//         }
+//         aux = aux->next;
+// 		i--;
+//     }
+// }
+
+int get_old(t_mem *mem)
+{
+	t_env *aux = NULL;
+	char str[4096];
+	char *str_aux;
+	int i;
+
+	i =  mem->env_list->total;
+	aux = mem->env_list->last;
+    while(i > 0)
+    {
+        if (!ft_strcmp(aux->key, "OLDPWD"))
+        {
+			str_aux = aux->content;
+			printf("mizera = %s\n", str_aux);
+			printf("oldpwd = %s\n", aux->content);
+			aux->content = getcwd(str, 4096);
+			printf("oldpwd = %s\n", aux->content);
+            break;
+        }
+        aux = aux->next;
+		i--;
+    }
+	printf("mizera = %s\n", str_aux);
+	i =  mem->env_list->total;
+	aux = mem->env_list->last;
+	while(i > 0)
+    {
+        if (!ft_strcmp(aux->key, "PWD"))
+        {
+			aux->content = str_aux;
+            break;
+        }
+        aux = aux->next;
+		i--;
+    }
+	printf("str_aux = %s\n", str_aux);
+	chdir(str_aux);
+	return (0);
+}
 
 /* \/ Print para checkar \/ */
 void	print_tolken(t_tolken_list *tolken_list)
@@ -79,6 +138,7 @@ void	ft_create_shell(t_mem *mem)
 		if (input)
 		{
 			ft_fill_tolken_list(mem->tolken_list, input);
+			get_old(mem);
 			/* \/ Precisar criar função pra loop quando usar pipes \/ */
 			if (mem->tolken_list->first)
 				ft_actions(mem);
