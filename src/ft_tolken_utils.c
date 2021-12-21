@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tolken_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:02:17 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/21 16:59:10 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/21 21:10:36 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_get_tolken_sizes(int *i, int *key, int *content, char *input)
 {
 	while(input[*i] == ' ')
 		(*i)++;
-	while (input[*i + *key] != ' ')
+	while (input[*i + *key] != ' ' && input[*i + *key] != '\0')
 	{
 		if (input[*i + *key] == '"' || input[*i + *key] == '\'')
 			*key += ft_check_quotes(&input[*i + *key]);
