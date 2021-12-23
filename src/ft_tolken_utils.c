@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tolken_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:02:17 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/21 21:10:36 by coder            ###   ########.fr       */
+/*   Updated: 2021/12/23 20:26:04 by rarodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,5 @@ void	ft_create_tolken_strings(t_tolken *tolken, int key, int content, char *inpu
 	// {
 		// Free Error msg
 	// }
-	ft_strlcpy(tolken->content, &input[key], content + 1);
+	ft_strlcpy(tolken->content, &input[key + 1], content + 1);
 }

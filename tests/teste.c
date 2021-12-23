@@ -13,20 +13,30 @@
 #include "test.h"
 
 /*
-int	ft_exit(ft_mem *mem, int resul)
+int ft_unset(t_mem *mem)
 {
-	func_free_stop();
-	return(mem->result_da_ultima_func)
+	t_mem *aux;
+	t_env_list	aux;
+	int			i;
+															1 2 3
+	i = env_list->total;
+	ft_bzero(&aux, sizeof(aux));
+	aux.first = env_list->first;
+	(void)str;
+	while (i > 0)
+	{
+		if(!ft_strcmp(aux.first->key, key))
+		{
+			ft_free_env(mem->env_list, &aux.first);
+			mem->all_return = 0;
+			return(0);
+		}
+		aux.first = aux.first->next;
+		i--;
+	}
 }
-*/
-
-void	ft_free_mem(t_mem *mem)
-{
-	ft_free_env_list(mem->env_list);
-	free(mem->built_in);
-	free(mem->keys);
 }
-
+*/ 
 int main(void)
 {
 	int aux;

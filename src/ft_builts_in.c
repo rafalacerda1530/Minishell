@@ -6,7 +6,7 @@
 /*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 15:13:06 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/23 19:41:06 by rarodrig         ###   ########.fr       */
+/*   Updated: 2021/12/23 20:15:11 by rarodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ t_built_in	*ft_alloc_built_in(void)
 	return (built);
 }
 
-int	ft_use_built_in(int (*funct)())
+int	ft_use_built_in(int (*funct)(), char *key, t_mem *mem)
 {
-	funct();
+	funct(mem, mem->env_list, key);
 	return 0;
 }

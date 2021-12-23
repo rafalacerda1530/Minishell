@@ -6,16 +6,16 @@
 /*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:42:41 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/23 19:41:43 by rarodrig         ###   ########.fr       */
+/*   Updated: 2021/12/23 20:28:20 by rarodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 /* \/ Print para checkar \/ */
-void	print_tolken(t_tolken_list *tolken_list)
+void	print_tolken(t_env_list *tolken_list)
 {
-	t_tolken	*tolken;
+	t_env	*tolken;
 	int			total;
 
 	tolken = NULL;
@@ -60,7 +60,7 @@ void	ft_actions(t_mem *mem)
 	int	key;
 
 	key = ft_check_key(mem->tolken_list->first->key, mem->keys);
-	ft_use_built_in(mem->built_in->function[key]);
+	ft_use_built_in(mem->built_in->function[key], mem->tolken_list->first->content, mem);
 }
 
 void	ft_create_shell(t_mem *mem)
@@ -73,7 +73,7 @@ void	ft_create_shell(t_mem *mem)
 		input = NULL;
 		ft_read_input(&input);
 		ft_create_history(input);
-		// // print_tolken(mem->tolken_list);
+		print_tolken(mem->env_list);
 		if (input)
 		{
 			ft_fill_tolken_list(mem->tolken_list, input);
@@ -84,8 +84,8 @@ void	ft_create_shell(t_mem *mem)
 						WORKING BUILT INS */
 
 			/* \/ Precisar criar função pra loop quando usar pipes \/ */
-			// if (mem->tolken_list->first)
-			// 	ft_actions(mem);
+			if (mem->tolken_list->first)
+				ft_actions(mem);
 			/* /\ Precisar criar função pra loop quando usar pipes /\ */
 			ft_free_tolken_list(mem->tolken_list);
 			free(input);

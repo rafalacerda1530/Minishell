@@ -6,7 +6,7 @@
 /*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:16:58 by Rarodrig          #+#    #+#             */
-/*   Updated: 2021/12/23 19:41:19 by rarodrig         ###   ########.fr       */
+/*   Updated: 2021/12/23 20:17:08 by rarodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,14 @@ void			ft_fill_tolken_list(t_tolken_list *tolken_list, char *input);
 void			ft_get_tolken_sizes(int *i, int *key, int *content, char *input);
 void			ft_create_tolken_strings(t_tolken *tolken, int key, int content, char *input);
 int				ft_check_key(char *str, char **keys);
-int				ft_use_built_in(int (*funct)());
+int	ft_use_built_in(int (*funct)(), char *key, t_mem *mem);
 
 void			ft_free_tolken_list(t_tolken_list *tolken_list);
 void			ft_free_env_list(t_env_list *env_list);
 char			*ft_get_env(char *key, t_env_list *env_list);
 void			ft_search_and_change(char *str, char *key, t_env_list *env_list);
 void			ft_free_mem(t_mem *mem);
+void			ft_free_env(t_env_list *env_list, t_env *env);
 
 char			*ft_strjoin_first(char c);
 char			*ft_strjoin_char(char *s1, char const c);
@@ -114,6 +115,6 @@ int				ft_env(void);
 int				ft_execv(void);
 int				ft_exit(t_mem *mem, int ret);
 int				ft_export(void);
-int				ft_unset(void);
+int				ft_unset(t_mem *mem, t_env_list *env_list, char *key);
 
 #endif
