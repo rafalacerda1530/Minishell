@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:42:41 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/23 17:08:05 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/23 17:56:29 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,12 @@ void	ft_create_shell(t_mem *mem)
 		if (input)
 		{
 			ft_fill_tolken_list(mem->tolken_list, input);
-			// ft_pwd(); ---> Working
-			// ft_echo(mem, mem->tolken_list->last->content, mem->env_list);  ---> Working
+			/* 			WORKING BUILT INS 
+			ft_pwd(); 
+			ft_echo(mem, mem->tolken_list->last->content, mem->env_list);
 			ft_cd(mem, mem->tolken_list->first->content, mem->env_list);
+						WORKING BUILT INS */
+
 			/* \/ Precisar criar função pra loop quando usar pipes \/ */
 			// if (mem->tolken_list->first)
 			// 	ft_actions(mem);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:09:19 by coder             #+#    #+#             */
-/*   Updated: 2021/12/21 16:12:57 by coder            ###   ########.fr       */
+/*   Updated: 2021/12/23 17:55:00 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int ft_pwd(void)
 {
-    char    *path[2021];
-    char    *resul;
+	char	path[4096];
+	char	*resul;
  
-    resul = getcwd(*path, 2021);
-    ft_putendl_fd(resul, 1);
-    return (0);
+	resul = getcwd(path, 4096);
+	ft_putendl_fd(resul, 1);
+	return (0);
 }
