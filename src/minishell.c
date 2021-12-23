@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:04:41 by Rarodrig          #+#    #+#             */
-/*   Updated: 2021/12/21 15:52:22 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/23 19:40:26 by rarodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-/* \/ Print para checkar \/ */
+/*
+	Codar o ?para o echo
+	Coletar o retorno de todos as funções
+*/
 void	print_env(t_env_list *env_list, char **envp)
 {
 	t_env	*env;
@@ -44,13 +47,7 @@ void	ft_alloc_mem(t_mem *mem)
 	mem->tolken_list = ft_alloc_tolken_list();
 	mem->built_in = ft_alloc_built_in();
 	mem->keys = ft_set_keys();
-}
-
-void	ft_free_mem(t_mem *mem)
-{
-	ft_free_env_list(mem->env_list);
-	free(mem->built_in);
-	free(mem->keys);
+	mem->all_return = 0;
 }
 
 int	main(int argc, char **argv, char **envp)

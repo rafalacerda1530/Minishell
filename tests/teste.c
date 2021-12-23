@@ -3,89 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   teste.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 15:52:31 by coder             #+#    #+#             */
-/*   Updated: 2021/12/23 16:35:12 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/23 19:01:109 by rarodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test.h"
 
-
-// int get_home(t_mem *mem)
-// {
-// 	t_env *aux = NULL;
-// 	int i;
-
-// 	i =  mem->env_list->total;
-// 	aux = mem->env_list->last;
-// 	printf("key = %s\n", aux->next->key);
-//     while(i > 0)
-//     {
-// 		printf("key = %s\n", aux->key);
-//         if (!ft_strncmp(aux->key, "HOME", 5))
-//         {
-			
-//             chdir(aux->content);
-//             break;
-//         }
-//         aux = aux->next;
-// 		i--;
-//     }
-// 	return (0);
-// }
-
-
-
 /*
-int get_home(t_mem *mem)
+int	ft_exit(ft_mem *mem, int resul)
 {
-    int i;
-	t_env *aux;
-	
-	aux = mem->env_list->first;
-    i = mem->env_list->total;
-    while(i > 0)
-    {
-        if (ft_strncmp(aux->key, "HOME", 4))
-        {
-            chdir(aux->content)
-            break;
-        }
-        aux = aux->next;
-        i--;
-    }
-}
-
-int ft_cd(char *content, t_mem *mem)
-{
-    int resul;
-
-    else if(content = " " || content == NULL '\0' || content == "~")
-        get_home(mem);
-    else if (content == "-")
-        func para o ultimo caminho OLDPWD
-    if (len de content > 1)
-        printa erro 
-    resul = chdir(content);
-    if (resul != 0)
-        printa erro
-
+	func_free_stop();
+	return(mem->result_da_ultima_func)
 }
 */
 
+void	ft_free_mem(t_mem *mem)
+{
+	ft_free_env_list(mem->env_list);
+	free(mem->built_in);
+	free(mem->keys);
+}
+
 int main(void)
 {
-    char *path[2021];
-    char *resul;
+	int aux;
 
-    resul = getcwd(*path, 2021);
-
-    // while(1)
-    // {
-        // chdir("/home/coder/Desktop/Minishell/Minishell");
-        printf("teste = %d\n",chdir("~/Minishell/Minishell"));
-    // }
-    return (0);
+	aux = mem->return_all;
+	ft_free_mem(mem);
+	rl_clear_history();
+    exit(aux);
 }

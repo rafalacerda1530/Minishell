@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:16:58 by Rarodrig          #+#    #+#             */
-/*   Updated: 2021/12/23 17:04:02 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/23 19:41:19 by rarodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_mem
 {
 	char			**keys;
 	char			*print;
+	int 			all_return;
 	t_built_in		*built_in;
 	t_env_list		*env_list;
 	t_tolken_list	*tolken_list;
@@ -91,6 +92,7 @@ void			ft_free_tolken_list(t_tolken_list *tolken_list);
 void			ft_free_env_list(t_env_list *env_list);
 char			*ft_get_env(char *key, t_env_list *env_list);
 void			ft_search_and_change(char *str, char *key, t_env_list *env_list);
+void			ft_free_mem(t_mem *mem);
 
 char			*ft_strjoin_first(char c);
 char			*ft_strjoin_char(char *s1, char const c);
@@ -110,7 +112,7 @@ int				ft_d_arrow_left(void);
 int				ft_d_arrow_right(void);
 int				ft_env(void);
 int				ft_execv(void);
-int				ft_exit(void);
+int				ft_exit(t_mem *mem, int ret);
 int				ft_export(void);
 int				ft_unset(void);
 
