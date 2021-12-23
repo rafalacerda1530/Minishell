@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:16:58 by Rarodrig          #+#    #+#             */
-/*   Updated: 2021/12/21 16:13:49 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/23 17:04:02 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ int				ft_use_built_in(int (*funct)());
 
 void			ft_free_tolken_list(t_tolken_list *tolken_list);
 void			ft_free_env_list(t_env_list *env_list);
+char			*ft_get_env(char *key, t_env_list *env_list);
+void			ft_search_and_change(char *str, char *key, t_env_list *env_list);
 
 char			*ft_strjoin_first(char c);
 char			*ft_strjoin_char(char *s1, char const c);
@@ -99,12 +101,13 @@ int				ft_get_key_size(char *str, int *i);
 void			ft_strjoin_env(char **ret, char *content);
 int				ft_true_dollar(char *str, int i, int quote);
 
+int				ft_cd(t_mem *mem, char *str, t_env_list *env_list);
+
 int 			ft_pwd(void);
 int				ft_arrow_left(void);
 int				ft_arrow_right(void);
 int				ft_d_arrow_left(void);
 int				ft_d_arrow_right(void);
-int				ft_cd(void);
 int				ft_env(void);
 int				ft_execv(void);
 int				ft_exit(void);

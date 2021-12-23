@@ -3,69 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_prompt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:42:41 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/21 23:32:42 by coder            ###   ########.fr       */
+/*   Updated: 2021/12/23 17:08:05 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// char *get_value(t_mem *mem, char *key)
-// {
-// 	int i;
-// 	t_env aux;
-
-// 	aux = mem->env_list->last;
-// 	i = env_list->total;
-// 	while(i > 0)
-//     {
-//         if (!ft_strcmp(aux->key, key))
-//         {
-//            return(aux->content);
-//         }
-//         aux = aux->next;
-// 		i--;
-//     }
-// }
-
-int get_old(t_mem *mem)
-{
-	t_env *aux = NULL;
-	char str[4096];
-	char *str_aux = NULL;
-	int i;
-
-	i =  mem->env_list->total;
-	aux = mem->env_list->last;
-    while(i > 0)
-    {
-        if (!ft_strcmp(aux->key, "OLDPWD"))
-        {
-			str_aux = ft_strdup(aux->content);
-			aux->content = getcwd(str, 4096);
-            break;
-        }
-        aux = aux->next;
-		i--;
-    }
-	i =  mem->env_list->total;
-	aux = mem->env_list->last;
-	while(i > 0)
-    {
-        if (!ft_strcmp(aux->key, "PWD"))
-        {
-			free(aux->content);
-			aux->content = str_aux;
-            break;
-        }
-        aux = aux->next;
-		i--;
-    }
-	chdir(str_aux);
-	return (0);
-}
 
 /* \/ Print para checkar \/ */
 void	print_tolken(t_tolken_list *tolken_list)
@@ -128,16 +73,16 @@ void	ft_create_shell(t_mem *mem)
 		input = NULL;
 		ft_read_input(&input);
 		ft_create_history(input);
-		//ft_pwd();
 		// // print_tolken(mem->tolken_list);
-		//ft_echo(mem, mem->tolken_list->last->content, mem->env_list);
 		if (input)
 		{
 			ft_fill_tolken_list(mem->tolken_list, input);
-			get_old(mem);
+			// ft_pwd(); ---> Working
+			// ft_echo(mem, mem->tolken_list->last->content, mem->env_list);  ---> Working
+			ft_cd(mem, mem->tolken_list->first->content, mem->env_list);
 			/* \/ Precisar criar função pra loop quando usar pipes \/ */
-			if (mem->tolken_list->first)
-				ft_actions(mem);
+			// if (mem->tolken_list->first)
+			// 	ft_actions(mem);
 			/* /\ Precisar criar função pra loop quando usar pipes /\ */
 			ft_free_tolken_list(mem->tolken_list);
 			free(input);

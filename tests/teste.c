@@ -3,38 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   teste.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 15:52:31 by coder             #+#    #+#             */
-/*   Updated: 2021/12/21 22:11:05 by coder            ###   ########.fr       */
+/*   Updated: 2021/12/23 16:35:12 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test.h"
 
 
-int get_home(t_mem *mem)
-{
-	t_env *aux = NULL;
-	int i;
+// int get_home(t_mem *mem)
+// {
+// 	t_env *aux = NULL;
+// 	int i;
 
-	i =  mem->env_list->total;
-	aux = mem->env_list->last;
-	printf("key = %s\n", aux->next->key);
-    while(i > 0)
-    {
-		printf("key = %s\n", aux->key);
-        if (!ft_strncmp(aux->key, "HOME", 5))
-        {
+// 	i =  mem->env_list->total;
+// 	aux = mem->env_list->last;
+// 	printf("key = %s\n", aux->next->key);
+//     while(i > 0)
+//     {
+// 		printf("key = %s\n", aux->key);
+//         if (!ft_strncmp(aux->key, "HOME", 5))
+//         {
 			
-            chdir(aux->content);
-            break;
-        }
-        aux = aux->next;
-		i--;
-    }
-	return (0);
-}
+//             chdir(aux->content);
+//             break;
+//         }
+//         aux = aux->next;
+// 		i--;
+//     }
+// 	return (0);
+// }
 
 
 
@@ -82,10 +82,10 @@ int main(void)
 
     resul = getcwd(*path, 2021);
 
-    while(1)
-    {
-        chdir("/home/coder/Desktop/Minishell/Minishell");
-        // printf("teste = %d\n",chdir("/home/coder/Desktop/Minishell/Minishell"));
-    }
+    // while(1)
+    // {
+        // chdir("/home/coder/Desktop/Minishell/Minishell");
+        printf("teste = %d\n",chdir("~/Minishell/Minishell"));
+    // }
     return (0);
 }
