@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:08:08 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/16 12:05:25 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/24 15:47:44 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_env_list	*ft_alloc_env_list(void)
 	return (env_list);
 }
 
-t_env	*ft_alloc_env(char *envp)
+t_env	*ft_alloc_env(char *envp, char tag)
 {
 	t_env	*env;
 	int		key_size;
@@ -44,16 +44,17 @@ t_env	*ft_alloc_env(char *envp)
 	ft_create_env_strings(env, key_size, content_size, envp);
 	env->next = env;
 	env->prev = env;
+	env->tag = tag;
 	return (env);
 }
 
-void	ft_fill_env_list(t_env_list *env_list, char **envp)
+void	ft_fill_env_list(t_env_list *env_list, char **envp, char tag)
 {
 	t_env	*env;
 
 	while (*envp != 0)
 	{
-		env = ft_alloc_env(*envp);
+		env = ft_alloc_env(*envp, tag);
 		if (env_list->total == 0)
 			env_list->last = env;
 		else

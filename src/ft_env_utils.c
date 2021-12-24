@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:10:07 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/24 15:31:16 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/24 15:45:58 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ char	*ft_get_env(char *key, t_env_list *env_list)
 	char		*path;
 	t_env_list	aux;
 
-	printf("The content %s\n", key);
 	i = env_list->total;
 	ft_bzero(&aux, sizeof(aux));
 	aux.first = env_list->first;

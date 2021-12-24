@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:04:36 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/24 15:03:05 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/24 15:50:25 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,13 @@ int	ft_env(t_mem *mem, t_env_list *env_list)
 	aux.last = env_list->last;
 	while (i > 0)
 	{
-		ft_putstr_fd(aux.last->key, 1);
-		ft_putchar_fd('=', 1);
-		ft_putstr_fd(aux.last->content, 1);
-		ft_putchar_fd('\n', 1);
+		if (aux.last->tag == 'A')
+		{
+			ft_putstr_fd(aux.last->key, 1);
+			ft_putchar_fd('=', 1);
+			ft_putstr_fd(aux.last->content, 1);
+			ft_putchar_fd('\n', 1);
+		}
 		aux.last = aux.last->prev;
 		i--;
 	}
