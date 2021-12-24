@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 14:41:43 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/21 16:13:35 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/24 15:32:59 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,10 @@ int	ft_echo(t_mem *mem, char *str, t_env_list *env_list)
 		str++;
 	flag_n = ft_flag_n(&str);
 	mem->print = ft_get_string(str, env_list);
-	if (flag_n == 1)
-		printf("%s", mem->print);
-	else
-		printf("%s\n", mem->print);
+	ft_putstr_fd(mem->print, 1);
+	if (flag_n == 0)
+		ft_putchar_fd('\n', 1);
 	free(mem->print);
+	mem->all_return = 0;
 	return (0);
 }

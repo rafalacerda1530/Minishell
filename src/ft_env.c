@@ -6,14 +6,29 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:04:36 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/21 16:06:20 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/24 15:03:05 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_env(void)
+int	ft_env(t_mem *mem, t_env_list *env_list)
 {
-	printf("Function env\n");
+	int			i;
+	t_env_list	aux;
+
+	i = env_list->total;
+	ft_bzero(&aux, sizeof(aux));
+	aux.last = env_list->last;
+	while (i > 0)
+	{
+		ft_putstr_fd(aux.last->key, 1);
+		ft_putchar_fd('=', 1);
+		ft_putstr_fd(aux.last->content, 1);
+		ft_putchar_fd('\n', 1);
+		aux.last = aux.last->prev;
+		i--;
+	}
+	mem->all_return = 0;
 	return 0;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:16:58 by Rarodrig          #+#    #+#             */
-/*   Updated: 2021/12/23 20:17:08 by rarodrig         ###   ########.fr       */
+/*   Updated: 2021/12/24 14:51:04 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int				ft_arrow_left(void);
 int				ft_arrow_right(void);
 int				ft_d_arrow_left(void);
 int				ft_d_arrow_right(void);
-int				ft_env(void);
+int				ft_env(t_mem *mem, t_env_list *env_list);
 int				ft_execv(void);
 int				ft_exit(t_mem *mem, int ret);
 int				ft_export(void);

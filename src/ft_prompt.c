@@ -3,34 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_prompt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:42:41 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/23 20:28:20 by rarodrig         ###   ########.fr       */
+/*   Updated: 2021/12/24 15:37:40 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-/* \/ Print para checkar \/ */
-void	print_tolken(t_env_list *tolken_list)
-{
-	t_env	*tolken;
-	int			total;
-
-	tolken = NULL;
-	total = tolken_list->total;
-	tolken = tolken_list->last;
-	printf("\n----------------------Tolkens Criados------------------------\n");
-	while (total != 0)
-	{
-		printf("The Key is >> %s\nThe Command is >> %s\n", tolken->key, tolken->content);
-		tolken = tolken->prev;
-		total--;
-	}
-	printf("\n----------------------Fim------------------------\n");
-}
-/* /\ Print para checkar /\ */
 
 void	ft_read_input(char **input)
 {
@@ -73,19 +53,19 @@ void	ft_create_shell(t_mem *mem)
 		input = NULL;
 		ft_read_input(&input);
 		ft_create_history(input);
-		print_tolken(mem->env_list);
+		printf("\n------------START ENV----------------\n");
 		if (input)
 		{
 			ft_fill_tolken_list(mem->tolken_list, input);
+			// ft_echo(mem, mem->tolken_list->last->content, mem->env_list);
 			/* 			WORKING BUILT INS 
 			ft_pwd(); 
-			ft_echo(mem, mem->tolken_list->last->content, mem->env_list);
 			ft_cd(mem, mem->tolken_list->first->content, mem->env_list);
 						WORKING BUILT INS */
-
+			// ft_env(mem, mem->env_list);
 			/* \/ Precisar criar função pra loop quando usar pipes \/ */
-			if (mem->tolken_list->first)
-				ft_actions(mem);
+			// if (mem->tolken_list->first)
+			// 	ft_actions(mem);
 			/* /\ Precisar criar função pra loop quando usar pipes /\ */
 			ft_free_tolken_list(mem->tolken_list);
 			free(input);
