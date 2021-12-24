@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:08:08 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/24 15:47:44 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/24 17:21:09 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,26 +48,22 @@ t_env	*ft_alloc_env(char *envp, char tag)
 	return (env);
 }
 
-void	ft_fill_env_list(t_env_list *env_list, char **envp, char tag)
+void	ft_fill_env_list(t_env_list *env_list, char *envp, char tag)
 {
 	t_env	*env;
 
-	while (*envp != 0)
+	env = ft_alloc_env(envp, tag);
+	if (env_list->total == 0)
+		env_list->last = env;
+	else
 	{
-		env = ft_alloc_env(*envp, tag);
-		if (env_list->total == 0)
-			env_list->last = env;
-		else
-		{
-			env->next = env_list->first;
-			env_list->first->prev = env;
-			env->prev = env_list->last;
-			env_list->last->next = env;
-		}
-		env_list->first = env;
-		env_list->total++;
-		envp++;
+		env->next = env_list->first;
+		env_list->first->prev = env;
+		env->prev = env_list->last;
+		env_list->last->next = env;
 	}
+	env_list->first = env;
+	env_list->total++;
 }
 
 void	ft_free_env(t_env_list *env_list, t_env *env)

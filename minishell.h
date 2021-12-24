@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:16:58 by Rarodrig          #+#    #+#             */
-/*   Updated: 2021/12/24 15:48:01 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/24 17:21:55 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_tolken_list	*ft_alloc_tolken_list(void);
 t_env_list		*ft_alloc_env_list(void);
 t_env			*ft_alloc_env(char *envp, char tag);
 t_built_in		*ft_alloc_built_in(void);
-void			ft_fill_env_list(t_env_list *env_list, char **envp, char tag);
+void			ft_fill_env_list(t_env_list *env_list, char *envp, char tag);
 void			ft_create_env_strings(t_env *env, int key, int content, char *envp);
 void			ft_get_env_sizes(int *key, int *content, char *envp);
 char			**ft_set_keys(void);
@@ -88,7 +88,7 @@ void			ft_fill_tolken_list(t_tolken_list *tolken_list, char *input);
 void			ft_get_tolken_sizes(int *i, int *key, int *content, char *input);
 void			ft_create_tolken_strings(t_tolken *tolken, int key, int content, char *input);
 int				ft_check_key(char *str, char **keys);
-int				ft_use_built_in(int (*funct)(), char *key, t_mem *mem);
+int				ft_use_built_in(int (*funct)(), t_mem *mem, char *key);
 
 void			ft_free_tolken_list(t_tolken_list *tolken_list);
 void			ft_free_env_list(t_env_list *env_list);
@@ -116,7 +116,7 @@ int				ft_d_arrow_right(void);
 int				ft_env(t_mem *mem, t_env_list *env_list);
 int				ft_execv(void);
 int				ft_exit(t_mem *mem, int ret);
-int				ft_export(void);
+int				ft_export(t_mem *mem, t_env_list *env_list, char *content);
 int				ft_unset(t_mem *mem, t_env_list *env_list, char *key);
 
 #endif

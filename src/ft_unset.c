@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:04:55 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/23 20:28:12 by rarodrig         ###   ########.fr       */
+/*   Updated: 2021/12/24 17:52:37 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,16 @@ int ft_unset(t_mem *mem, t_env_list *env_list, char *key)
 	int			i;
 	i = env_list->total;
 	ft_bzero(&aux, sizeof(aux));
-	aux.first = env_list->first;
+	aux.last = env_list->last;
 	while (i > 0)
 	{
-		
-		if(!ft_strcmp(aux.first->key, key))
+		if(!ft_strcmp(aux.last->key, key))
 		{
-			ft_free_env(mem->env_list, aux.first);
+			ft_free_env(mem->env_list, aux.last);
 			mem->all_return = 0;
 			return(0);
 		}
-		aux.first = aux.first->next;
+		aux.last = aux.last->prev;
 		i--;
 	}
 	mem->all_return = 1;

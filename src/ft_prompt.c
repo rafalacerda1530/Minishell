@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:42:41 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/24 15:49:16 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/24 20:09:23 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ft_actions(t_mem *mem)
 	int	key;
 
 	key = ft_check_key(mem->tolken_list->first->key, mem->keys);
-	ft_use_built_in(mem->built_in->function[key], mem->tolken_list->first->content, mem);
+	ft_use_built_in(mem->built_in->function[key], mem, mem->tolken_list->first->content);
 }
 
 void	ft_create_shell(t_mem *mem)
@@ -53,7 +53,6 @@ void	ft_create_shell(t_mem *mem)
 		input = NULL;
 		ft_read_input(&input);
 		ft_create_history(input);
-		printf("\n------------START ENV----------------\n");
 		if (input)
 		{
 			ft_fill_tolken_list(mem->tolken_list, input);
@@ -62,10 +61,10 @@ void	ft_create_shell(t_mem *mem)
 			ft_pwd(); 
 			ft_cd(mem, mem->tolken_list->first->content, mem->env_list);
 						WORKING BUILT INS */
-			ft_env(mem, mem->env_list);
+			// ft_env(mem, mem->env_list);
 			/* \/ Precisar criar função pra loop quando usar pipes \/ */
-			// if (mem->tolken_list->first)
-			// 	ft_actions(mem);
+			if (mem->tolken_list->first)
+				ft_actions(mem);
 			/* /\ Precisar criar função pra loop quando usar pipes /\ */
 			ft_free_tolken_list(mem->tolken_list);
 			free(input);

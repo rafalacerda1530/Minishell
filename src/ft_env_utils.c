@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:10:07 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/24 15:45:58 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/24 17:43:52 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 void	ft_get_env_sizes(int *key_size, int *size, char *envp)
 {
 	while (envp[*key_size] != '=')
+	{
 		(*key_size)++;
+		if (envp[*key_size] == '\0')
+			return ;
+	}
 	while (envp[*key_size + *size + 1] != '\0')
 		(*size)++;
 }

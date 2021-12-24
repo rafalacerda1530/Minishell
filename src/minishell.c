@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:04:41 by Rarodrig          #+#    #+#             */
-/*   Updated: 2021/12/24 15:48:23 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/24 20:08:23 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,19 @@ void	ft_alloc_mem(t_mem *mem)
 int	main(int argc, char **argv, char **envp)
 {
 	t_mem	mem;
+	int		i;
 
 	(void) argc;
 	(void) argv;
+	(void) envp;
 	ft_alloc_mem(&mem);
-	ft_fill_env_list(mem.env_list, envp, 'A');
+	i = 0;
+	while (envp[i] != (void *)0)
+	{
+		ft_fill_env_list(mem.env_list, envp[i], 'A');
+		i++;
+	}
+	// ft_fill_env_list(mem.env_list, envp, 'A');
 	ft_create_shell(&mem);
 	ft_free_mem(&mem);
 	return (0);
