@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:00:31 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/21 16:21:26 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/27 18:08:43 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_tolken_list	*ft_alloc_tolken_list(void)
 {
 	t_tolken_list	*tolken_list;
-	
+
 	tolken_list = (t_tolken_list *) malloc (sizeof(t_tolken_list));
 	// if (!tolken_list)
 	// {
@@ -27,7 +27,7 @@ t_tolken_list	*ft_alloc_tolken_list(void)
 	return (tolken_list);
 }
 
-t_tolken	*ft_alloc_tolken(char *input)
+t_tolken	*ft_alloc_tolken(t_mem *mem, char *input)
 {
 	t_tolken	*tolken;
 	int			i;
@@ -43,22 +43,23 @@ t_tolken	*ft_alloc_tolken(char *input)
 	// {
 		// Free Error msg
 	// }
-	ft_create_tolken_strings(tolken, key, content, &input[i]);
+	ft_tolken_key(mem, tolken, key, &input[i]);
+	ft_tolken_content(mem, tolken, content, &input[i + key + 1]);
 	tolken->size = key + content;
 	tolken->next = tolken;
 	tolken->prev = tolken;
 	return (tolken);
 }
 
-void	ft_fill_tolken_list(t_tolken_list *tolken_list, char *input)
+void	ft_fill_tolken_list(t_mem *mem, t_tolken_list *tolken_list, char *input)
 {
 	t_tolken	*tolken;
-	size_t			i;
+	size_t		i;
 
 	i = 0;
 	while (i < ft_strlen(input))
 	{
-		tolken = ft_alloc_tolken(&input[i]);
+		tolken = ft_alloc_tolken(mem, &input[i]);
 		if (tolken_list->total == 0)
 			tolken_list->last = tolken;
 		else
@@ -103,13 +104,13 @@ void	ft_free_tolken(t_tolken_list *tolken_list, t_tolken *tolken)
 
 void	ft_free_tolken_list(t_tolken_list *tolken_list)
 {
-	while(tolken_list->total != 0)
+	while (tolken_list->total != 0)
 	{
 		tolken_list->first->size = 0;
 		if (tolken_list->first->key)
 			free(tolken_list->first->key);
 		if (tolken_list->first->content)
 			free(tolken_list->first->content);
-		ft_free_tolken(tolken_list,tolken_list->first);
+		ft_free_tolken(tolken_list, tolken_list->first);
 	}
 }

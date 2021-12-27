@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:08:08 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/24 17:21:09 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/27 18:12:02 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_env_list	*ft_alloc_env_list(void)
 {
 	t_env_list	*env_list;
-	
+
 	env_list = (t_env_list *) malloc (sizeof(t_env_list));
 	// if (!env_list)
 	// {
@@ -68,6 +68,8 @@ void	ft_fill_env_list(t_env_list *env_list, char *envp, char tag)
 
 void	ft_free_env(t_env_list *env_list, t_env *env)
 {
+	free(env->key);
+	free(env->content);
 	if (env_list->first == env)
 	{
 		if (env_list->last == env)
@@ -95,11 +97,9 @@ void	ft_free_env(t_env_list *env_list, t_env *env)
 
 void	ft_free_env_list(t_env_list *env_list)
 {
-	while(env_list->total != 0)
+	while (env_list->total != 0)
 	{
-		free(env_list->first->key);
-		free(env_list->first->content);
-		ft_free_env(env_list,env_list->first);
+		ft_free_env(env_list, env_list->first);
 	}
 	free(env_list);
 }

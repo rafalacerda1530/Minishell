@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:04:21 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/23 17:48:35 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/27 18:16:52 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_check_cd_arguments(char *str)
 	int	i;
 
 	i = 0;
-	while(str[i] != '\0')
+	while (str[i] != '\0')
 	{
 		if (str[i] == ' ')
 			return (1);
@@ -57,7 +57,7 @@ void	ft_go_to_path(char *path, t_env_list *env_list)
 		path = ft_change_path(path, env_list);
 	if (chdir(path) != 0)
 	{
-		printf("Error no path\n"); // need to make a error msg
+		ft_putstr_fd("Error no path\n", 2);
 		return ;
 	}
 	new = getcwd(new_pwd, 4096);
@@ -69,13 +69,13 @@ void	ft_go_to_path(char *path, t_env_list *env_list)
 int	ft_cd(t_mem *mem, char *str, t_env_list *env_list)
 {
 	char	*path;
-	(void)mem;
 
+	(void)mem;
 	while (*str == ' ')
 		str++;
-	if(ft_check_cd_arguments(str))
+	if (ft_check_cd_arguments(str))
 	{
-		printf("Too many arguments\n");//error too many arguments
+		ft_putstr_fd("Too many arguments\n", 1);
 		return (1);
 	}
 	// Need fd check
@@ -84,7 +84,8 @@ int	ft_cd(t_mem *mem, char *str, t_env_list *env_list)
 	else if (str[0] == '-' && str[1] == '\0')
 	{
 		path = ft_get_env("OLDPWD", env_list);
-		printf("%s\n", path);
+		ft_putstr_fd(path, 1);
+		ft_putchar_fd('\n', 1);
 	}
 	else
 		path = ft_strdup(str);

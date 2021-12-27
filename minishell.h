@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:16:58 by Rarodrig          #+#    #+#             */
-/*   Updated: 2021/12/24 17:21:55 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/27 18:34:26 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ typedef struct s_tolken_list
 typedef struct s_mem
 {
 	char			**keys;
-	char			*print;
 	int 			all_return;
 	t_built_in		*built_in;
 	t_env_list		*env_list;
@@ -84,9 +83,10 @@ char			**ft_set_keys(void);
 
 void			ft_create_shell(t_mem *mem);
 
-void			ft_fill_tolken_list(t_tolken_list *tolken_list, char *input);
+void			ft_fill_tolken_list(t_mem *mem, t_tolken_list *tolken_list, char *input);
 void			ft_get_tolken_sizes(int *i, int *key, int *content, char *input);
-void			ft_create_tolken_strings(t_tolken *tolken, int key, int content, char *input);
+void			ft_tolken_key(t_mem *mem, t_tolken *tolken, int key, char *input);
+void			ft_tolken_content(t_mem *mem, t_tolken *tolken, int size, char *input);
 int				ft_check_key(char *str, char **keys);
 int				ft_use_built_in(int (*funct)(), t_mem *mem, char *key);
 
@@ -100,11 +100,14 @@ void			ft_free_env(t_env_list *env_list, t_env *env);
 char			*ft_strjoin_first(char c);
 char			*ft_strjoin_char(char *s1, char const c);
 
-int				ft_echo(t_mem *mem, char *str, t_env_list *env_list);
+int				ft_quote_check(char *str, int *i, int quote);
 void			ft_add_char(char **tmp, char **ret, char c);
-int				ft_get_key_size(char *str, int *i);
+int				ft_get_key_size(char *str, int i);
+char			*ft_get_string(char *str, t_env_list *env_list);
 void			ft_strjoin_env(char **ret, char *content);
 int				ft_true_dollar(char *str, int i, int quote);
+
+int				ft_echo(t_mem *mem, char *str, t_env_list *env_list);
 
 int				ft_cd(t_mem *mem, char *str, t_env_list *env_list);
 
@@ -116,7 +119,17 @@ int				ft_d_arrow_right(void);
 int				ft_env(t_mem *mem, t_env_list *env_list);
 int				ft_execv(void);
 int				ft_exit(t_mem *mem, int ret);
+
 int				ft_export(t_mem *mem, t_env_list *env_list, char *content);
+int				ft_invalid_key(char *str, int i, int quoted);
+void			ft_export_string(t_mem *mem, t_env_list *env_list, char *content);
+int				ft_new_env(t_mem *mem, char *key, char *content, int i);
+int				ft_print_export(t_mem *mem, t_env_list *env_list);
+void			ft_free_split(char **split);
+
 int				ft_unset(t_mem *mem, t_env_list *env_list, char *key);
+
+void			ft_key_error(char *str);
+void			ft_content_error(void);
 
 #endif

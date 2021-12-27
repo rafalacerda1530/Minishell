@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:10:07 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/24 17:43:52 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/27 18:12:36 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ void	ft_search_and_change(char *str, char *key, t_env_list *env_list)
 	(void)str;
 	while (i > 0)
 	{
-		if(!ft_strcmp(aux.first->key, key))
+		if (!ft_strcmp(aux.first->key, key))
 		{
 			free(aux.first->content);
 			aux.first->content = ft_strdup(str);
-			break;
+			break ;
 		}
 		aux.first = aux.first->next;
 		i--;

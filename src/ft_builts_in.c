@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 15:13:06 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/24 17:00:26 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/27 18:17:54 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_get_built_in(t_funct *function)
 
 t_built_in	*ft_alloc_built_in(void)
 {
-	t_built_in *built;
+	t_built_in	*built;
 
 	built = (t_built_in *) malloc (sizeof(t_built_in));
 	// if(built)
@@ -47,5 +47,5 @@ t_built_in	*ft_alloc_built_in(void)
 int	ft_use_built_in(int (*funct)(), t_mem *mem, char *key)
 {
 	funct(mem, mem->env_list, key);
-	return 0;
+	return (0);
 }

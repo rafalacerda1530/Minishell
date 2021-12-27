@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+         #
+#    By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/01 00:57:37 by coder             #+#    #+#              #
-#    Updated: 2021/12/23 19:30:34 by rarodrig         ###   ########.fr        #
+#    Updated: 2021/12/27 18:36:30 by fbonini          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,21 +17,23 @@ PATH_OBJ = ./obj/
 FILE = $(PATH_SRC)minishell.c $(PATH_SRC)ft_prompt.c \
 		$(PATH_SRC)ft_env_variables.c $(PATH_SRC)ft_env_utils.c \
 		$(PATH_SRC)ft_tolken.c $(PATH_SRC)ft_tolken_utils.c \
-		$(PATH_SRC)ft_echo.c $(PATH_SRC)ft_echo_utils.c \
+		$(PATH_SRC)ft_parse.c $(PATH_SRC)ft_parse_utils.c \
+		$(PATH_SRC)ft_errors.c $(PATH_SRC)ft_echo.c \
 		$(PATH_SRC)ft_minishell_utils.c $(PATH_SRC)ft_pwd.c \
 		$(PATH_SRC)ft_keys.c $(PATH_SRC)ft_builts_in.c \
 		$(PATH_SRC)ft_arrow_left.c $(PATH_SRC)ft_arrow_right.c \
 		$(PATH_SRC)ft_d_arrow_left.c $(PATH_SRC)ft_d_arrow_right.c \
 		$(PATH_SRC)ft_cd.c $(PATH_SRC)ft_env.c $(PATH_SRC)ft_execv.c \
-		$(PATH_SRC)ft_exit.c $(PATH_SRC)ft_export.c $(PATH_SRC)ft_unset.c \
-		
+		$(PATH_SRC)ft_exit.c $(PATH_SRC)ft_unset.c \
+		$(PATH_SRC)ft_export.c $(PATH_SRC)ft_export_utils.c \
+
 LIBFT = $(PATH_LIBFT)libft.a
 CC = clang
 CFLAGS = -Wall -Wextra -Werror
 RM = rm -rf
 LEAK = -fsanitize=address
 
-OBJ = $(patsubst $(PATH_SRC)%.c, $(PATH_OBJ)%.o, $(FILE)) 
+OBJ = $(patsubst $(PATH_SRC)%.c, $(PATH_OBJ)%.o, $(FILE))
 
 NAME = minishell
 

@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_execv.c                                         :+:      :+:    :+:   */
+/*   ft_errors.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/21 16:08:27 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/27 18:11:09 by fbonini          ###   ########.fr       */
+/*   Created: 2021/12/27 18:04:28 by fbonini           #+#    #+#             */
+/*   Updated: 2021/12/27 18:04:35 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_execv(void)
+void	ft_key_error(char *str)
 {
-	printf("Function execv\n");
-	return (0);
+	ft_putstr_fd("export: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd(": not a valid identifier\n", 2);
+}
+
+void	ft_content_error(void)
+{
+	ft_putstr_fd("export: ! is a special character, ", 2);
+	ft_putstr_fd("use \\! or single quotes \n", 2);
 }

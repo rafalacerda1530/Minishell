@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:04:41 by Rarodrig          #+#    #+#             */
-/*   Updated: 2021/12/24 20:08:23 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/26 11:52:04 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 */
 void	ft_alloc_mem(t_mem *mem)
 {
-	mem->print = NULL;
 	mem->env_list = ft_alloc_env_list();
 	mem->tolken_list = ft_alloc_tolken_list();
 	mem->built_in = ft_alloc_built_in();
@@ -32,7 +31,6 @@ int	main(int argc, char **argv, char **envp)
 
 	(void) argc;
 	(void) argv;
-	(void) envp;
 	ft_alloc_mem(&mem);
 	i = 0;
 	while (envp[i] != (void *)0)

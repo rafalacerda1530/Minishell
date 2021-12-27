@@ -6,18 +6,18 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:09:19 by coder             #+#    #+#             */
-/*   Updated: 2021/12/23 17:55:00 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/27 18:10:24 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int ft_pwd(void)
+int	ft_pwd(void)
 {
 	char	path[4096];
-	char	*resul;
- 
-	resul = getcwd(path, 4096);
-	ft_putendl_fd(resul, 1);
+	char	*result;
+
+	result = getcwd(path, 4096);
+	ft_putendl_fd(result, 1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:04:36 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/24 15:50:25 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/27 18:12:56 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,5 @@ int	ft_env(t_mem *mem, t_env_list *env_list)
 		i--;
 	}
 	mem->all_return = 0;
-	return 0;
+	return (0);
 }
