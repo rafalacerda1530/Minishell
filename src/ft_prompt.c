@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:42:41 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/27 17:43:30 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/28 08:11:56 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ void	ft_create_shell(t_mem *mem)
 		if (input)
 		{
 			ft_fill_tolken_list(mem, mem->tolken_list, input);
-			ft_export(mem, mem->env_list, mem->tolken_list->first->content);
+			if (i == 0 || i == 4)
+				ft_export(mem, mem->env_list, mem->tolken_list->first->content);
+			if (i < 4 && i > 0)
+				ft_unset(mem, mem->env_list, mem->tolken_list->first->content);
 			// ft_echo(mem, mem->tolken_list->last->content, mem->env_list);
 			/* 			WORKING BUILT INS 
 			ft_pwd(); 

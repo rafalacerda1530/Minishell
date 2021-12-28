@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:04:55 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/27 18:06:46 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/28 08:17:23 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,27 @@
 int	ft_unset(t_mem *mem, t_env_list *env_list, char *key)
 {
 	t_env_list	aux;
+	char		**split;
+	int			total;
 	int			i;
 
-	i = env_list->total;
 	ft_bzero(&aux, sizeof(aux));
 	aux.last = env_list->last;
-	while (i > 0)
+	split = ft_split(key, ' ');
+	i = 0;
+	while (split[i])
 	{
-		if (!ft_strcmp(aux.last->key, key))
+		total = env_list->total;
+		while (total > 0)
 		{
-			ft_free_env(mem->env_list, aux.last);
-			mem->all_return = 0;
-			return (0);
+			if (!ft_strcmp(aux.last->key, split[i]))
+				ft_free_env(mem->env_list, aux.last);
+			aux.last = aux.last->prev;
+			total--;
 		}
-		aux.last = aux.last->prev;
-		i--;
+		i++;
 	}
+	ft_free_split(split);
 	mem->all_return = 0;
 	return (0);
 }
