@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:10:07 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/27 18:12:36 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/03 15:46:52 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,19 @@ void	ft_get_env_sizes(int *key_size, int *size, char *envp)
 void	ft_create_env_strings(t_env *env, int key_size, int size, char *envp)
 {
 	env->key = (char *) malloc ((key_size + 1) * sizeof(char));
-	// if (!env->key)
-	// {
-		// Free Error msg
-	// }
+	if (!env->key)
+	{
+		free (env->key);
+		return ;
+	}
 	ft_strlcpy(env->key, envp, key_size + 1);
 	env->content = (char *) malloc ((size + 1) * sizeof(char));
-	// if (!env->content)
-	// {
-		// Free Error msg
+	if (!env->content)
+	{
+		free(env->key);
+		free(env->content);
+		return ;
+	}
 	ft_strlcpy(env->content, &envp[key_size + 1], size + 1);
 }
 
@@ -46,7 +50,7 @@ char	*ft_get_env(char *key, t_env_list *env_list)
 	t_env_list	aux;
 
 	i = env_list->total;
-	ft_bzero(&aux, sizeof(aux));
+	ft_bzero(&aux, sizeof(t_env_list));
 	aux.first = env_list->first;
 	path = NULL;
 	while (i > 0)

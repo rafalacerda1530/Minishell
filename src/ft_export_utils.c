@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 17:54:38 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/27 18:04:10 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/29 18:14:02 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	ft_new_env(t_mem *mem, char *key, char *content, int i)
 			if (content[i] == '\0' || content[i + 1] == '\0')
 				return (1);
 			ft_free_env(mem->env_list, aux.last);
-			ft_fill_env_list(mem->env_list, content, 'L');
+			ft_fill_env_list(mem, mem->env_list, content, 'A');
 			return (1);
 		}
 		aux.last = aux.last->prev;
@@ -92,7 +92,7 @@ void	ft_export_string(t_mem *mem, t_env_list *env_list, char *content)
 	key[i] = '\0';
 	added = ft_new_env(mem, key, content, i);
 	if (!added)
-		ft_fill_env_list(env_list, content, 'L');
+		ft_fill_env_list(mem, env_list, content, 'A');
 	free(key);
 }
 

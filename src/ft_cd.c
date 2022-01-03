@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:04:21 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/27 18:16:52 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/03 15:47:35 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ char	*ft_change_path(char *path, t_env_list *env_list)
 
 	begin = ft_get_env("HOME", env_list);
 	tmp = ft_strdup(&path[1]);
-	// free(path);
 	new_path = ft_strjoin(begin, tmp);
 	free(tmp);
 	free(begin);

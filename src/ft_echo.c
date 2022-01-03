@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 14:41:43 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/27 17:52:24 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/03 15:41:46 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,15 @@ int	ft_echo(t_mem *mem, char *str, t_env_list *env_list)
 {
 	int		i;
 	int		flag_n;
-	char	*print;
 
+	(void) env_list;
 	i = 0;
 	while (*str == ' ')
 		str++;
 	flag_n = ft_flag_n(&str);
-	print = ft_get_string(str, env_list);
-	ft_putstr_fd(print, 1);
+	ft_putstr_fd(str, 1);
 	if (flag_n == 0)
 		ft_putchar_fd('\n', 1);
-	free(print);
 	mem->all_return = 0;
 	return (0);
 }

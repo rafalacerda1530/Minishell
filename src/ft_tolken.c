@@ -6,21 +6,22 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:00:31 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/27 18:08:43 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/03 14:48:03 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_tolken_list	*ft_alloc_tolken_list(void)
+t_tolken_list	*ft_alloc_tolken_list(t_mem *mem)
 {
 	t_tolken_list	*tolken_list;
 
 	tolken_list = (t_tolken_list *) malloc (sizeof(t_tolken_list));
-	// if (!tolken_list)
-	// {
-		// Free Error msg
-	// }
+	if (!tolken_list)
+	{
+		ft_memory_error();
+		ft_exit(mem, 2);
+	}
 	tolken_list->first = NULL;
 	tolken_list->last = NULL;
 	tolken_list->total = 0;
@@ -30,21 +31,26 @@ t_tolken_list	*ft_alloc_tolken_list(void)
 t_tolken	*ft_alloc_tolken(t_mem *mem, char *input)
 {
 	t_tolken	*tolken;
-	int			i;
 	int			key;
 	int			content;
 
-	i = 0;
 	key = 0;
 	content = 0;
-	ft_get_tolken_sizes(&i, &key, &content, input);
+	ft_get_tolken_sizes(&key, &content, input);
 	tolken = (t_tolken *) malloc (sizeof(t_tolken));
-	// if (!tolken)
-	// {
-		// Free Error msg
-	// }
-	ft_tolken_key(mem, tolken, key, &input[i]);
-	ft_tolken_content(mem, tolken, content, &input[i + key + 1]);
+	if (!tolken)
+	{
+		ft_memory_error();
+		ft_exit(mem, 2);
+	}
+	ft_bzero(tolken, sizeof(t_tolken));
+	ft_tolken_key(mem, tolken, key, input);
+	if (content > 0)
+	{
+		ft_tolken_content(mem, tolken, content, &input[key + 1]);
+		if (tolken->content != NULL)
+			ft_tolken_string(&tolken->str, tolken->key, tolken->content);
+	}
 	tolken->size = key + content;
 	tolken->next = tolken;
 	tolken->prev = tolken;
@@ -57,8 +63,10 @@ void	ft_fill_tolken_list(t_mem *mem, t_tolken_list *tolken_list, char *input)
 	size_t		i;
 
 	i = 0;
-	while (i < ft_strlen(input))
+	while (input[i] != '\0')
 	{
+		while (input[i] == ' ')
+			input++;
 		tolken = ft_alloc_tolken(mem, &input[i]);
 		if (tolken_list->total == 0)
 			tolken_list->last = tolken;
@@ -111,6 +119,8 @@ void	ft_free_tolken_list(t_tolken_list *tolken_list)
 			free(tolken_list->first->key);
 		if (tolken_list->first->content)
 			free(tolken_list->first->content);
+		if (tolken_list->first->str)
+			free(tolken_list->first->str);
 		ft_free_tolken(tolken_list, tolken_list->first);
 	}
 }

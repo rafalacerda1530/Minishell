@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_string_utils.c                                  :+:      :+:    :+:   */
+/*   ft_parse_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 12:28:51 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/27 18:08:54 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/03 14:56:16 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_add_char(char **tmp, char **ret, char c)
+int	ft_space_remove(char *str, int i, int quote)
 {
-	*tmp = ft_strjoin_char(*ret, c);
-	free(*ret);
-	*ret = ft_strdup(*tmp);
-	free(*tmp);
+	if (quote == 0)
+	{
+		if (str[i] == ' ' && str[i + 1] == ' ')
+			return (1);
+	}
+	return (0);
 }
 
 int	ft_get_key_size(char *str, int i)
@@ -52,4 +54,34 @@ void	ft_strjoin_env(char **ret, char *content)
 		ft_add_char(&tmp, ret, content[i]);
 		i++;
 	}
+}
+
+int	ft_true_dollar(char *str, t_parse *parser)
+{
+	if (parser->quote != 1)
+	{
+		if (str[parser->index + 1] == '\'')
+			return (0);
+		if (str[parser->index + 1] == '"')
+			return (0);
+		if (str[parser->index + 1] == ' ')
+			return (0);
+		return (1);
+	}
+	return (0);
+}
+
+int	ft_true_home(char *str, t_parse *parser)
+{
+	if (parser->quote == 0)
+	{
+		if (str[parser->index + 1] == '/')
+			return (1);
+		if (str[parser->index + 1] == ' ')
+			return (1);
+		if (str[parser->index + 1] == '\0')
+			return (1);
+		return (0);
+	}
+	return (0);
 }

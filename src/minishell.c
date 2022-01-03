@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:04:41 by Rarodrig          #+#    #+#             */
-/*   Updated: 2021/12/26 11:52:04 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/03 14:49:43 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 */
 void	ft_alloc_mem(t_mem *mem)
 {
-	mem->env_list = ft_alloc_env_list();
-	mem->tolken_list = ft_alloc_tolken_list();
-	mem->built_in = ft_alloc_built_in();
-	mem->keys = ft_set_keys();
+	mem->env_list = ft_alloc_env_list(mem);
+	mem->tolken_list = ft_alloc_tolken_list(mem);
+	mem->built_in = ft_alloc_built_in(mem);
+	mem->keys = ft_set_keys(mem);
 	mem->all_return = 0;
 }
 
@@ -35,10 +35,9 @@ int	main(int argc, char **argv, char **envp)
 	i = 0;
 	while (envp[i] != (void *)0)
 	{
-		ft_fill_env_list(mem.env_list, envp[i], 'A');
+		ft_fill_env_list(&mem, mem.env_list, envp[i], 'A');
 		i++;
 	}
-	// ft_fill_env_list(mem.env_list, envp, 'A');
 	ft_create_shell(&mem);
 	ft_free_mem(&mem);
 	return (0);

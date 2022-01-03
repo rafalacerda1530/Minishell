@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strings.c                                       :+:      :+:    :+:   */
+/*   ft_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 17:44:59 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/27 18:09:44 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/03 14:56:10 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,75 +33,87 @@ int	ft_quote_check(char *str, int *i, int quote)
 	return (quote);
 }
 
-int	ft_check_env(char **ret, char *str, t_env_list *env_list, int i)
+void	ft_check_env(char **ret, char *str, t_env_list *env_list, int *i)
 {
 	int			key_size;
-	int			total;
-	t_env_list	list;
 	char		*key;
+	char		*content;
 
-	key_size = ft_get_key_size(str, i);
+	key_size = ft_get_key_size(str, *i);
 	key = (char *) malloc ((key_size + 1) * sizeof(char));
-	// if (!key)
-	// {
-		// Free Error msg
-	// }
-	ft_bzero(&list, sizeof(list));
-	ft_memcpy(key, &str[i], key_size);
-	i = i + key_size;
-	list.last = env_list->last;
-	total = env_list->total;
-	while (total > 0)
+	if (!key)
 	{
-		if (!ft_strncmp(key, list.last->key, key_size))
-			break ;
-		list.last = list.last->prev;
-		total--;
+		free(key);
+		return ;
 	}
-	if (total > 0)
-		ft_strjoin_env(ret, list.last->content);
+	ft_memcpy(key, &str[*i], key_size);
+	key[key_size] = '\0';
+	*i = *i + key_size;
+	content = ft_get_env(key, env_list);
+	if (content != NULL)
+		ft_strjoin_env(ret, content);
 	free(key);
-	return (i);
+	free(content);
 }
 
-int	ft_true_dollar(char *str, int i, int quote)
+void	ft_get_home(char **tmp, char **ret, t_env_list *env_list)
 {
-	if (quote != 1)
+	char	*new_ret;
+
+	*tmp = ft_get_env("HOME", env_list);
+	new_ret = NULL;
+	if (*ret)
 	{
-		if (str[i + 1] == '\'')
-			return (0);
-		if (str[i + 1] == '"')
-			return (0);
-		if (str[i + 1] == ' ')
-			return (0);
-		return (1);
+		new_ret = ft_strjoin(*ret, *tmp);
+		free(*ret);
+		*ret = ft_strdup(new_ret);
+		free(new_ret);
 	}
-	return (0);
+	else
+		*ret = ft_strdup(*tmp);
+	free(*tmp);
 }
 
-char	*ft_get_string(char *str, t_env_list *env_list)
+void	ft_env_checks(char *str, t_parse *parser, t_env_list *env_list)
 {
-	int		i;
-	int		quote;
-	char	*ret;
-	char	*tmp;
-
-	i = 0;
-	ret = NULL;
-	quote = 0;
-	while (str[i] != '\0')
+	if (str[parser->index] == '~' && ft_true_home(str, parser))
 	{
-		quote = ft_quote_check(str, &i, quote);
-		if (str[i] == '$' && ft_true_dollar(str, i, quote))
+		ft_get_home(&parser->aux, &parser->ret, env_list);
+		if (str[parser->index + 1] == '/')
+			parser->index++;
+		parser->index++;
+	}
+	if (str[parser->index] == '$' && ft_true_dollar(str, parser))
+	{
+		parser->index++;
+		ft_check_env(&parser->ret, str, env_list, &parser->index);
+	}
+}
+
+char	*ft_parse_string(char *str, t_env_list *env_list)
+{
+	t_parse	parser;
+
+	ft_bzero(&parser, sizeof(t_parse));
+	while (*str == ' ')
+		str++;
+	while (str[parser.index] != '\0')
+	{
+		parser.quote = ft_quote_check(str, &parser.index, parser.quote);
+		if (ft_space_remove(str, parser.index, parser.quote))
 		{
-			i++;
-			i = i + ft_check_env(&ret, str, env_list, i);
+			while (str[parser.index] == ' ')
+				parser.index++;
+			if (str[parser.index] != '\0')
+				ft_add_char(&parser.aux, &parser.ret, str[parser.index - 1]);
 		}
-		else if (str[i] != '\0')
+		ft_env_checks(str, &parser, env_list);
+		parser.quote = ft_quote_check(str, &parser.index, parser.quote);
+		if (str[parser.index] != '\0')
 		{
-			ft_add_char(&tmp, &ret, str[i]);
-			i++;
+			ft_add_char(&parser.aux, &parser.ret, str[parser.index]);
+			parser.index++;
 		}
 	}
-	return (ret);
+	return (parser.ret);
 }

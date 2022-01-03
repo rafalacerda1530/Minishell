@@ -6,28 +6,29 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:08:08 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/27 18:12:02 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/03 15:46:01 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_env_list	*ft_alloc_env_list(void)
+t_env_list	*ft_alloc_env_list(t_mem *mem)
 {
 	t_env_list	*env_list;
 
 	env_list = (t_env_list *) malloc (sizeof(t_env_list));
-	// if (!env_list)
-	// {
-		// Free Error msg
-	// }
+	if (!env_list)
+	{
+		ft_memory_error();
+		ft_exit(mem, 2);
+	}
 	env_list->first = NULL;
 	env_list->last = NULL;
 	env_list->total = 0;
 	return (env_list);
 }
 
-t_env	*ft_alloc_env(char *envp, char tag)
+t_env	*ft_alloc_env(t_mem *mem, char *envp, char tag)
 {
 	t_env	*env;
 	int		key_size;
@@ -37,22 +38,28 @@ t_env	*ft_alloc_env(char *envp, char tag)
 	content_size = 0;
 	ft_get_env_sizes(&key_size, &content_size, envp);
 	env = (t_env *) malloc (sizeof(t_env));
-	// if (!env)
-	// {
-		// Free Error msg
-	// }
+	if (!env)
+	{
+		ft_memory_error();
+		ft_exit(mem, 2);
+	}
 	ft_create_env_strings(env, key_size, content_size, envp);
+	if (!env->key || !env->content)
+	{
+		ft_memory_error();
+		ft_exit(mem, 2);
+	}
 	env->next = env;
 	env->prev = env;
 	env->tag = tag;
 	return (env);
 }
 
-void	ft_fill_env_list(t_env_list *env_list, char *envp, char tag)
+void	ft_fill_env_list(t_mem *mem, t_env_list *env_list, char *envp, char tag)
 {
 	t_env	*env;
 
-	env = ft_alloc_env(envp, tag);
+	env = ft_alloc_env(mem, envp, tag);
 	if (env_list->total == 0)
 		env_list->last = env;
 	else

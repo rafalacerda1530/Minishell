@@ -6,44 +6,33 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:02:17 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/27 18:07:44 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/03 14:48:08 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_check_quotes(char *input)
+void	ft_get_tolken_sizes(int *i, int *j, char *input)
 {
-	int	i;
+	int	quote;
+	int	k;
 
-	i = 0;
-	if (input[i] == '"')
+	k = 0;
+	while (input[k] != ' ' && input[k] != '\0')
+		k++;
+	*i = k;
+	quote = 0;
+	while (input[k + 1] != '\0')
 	{
-		i++;
-		while (input[i] != '"' && input[i] != '\0')
-			i++;
-	}
-	else if (input[i] == '\'')
-	{
-		i++;
-		while (input[i] != '\'' && input[i] != '\0')
-			(i)++;
-	}
-	return (i);
-}
-
-void	ft_get_tolken_sizes(int *i, int *key, int *content, char *input)
-{
-	while (input[*i] == ' ')
-		(*i)++;
-	while (input[*i + *key] != ' ' && input[*i + *key] != '\0')
-		(*key)++;
-	while (input[*i + *key + *content] != '\0')
-	{
-		if (input[*i + *key + *content] == '|')
+		quote = ft_quote_check(input, &k, quote);
+		if (input[k] == '|' && quote == 0)
+		{
+			k--;
 			break ;
-		(*content)++;
+		}
+		k++;
 	}
+	*j = k - *i;
 }
 
 void	ft_tolken_key(t_mem *mem, t_tolken *tolken, int size, char *input)
@@ -51,25 +40,39 @@ void	ft_tolken_key(t_mem *mem, t_tolken *tolken, int size, char *input)
 	char	*tmp;
 
 	tmp = (char *) malloc ((size + 1) * sizeof(char));
-	// if (!tmp)
-	// {
-		// Free Error msg
-	// }
+	if (!tmp)
+	{
+		ft_memory_error();
+		ft_exit(mem, 2);
+	}
 	ft_strlcpy(tmp, input, size + 1);
-	tolken->key = ft_get_string(tmp, mem->env_list);
+	tolken->key = ft_parse_string(tmp, mem->env_list);
 	free(tmp);
 }
 
 void	ft_tolken_content(t_mem *mem, t_tolken *tolken, int size, char *input)
 {
+	int		i;
+	char	*tmp;
+	char	*ret;
+
+	i = 0;
+	ret = NULL;
+	while (input[i] != '\0' && i < size)
+	{
+		if (input[i] != '\0')
+			ft_add_char(&tmp, &ret, input[i]);
+		i++;
+	}
+	tolken->content = ft_parse_string(ret, mem->env_list);
+	free(ret);
+}
+
+void	ft_tolken_string(char **str, char *key, char *content)
+{
 	char	*tmp;
 
-	tmp = (char *) malloc ((size + 1) * sizeof(char));
-	// if (!tmp)
-	// {
-		// Free Error msg
-	// }
-	ft_strlcpy(tmp, input, size + 1);
-	tolken->content = ft_get_string(tmp, mem->env_list);
+	tmp = ft_strjoin_char(key, ' ');
+	*str = ft_strjoin(tmp, content);
 	free(tmp);
 }

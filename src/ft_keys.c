@@ -6,19 +6,24 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 15:11:52 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/21 15:50:17 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/29 18:12:57 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	**ft_set_keys(void)
+char	**ft_set_keys(t_mem *mem)
 {
 	char	**keys;
 	int		i;
 
 	i = 0;
 	keys = (char **) malloc (sizeof(char *) * MAX_KEYS);
+	if (!keys)
+	{
+		ft_memory_error();
+		ft_exit(mem, 2);
+	}
 	keys[i] = "echo";
 	keys[++i] = "cd";
 	keys[++i] = "pwd";

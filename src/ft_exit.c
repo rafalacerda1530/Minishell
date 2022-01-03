@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:04:40 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/26 16:00:51 by fbonini          ###   ########.fr       */
+/*   Updated: 2021/12/29 17:54:01 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	ft_free_mem(t_mem *mem)
 {
+	if (mem->tolken_list)
+		ft_free_tolken_list(mem->tolken_list);
 	ft_free_env_list(mem->env_list);
 	free(mem->built_in);
 	free(mem->keys);
