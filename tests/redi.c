@@ -82,7 +82,7 @@ int	main (void)
 	printf("%d\n", d);
 	printf("%d\n", e);
 	printf("------------\n");
-	printf("%d\n", b + c + d);
+	printf("%d\n", b | c | d);
 	printf("%d\n", a + c);
 	printf("%d\n", b + c + e);
 	// printf("------------\n");

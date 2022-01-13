@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 12:28:51 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/03 14:56:16 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/12 15:08:24 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ft_strjoin_env(char **ret, char *content)
 
 int	ft_true_dollar(char *str, t_parse *parser)
 {
-	if (parser->quote != 1)
+	if (parser->quote != 1 && parser->inverse == 0)
 	{
 		if (str[parser->index + 1] == '\'')
 			return (0);
@@ -73,7 +73,7 @@ int	ft_true_dollar(char *str, t_parse *parser)
 
 int	ft_true_home(char *str, t_parse *parser)
 {
-	if (parser->quote == 0)
+	if (parser->quote == 0 && parser->inverse == 0)
 	{
 		if (str[parser->index + 1] == '/')
 			return (1);

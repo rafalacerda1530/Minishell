@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:16:58 by Rarodrig          #+#    #+#             */
-/*   Updated: 2022/01/11 15:15:35 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/13 12:08:21 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ typedef struct s_tolken
 	char			*str;
 	char			*key;
 	char			*content;
+	int				numb_redir;
+	int				*redir;
 	int				size;
 }			t_tolken;
 
@@ -100,6 +102,9 @@ void			ft_get_tolken_sizes(int *i, int *j, char *input);
 void			ft_tolken_key(t_mem *mem, t_tolken *tolken, int key, char *input);
 void			ft_tolken_content(t_mem *mem, t_tolken *tolken, int size, char *input);
 void			ft_tolken_string(char **str, char *key, char *content);
+void			ft_redirect_check(char *ret, t_tolken *tolken);
+void			ft_get_numb_redirect(t_tolken *tolken, t_parse parser, char *ret);
+
 int				ft_check_key(char *str, char **keys);
 int				ft_use_built_in(int (*funct)(), t_mem *mem, char *key);
 

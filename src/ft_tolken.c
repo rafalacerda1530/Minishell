@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:00:31 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/03 14:48:03 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/13 12:05:32 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ void	ft_free_tolken_list(t_tolken_list *tolken_list)
 			free(tolken_list->first->content);
 		if (tolken_list->first->str)
 			free(tolken_list->first->str);
+		if (tolken_list->first->redir)
+			free(tolken_list->first->redir);
 		ft_free_tolken(tolken_list, tolken_list->first);
 	}
 }

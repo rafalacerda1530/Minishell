@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:02:17 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/03 14:48:08 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/13 12:06:35 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	ft_tolken_content(t_mem *mem, t_tolken *tolken, int size, char *input)
 	char	*ret;
 
 	i = 0;
+	quote = 0;
 	ret = NULL;
 	while (input[i] != '\0' && i < size)
 	{
@@ -64,6 +65,7 @@ void	ft_tolken_content(t_mem *mem, t_tolken *tolken, int size, char *input)
 			ft_add_char(&tmp, &ret, input[i]);
 		i++;
 	}
+	ft_redirect_check(ret, tolken);
 	tolken->content = ft_parse_string(ret, mem->env_list);
 	free(ret);
 }
