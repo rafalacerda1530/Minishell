@@ -14,6 +14,7 @@
 /*
 	Codar o ?para o echo
 	Coletar o retorno de todos as funções
+	
 */
 void	ft_alloc_mem(t_mem *mem)
 {
