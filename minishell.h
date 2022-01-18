@@ -6,7 +6,7 @@
 /*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:16:58 by Rarodrig          #+#    #+#             */
-/*   Updated: 2022/01/18 18:14:20 by rarodrig         ###   ########.fr       */
+/*   Updated: 2022/01/18 18:52:46 by rarodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int				ft_true_dollar(char *str, t_parse *parser);
 int				ft_true_home(char *str, t_parse *parser);
 void			ft_redirect_check(char *ret, t_tolken *tolken);
 
-int				ft_echo(t_mem *mem, char *str, t_env_list *env_list);
+int				ft_echo(t_mem *mem, t_env_list *env_list, char *str);
 
 int				ft_cd(t_mem *mem, char *str, t_env_list *env_list);
 

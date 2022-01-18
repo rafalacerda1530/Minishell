@@ -6,7 +6,7 @@
 /*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:42:41 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/18 18:24:57 by rarodrig         ###   ########.fr       */
+/*   Updated: 2022/01/18 19:30:35 by rarodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,16 @@ void	ft_create_history(char *input)
 	}
 }
 
-// void	ft_make_commands(t_mem *mem, t_tolken_list *tolken_list)
-// {
-// 	int	key;
-// 	int	total;
-// 	/*
-// 		pegar lista de token
-// 		Pegar Keys ate o ultimo tolken
-// 		if (total > 1)
-// 			Tem Pipe
+void	ft_make_commands(t_mem *mem, t_tolken_list *tolken_list)
+{
+	int	key;
 
-// 	*/
-// 	total = tolken_list->total;
-// 	while (total > 0)
-// 	{
-// 		key = ft_check_key(tolken_list->first->key, mem->keys);
-// 		ft_use_built_in(mem->built_in->function[key], mem, mem->tolken_list->first->content);
-// 		total--;
-// 	}
-// }
+	key = ft_check_key(tolken_list->first->key, mem->keys);
+	if (key < 11)
+		ft_use_built_in(mem->built_in->function[key], mem, mem->tolken_list->first->content);
+	else
+		ft_use_built_in(mem->built_in->function[key], mem, mem->tolken_list->first->key);
+}
 
 void	ft_send_tolken(t_mem *mem)
 {
@@ -68,28 +59,24 @@ void	ft_send_tolken(t_mem *mem)
 	int fd_pipe[2];
 	t_tolken *token;
 
-	token = mem->tolken_list->first;
+	token = mem->tolken_list->last;
 	check = mem->tolken_list->total;
-	// if (mem->tolken_list->total == 1)
-	// {
-	// 	//executar o comando
-	// }
-	// else if (mem->tolken_list->total > 1)
-	// {
-		//excuta com pipe
-		while(check != 0)
-		{
-			pipe(fd_pipe);
-			dup2(STDIN_FILENO, fd_pipe[0]);
-			dup2(STDOUT_FILENO, fd_pipe[1]);
-			printf("teste = %d\n", fd_pipe[0]);
-			printf("teste = %d\n", fd_pipe[1]);
-			token = token->next;
-			check--;
-			close(fd_pipe[0]);
-			close(fd_pipe[1]);
-		}
-	//}
+
+	while(check != 1)
+	{
+		pipe(fd_pipe);
+		dup2(fd_pipe[0], STDIN_FILENO);
+		dup2(fd_pipe[1], STDOUT_FILENO);
+		ft_make_commands(mem, mem->tolken_list);
+		token = token->prev;
+		check--;
+		close(fd_pipe[1]);
+		ft_make_commands(mem, mem->tolken_list);	
+		close(fd_pipe[0]);
+	}
+	dup2(mem->std_pipe[0], STDIN_FILENO);
+	dup2(mem->std_pipe[1], STDOUT_FILENO);
+	ft_make_commands(mem, mem->tolken_list);
 }
 
 void	ft_create_shell(t_mem *mem)

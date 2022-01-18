@@ -6,7 +6,7 @@
 /*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 14:41:43 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/18 18:14:03 by rarodrig         ###   ########.fr       */
+/*   Updated: 2022/01/18 18:52:37 by rarodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_flag_n(char **str)
 	return (n_flag);
 }
 
-int	ft_echo(t_mem *mem, char *str, t_env_list *env_list)
+int	ft_echo(t_mem *mem, t_env_list *env_list, char *str)
 {
 	int		i;
 	int		flag_n;
