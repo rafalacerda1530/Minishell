@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_d_arrow_left.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:04:25 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/21 16:06:02 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/18 17:04:16 by rarodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	start_prompt(int fd, char **eof)
 		input = readline("> ");
 		if (input)
 		{
-			if (ft_strncmp(input, eof[i]))
+			if (ft_strcmp(input, eof[i]))
 			{
 				ft_putendl_fd(input, fd);
 			}
@@ -61,7 +61,7 @@ int ft_d_arrow_left(char **eof)
 
 	tmp_fd = create_temporary();
 	if (tmp_fd == -1)
-		return ;
+		return (0);
 	pid = fork();
 	if (pid == 0)
 		start_prompt(tmp_fd, eof);

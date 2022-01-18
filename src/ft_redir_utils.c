@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redir_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 12:06:03 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/13 18:52:36 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/18 17:09:08 by rarodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_get_numb_redirect(t_tolken *tolken, t_parse parser, char *ret)
 		{
 			while (ret[parser.index] != ' ')
 				parser.index++;
-			tolken->redir_numb++;
+			tolken->numb_redir++;
 		}
 		parser.index++;
 	}
@@ -32,8 +32,8 @@ void	ft_redirect_check(char *ret, t_tolken *tolken)
 	t_parse	parser;
 
 	ft_bzero(&parser, sizeof(t_parse));
-	ft_get_numb_redirect(parser, ret);
-	tolken->redir = (int *) malloc (sizeof(int) * redir_numb);
+	ft_get_numb_redirect(tolken, parser, ret);
+	tolken->redir = (int *) malloc (sizeof(int) * tolken->numb_redir);
 	i = 0;
 	while (ret[parser.index] != '\0')
 	{

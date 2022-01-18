@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tolken_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:02:17 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/13 12:06:35 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/18 17:02:15 by rarodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	ft_tolken_content(t_mem *mem, t_tolken *tolken, int size, char *input)
 	char	*ret;
 
 	i = 0;
-	quote = 0;
 	ret = NULL;
 	while (input[i] != '\0' && i < size)
 	{

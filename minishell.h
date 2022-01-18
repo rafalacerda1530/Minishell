@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:16:58 by Rarodrig          #+#    #+#             */
-/*   Updated: 2022/01/13 12:08:21 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/18 18:14:20 by rarodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_mem
 {
 	char			**keys;
 	int 			all_return;
+	int				std_pipe[2];
 	t_built_in		*built_in;
 	t_env_list		*env_list;
 	t_tolken_list	*tolken_list;
@@ -126,6 +127,7 @@ int				ft_space_remove(char *str, int i, int quote);
 void			ft_strjoin_env(char **ret, char *content);
 int				ft_true_dollar(char *str, t_parse *parser);
 int				ft_true_home(char *str, t_parse *parser);
+void			ft_redirect_check(char *ret, t_tolken *tolken);
 
 int				ft_echo(t_mem *mem, char *str, t_env_list *env_list);
 
@@ -135,7 +137,7 @@ int 			ft_pwd(void);
 
 int				ft_arrow_left(char *file);
 int				ft_arrow_right(char *file);
-int				ft_d_arrow_left(void);
+int				ft_d_arrow_left(char **eof);
 int				ft_d_arrow_right(char *file);
 
 int				ft_env(t_mem *mem, t_env_list *env_list);
