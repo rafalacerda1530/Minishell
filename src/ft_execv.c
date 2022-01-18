@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:08:27 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/11 17:11:44 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/17 21:22:38 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,3 +115,13 @@ int	ft_execv(t_mem *mem, t_env_list *env_list, char *command)
 	waitpid(pid, &result, 0);
 	return (0);
 }
+/*
+	Coloca check de Pipe
+		- Antes de executar o execve (dentro do fork)
+		- Se tiver pipe, os Fd vao ser enviados
+		- Usar dup2
+			dup2(pipe_fd[0], STDIN Padrao);
+			dup2(pipe_fd[1], STDOUT Padrao);
+
+
+*/

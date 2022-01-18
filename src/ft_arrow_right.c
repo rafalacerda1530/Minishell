@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:04:15 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/11 17:29:39 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/17 21:24:03 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,12 @@ int	ft_arrow_right(char *file)
 	// 	error_message("redirect", strerror(errno), 1);
 	// else
 	// {
-		dup2(fd_file, 0~);
+		dup2(fd_file, 1);
 		close(fd_file);
 	// }
 	return 0;
 }
+/*
+	modifica saida padrao
+	
+*/
