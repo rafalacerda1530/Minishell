@@ -82,6 +82,6 @@ char	**ft_split(char const *s, char c)
 				return (NULL);
 		}
 	}
-	array[cword(s, c)] = 0;
+	array[cword(s, c)] = NULL;
 	return (array);
 }

@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 17:44:59 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/03 14:56:10 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/20 13:17:14 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,10 @@ void	ft_env_checks(char *str, t_parse *parser, t_env_list *env_list)
 	{
 		ft_get_home(&parser->aux, &parser->ret, env_list);
 		if (str[parser->index + 1] == '/')
+		{
 			parser->index++;
+			ft_add_char(&parser->aux, &parser->ret, str[parser->index]);
+		}
 		parser->index++;
 	}
 	if (str[parser->index] == '$' && ft_true_dollar(str, parser))

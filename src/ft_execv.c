@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:08:27 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/17 21:22:38 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/20 16:05:33 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*ft_find_path(t_mem *mem, char *command)
 	return (ret);
 }
 
-int	ft_execv(t_mem *mem, t_env_list *env_list, char *command)
+int	ft_execv(t_mem *mem, t_env_list *env_list, char *command, t_tolken *tolken)
 {
 	pid_t	pid;
 	char	**envs;
@@ -91,12 +91,13 @@ int	ft_execv(t_mem *mem, t_env_list *env_list, char *command)
 
 	envs = ft_get_env_list(env_list);
 	path = ft_find_path(mem, command);
-	if (mem->tolken_list->first->content)
-		split = ft_split(mem->tolken_list->first->str, ' ');
+	if (tolken->content)
+		split = ft_split(tolken->str, ' ');
 	else
 	{
-		split = (char **) malloc (sizeof(char *));
+		split = (char **) malloc (sizeof(char *) * 2);
 		split[0] = ft_strdup(command);
+		split[1] = NULL;
 	}
 	pid = fork();
 	if (pid == -1)
@@ -104,7 +105,7 @@ int	ft_execv(t_mem *mem, t_env_list *env_list, char *command)
 	else if (pid == 0)
 	{
 		if (execve(path, split, envs) == -1)
-			ft_putstr_fd("No command\n", 2);
+			ft_putstr_fd("Aqui command\n", 2);
 	}
 	if (path)
 		free(path);

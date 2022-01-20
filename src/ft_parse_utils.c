@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 12:28:51 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/18 17:02:54 by rarodrig         ###   ########.fr       */
+/*   Updated: 2022/01/20 13:19:03 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_space_remove(char *str, int i, int quote)
 	if (quote == 0)
 	{
 		if (str[i] == ' ' && str[i + 1] == ' ')
+			return (1);
+		if (str[i] == ' ' && str[i + 1] == '\0')
 			return (1);
 	}
 	return (0);

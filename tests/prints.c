@@ -27,9 +27,9 @@ void	print_env(t_env_list *env_list, char **envp)
 
 
 /* \/ Print para checkar \/ */
-void	print_tolken(t_env_list *tolken_list)
+void	print_tolken(t_tolken_list *tolken_list)
 {
-	t_env	*tolken;
+	t_tolken	*tolken;
 	int			total;
 
 	tolken = NULL;
@@ -38,7 +38,7 @@ void	print_tolken(t_env_list *tolken_list)
 	printf("\n----------------------Tolkens Criados------------------------\n");
 	while (total != 0)
 	{
-		printf("The Key is >> %s\nThe Command is >> %s\n", tolken->key, tolken->content);
+		printf("The Key is >%s<\nThe Command is >%s<\n", tolken->key, tolken->content);
 		tolken = tolken->prev;
 		total--;
 	}

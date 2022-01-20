@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:04:21 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/03 15:47:35 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/20 13:46:23 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,18 @@ void	ft_go_to_path(char *path, t_env_list *env_list)
 	free(pwd);
 }
 
-int	ft_cd(t_mem *mem, char *str, t_env_list *env_list)
+int	ft_cd(t_mem *mem, t_env_list *env_list, char *str)
 {
 	char	*path;
 
 	(void)mem;
+	if (str == NULL)
+	{
+		path = ft_get_env("HOME", env_list);
+		ft_go_to_path(path, env_list);
+		free(path);
+		return (0);
+	}
 	while (*str == ' ')
 		str++;
 	if (ft_check_cd_arguments(str))
@@ -77,7 +84,6 @@ int	ft_cd(t_mem *mem, char *str, t_env_list *env_list)
 		ft_putstr_fd("Too many arguments\n", 1);
 		return (1);
 	}
-	// Need fd check
 	if (str[0] == '~' && str[1] == '\0')
 		path = ft_get_env("HOME", env_list);
 	else if (str[0] == '-' && str[1] == '\0')

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_prompt.c                                        :+:      :+:    :+:   */
+/*   ft_prompt_bkp.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:42:41 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/11 16:40:24 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/20 14:38:04 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,109 @@ void	ft_create_history(char *input)
 // 		total--;
 // 	}
 // }
+
+
+/*
+
+while (i < mem->tolken_list->total)
+{
+	if (i > 0)
+		dup2(fd_pipe[i - 1][0], STDIN_FILENO);
+	if (i != mem->tolken_list->total)
+		dup2(fd_pipe[i][1], STDOUT_FILENO);
+	else
+		dup2(mem->std_pipe[1], STDOUT_FILENO);
+	ft_make_commands(mem, mem->tolken_list);
+	if (i > 0)
+		close(fd_pipe[i - 1][0]);
+	if (i != mem->tolken_list->total)
+		close(fd_pipe[i][1]);
+	token = token->prev;
+	i++;
+}
+
+	FD 0 			
+	FD 1  		
+	FD 2 ----> 		STDOUT
+	FD 3 Pipe[0][0] ----> STDIN
+	FD 4 Pipe[0][1]
+
+	printf("Pipe %zu : in %d , out %d\n", i , fd_pipe[i][0], fd_pipe[i][1]);
+
+	CMD 01
+	i = 0
+	in - STDIN
+	out - DUP2(fd[i][1], STDOUT)
+	close(fd[i][1])
+	Exec
+
+	CMD 02
+	i = 1
+	in - DUP2(fd[i - 1][0], STDIN)
+	out - DUP2(fd[i][1], STDOUT)
+	close(fd[i - 1][0])
+	close(fd[i][1])
+	Exec
+
+	CMD 03
+	i = 2
+	in - DUP2(fd[i - 1][0], STDIN)
+	out - DUP2(fd[i][1], STDOUT)
+	close(fd[i - 1][0])
+	close(fd[i][1])
+	Exec
+
+
+	CMD 04
+	i = 3
+	in - DUP2(fd[i - 1][0], STDIN)
+	out - DUP2(mem->std_pipe[1], STDOUT)
+	Exec
+	close(fd[i - 1][0])
+
+
+
+
+
+	int check;
+	int *fd_pipe;
+	t_tolken *token;
+
+	token = mem->tolken_list->last;
+	check = mem->tolken_list->total;
+	while(check != 1)
+	{
+		pipe(fd_pipe);
+		dup2(fd_pipe[0], STDIN_FILENO);
+		dup2(fd_pipe[1], STDOUT_FILENO);
+		ft_make_commands(mem, mem->tolken_list);
+		token = token->prev;
+		check--;
+		close(fd_pipe[1]);
+		ft_make_commands(mem, mem->tolken_list);	
+		close(fd_pipe[0]);
+	}
+	dup2(mem->std_pipe[0], STDIN_FILENO);
+	dup2(mem->std_pipe[1], STDOUT_FILENO);
+	ft_make_commands(mem, mem->tolken_list);
+
+
+
+
+
+
+
+*/
+
+
+
+
+
+
+
+
+
+
 
 void	ft_create_shell(t_mem *mem)
 {

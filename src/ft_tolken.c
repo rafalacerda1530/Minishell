@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:00:31 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/13 12:05:32 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/20 13:42:08 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_fill_tolken_list(t_mem *mem, t_tolken_list *tolken_list, char *input)
 	size_t		i;
 
 	i = 0;
-	while (input[i] != '\0')
+	while (i < ft_strlen(input))
 	{
 		while (input[i] == ' ')
 			input++;

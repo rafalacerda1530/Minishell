@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_prompt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:42:41 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/18 19:30:35 by rarodrig         ###   ########.fr       */
+/*   Updated: 2022/01/20 16:11:01 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	print_tolken(t_tolken_list *tolken_list)
+{
+	t_tolken	*tolken;
+	int			total;
+
+	tolken = NULL;
+	total = tolken_list->total;
+	tolken = tolken_list->last;
+	printf("\n----------------------Tolkens Criados------------------------\n");
+	while (total != 0)
+	{
+		printf("The Key is >%s<\nThe Command is >%s<\n", tolken->key, tolken->content);
+		tolken = tolken->prev;
+		total--;
+	}
+	printf("\n----------------------Fim------------------------\n");
+}
 
 void	ft_read_input(char **input)
 {
@@ -42,41 +60,166 @@ void	ft_create_history(char *input)
 	}
 }
 
-void	ft_make_commands(t_mem *mem, t_tolken_list *tolken_list)
+void	ft_make_commands(t_mem *mem, t_tolken_list *tolken_list, t_tolken *tolken)
 {
 	int	key;
 
 	key = ft_check_key(tolken_list->first->key, mem->keys);
 	if (key < 11)
-		ft_use_built_in(mem->built_in->function[key], mem, mem->tolken_list->first->content);
+	{
+		if (tolken->content)
+			ft_use_built_in(mem->built_in->function[key], mem, tolken->content);
+		else
+			ft_use_built_in(mem->built_in->function[key], mem, NULL);
+	}
 	else
-		ft_use_built_in(mem->built_in->function[key], mem, mem->tolken_list->first->key);
+		ft_execv(mem, mem->env_list, tolken->key, tolken);
 }
 
+/*
+	int *fd_pipe
+
+	/-----------------------------/
+			Pipe Creation
+	/-----------------------------/
+	int	i;
+
+	fd_pipe = (int *) malloc (check * sizeof(int));
+	i = 0;
+	while (fd_pipe[i])
+	{
+		fd_pipe[i] = (int) malloc (2 * sizeof(int));
+		if (pipe(fd_pipe[i]) < 0)
+			Error
+		i++;
+	}
+
+	/-----------------------------/
+			Execution (3 Pipes)
+	/-----------------------------/
+	STDIN_FILENO
+	STDOUT_FILENO
+
+	CMD 01									i = 0
+	In > Original
+	Out > fd_pipe[0][1]
+
+	dup2(fd_pipe[0][1], STDOUT_FILENO);
+	Executar CMD 1
+
+	CMD 02									i = 1
+	In > fd_pipe[0][0]
+	Out > fd_pipe[1][1]
+	
+	dup2(fd_pipe[0][0], STDIN_FILENO);
+	dup2(fd_pipe[1][1], STDOUT_FILENO);
+	Executar CMD 2
+
+	CMD 03									i = 2
+	In > fd_pipe[1][0]
+	Out > fd_pipe[2][1]
+
+	dup2(fd_pipe[1][0], STDIN_FILENO);
+	dup2(fd_pipe[2][1], STDOUT_FILENO);
+	Executar CMD 3
+
+	(Last)
+	CMD 04									i = 3
+	In > fd_pipe[2][0]
+	Out > Original
+
+	dup2(fd_pipe[2][0], STDIN_FILENO);
+	dup2(mem->std_pipe[1], STDOUT_FILENO);
+	Executar CMD 4
+
+	dup2(mem->std_pipe[0], STDIN_FILENO);
+
+	/-----------------------------/
+			Pipe Free
+	/-----------------------------/
+	i = 0;
+	while (fd_pipe[i])
+	{
+		free(fd_pipe[i]);
+		i++;
+	}
+	free(fd_pipe);
+
+
+*/
 void	ft_send_tolken(t_mem *mem)
 {
-	int check;
-	int fd_pipe[2];
-	t_tolken *token;
+	size_t i;
+	int **fd_pipe;
+	t_tolken *tolken;
+	// char	bufs[100];
 
-	token = mem->tolken_list->last;
-	check = mem->tolken_list->total;
-
-	while(check != 1)
+	tolken = mem->tolken_list->last;
+	fd_pipe = (int **) malloc ((mem->tolken_list->total - 1) * sizeof(int *));
+	i = 0;
+	while (i < mem->tolken_list->total - 1)
 	{
-		pipe(fd_pipe);
-		dup2(fd_pipe[0], STDIN_FILENO);
-		dup2(fd_pipe[1], STDOUT_FILENO);
-		ft_make_commands(mem, mem->tolken_list);
-		token = token->prev;
-		check--;
-		close(fd_pipe[1]);
-		ft_make_commands(mem, mem->tolken_list);	
-		close(fd_pipe[0]);
+		fd_pipe[i] = (int *) malloc (2 * sizeof(int));
+		if (pipe(fd_pipe[i]) < 0)
+			return ;
+		i++;
 	}
-	dup2(mem->std_pipe[0], STDIN_FILENO);
-	dup2(mem->std_pipe[1], STDOUT_FILENO);
-	ft_make_commands(mem, mem->tolken_list);
+	i = 0;
+	while (i < mem->tolken_list->total)
+	{
+		if (i > 0)
+		{
+			dup2(fd_pipe[i - 1][0], STDIN_FILENO);
+			// read(fd_pipe[i - 1][0], bufs, 100);
+			// dup2(mem->std_pipe[1], STDOUT_FILENO);
+			// ft_putstr_fd("The buffer is ", 1);
+			// ft_putstr_fd(bufs, 1);
+			// ft_putstr_fd("\n", 1);
+			close(fd_pipe[i - 1][0]);
+		}
+		/*
+		i = 0  in = STDIN
+		i = 1  in = 0  Abriu e fecho
+		i = 2  in = 1  Fecha
+		fd[2][0]
+		*/
+		if (i != mem->tolken_list->total - 1)
+		{
+			dup2(fd_pipe[i][1], STDOUT_FILENO);
+			close(fd_pipe[i][1]);
+		} 
+		/*
+		i = 0  out = 0 Abriu fecho
+		i = 1  out = 1 Abriu fecho
+		i = 2  out = 2 Fecha
+		*/
+		else
+		{
+			dup2(mem->std_pipe[1], STDOUT_FILENO);
+			// read(fd_pipe[i - 1][0], bufs, 100);
+			// ft_putstr_fd("The buffer is ", 1);
+			// ft_putstr_fd(bufs, 1);
+			// ft_putstr_fd("\n", 1);
+			// exit(0);
+		/*
+				i = 0				i = 1				i = 2				i = 3
+				echo a		|		echo b		|		echo c		|		echo d
+		In	0	STDIN				P[0][0]				P[1][0]				P[2][0]
+		Out	1	P[0][1]				P[1][1]				P[2][1]				STDOUT
+		*/
+		}
+		ft_make_commands(mem, mem->tolken_list, tolken);
+		tolken = tolken->prev;
+		i++;
+	}
+	i = 0;
+	while (i < mem->tolken_list->total - 1)
+	{
+		free(fd_pipe[i]);
+		i++;
+	}
+	if (fd_pipe)
+		free(fd_pipe);
 }
 
 void	ft_create_shell(t_mem *mem)
@@ -93,7 +236,11 @@ void	ft_create_shell(t_mem *mem)
 		if (input)
 		{
 			ft_fill_tolken_list(mem, mem->tolken_list, input);
-			ft_send_tolken(mem);
+			print_tolken(mem->tolken_list);
+			if (mem->tolken_list->total > 1)
+				ft_send_tolken(mem);
+			else
+				ft_make_commands(mem, mem->tolken_list, mem->tolken_list->first);
 			ft_free_tolken_list(mem->tolken_list);
 			free(input);
 		}

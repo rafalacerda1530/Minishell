@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:16:58 by Rarodrig          #+#    #+#             */
-/*   Updated: 2022/01/18 18:52:46 by rarodrig         ###   ########.fr       */
+/*   Updated: 2022/01/20 16:02:29 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void			ft_redirect_check(char *ret, t_tolken *tolken);
 
 int				ft_echo(t_mem *mem, t_env_list *env_list, char *str);
 
-int				ft_cd(t_mem *mem, char *str, t_env_list *env_list);
+int				ft_cd(t_mem *mem, t_env_list *env_list, char *str);
 
 int 			ft_pwd(void);
 
@@ -156,6 +156,6 @@ void			ft_key_error(char *str);
 void			ft_content_error(void);
 void			ft_memory_error(void);
 
-int				ft_execv(t_mem *mem, t_env_list *env_list, char *command);
+int				ft_execv(t_mem *mem, t_env_list *env_list, char *command, t_tolken *tolken);
 
 #endif
