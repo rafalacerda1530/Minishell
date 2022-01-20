@@ -6,7 +6,7 @@
 /*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 14:41:43 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/18 18:52:37 by rarodrig         ###   ########.fr       */
+/*   Updated: 2022/01/20 17:24:48 by rarodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	ft_echo(t_mem *mem, t_env_list *env_list, char *str)
 	int		flag_n;
 
 	(void) env_list;
+	if (!str)
+		return(0);
 	i = 0;
 	while (*str == ' ')
 		str++;
