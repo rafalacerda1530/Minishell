@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_prompt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:42:41 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/20 17:25:28 by rarodrig         ###   ########.fr       */
+/*   Updated: 2022/01/24 18:52:27 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,94 +65,185 @@ void	ft_make_commands(t_mem *mem, t_tolken_list *tolken_list, t_tolken *tolken)
 	int	key;
 	(void)tolken_list;
 	key = ft_check_key(tolken->key, mem->keys);
-	if (key < 11)
+	if (key < 12)
 	{
 		if (tolken->content)
-			ft_use_built_in(mem->built_in->function[key], mem, tolken->content);
+			ft_use_built_in(mem->built_in->function[key], mem, tolken->content, key);
 		else
-			ft_use_built_in(mem->built_in->function[key], mem, NULL);
+			ft_use_built_in(mem->built_in->function[key], mem, NULL, key);
 	}
 	else
 		ft_execv(mem, mem->env_list, tolken->key, tolken);
 }
 
-/*
-	int *fd_pipe
+int	ft_valid_key(char *key)
+{
+	if (ft_strlen(key) > 2)
+		return (0);
+	if (key[0] == '>' && key[1] == '<')
+		return (0);
+	return (1);
+}
 
-	/-----------------------------/
-			Pipe Creation
-	/-----------------------------/
+void	ft_new_content(t_tolken *tolken, char *aux, char *key, char *file)
+{
+	int		i;
+	int		j;
+	size_t	len;
+	char	*remove;
+	char	*tmp;
+	char	*copy;
+
+	remove = ft_strdup(key);
+	if (ft_strcmp(aux, key) == 0)
+		ft_add_char(&tmp, &remove, ' ');
+	i = 0;
+	while (file[i] != '\0')
+	{
+		ft_add_char(&tmp, &remove, file[i]);
+		i++;
+	}
+	// ft_add_char(&tmp, &remove, ' ');
+	copy = ft_strdup(tolken->content);
+	free(tolken->content);
+	tolken->content = NULL;
+	i = 0;
+	j = 0;
+	len = ft_strlen(remove);
+	while (copy[i + j] != '\0')
+	{
+		if (ft_strncmp(&copy[i + j], remove, len) == 0)
+		{
+			while (remove[j] == '>' || remove[j] == '<')
+				j++;
+			if (remove[j] == ' ')
+				j++;
+			while (remove[j] != '\0')
+				j++;
+		}
+		if (copy[i + j] != '\0')
+		{
+			ft_add_char(&tmp, &tolken->content, copy[i + j]);
+			i++;
+		}
+	}
+	free(copy);
+	free(remove);
+}
+
+int	ft_check_string(t_mem *mem, t_tolken *tolken, char *str, int *j)
+{
+	char	*aux;
+	char	*key;
+	char	*file;
+	char	*tmp;
+	int		value;
+	int		k;
+	int		i;
+
+	k = *j;
+	key = NULL;
+	aux = NULL;
+	file = NULL;
+	tmp = NULL;
+	while(str[*j] != ' ' && str[*j] != '\0')
+	{
+		ft_add_char(&tmp, &aux, str[*j]);
+		(*j)++;
+	}
+	i = 0;
+	while (aux[i] != '\0')
+	{
+		if (aux[i] != '>' && aux[i] != '<')
+			break ;
+		ft_add_char(&tmp, &key, aux[i]);
+		i++;
+	}
+	if(!ft_valid_key(key))
+	{
+		free(key);
+		free(aux);
+		return (0);
+	}
+	if (ft_strcmp(key, "<<") == 0)
+	{
+		if (ft_strlen(aux) == 2)
+			ft_use_built_in(mem->built_in->function[10], mem, &str[*j + 1], 10);
+		else
+			ft_use_built_in(mem->built_in->function[10], mem, &str[*j], 10);
+		free(tolken->content);
+		tolken->content = NULL;
+		free(key);
+		free(aux);
+		return (1);
+	}
+	value = ft_check_key(key, mem->keys);
+	if (strcmp(aux, key) == 0)
+	{
+		while(str[k + i + 1] != ' ' && str[k + i + 1] != '\0')
+		{
+			ft_add_char(&tmp, &file, str[k + i + 1]);
+			k++;
+		}
+	}
+	else
+	{
+		while(str[k + i] != ' ' && str[k + i] != '\0')
+		{
+			ft_add_char(&tmp, &file, str[k + i + 1]);
+			k++;
+		}
+	}
+	ft_new_content(tolken, aux, key, file);
+	if (value != 11)
+		ft_use_built_in(mem->built_in->function[value], mem, file, value);
+	else
+	{
+		ft_arrow_left(file);
+		ft_arrow_right(file);
+	}
+	free(key);
+	free(aux);
+	free(file);
+	return (1);
+}
+
+int	ft_redirects(t_mem *mem, t_tolken *tolken, char *str)
+{
 	int	i;
+	int	j;
+	int	valid;
 
-	fd_pipe = (int *) malloc (check * sizeof(int));
 	i = 0;
-	while (fd_pipe[i])
+	j = 0;
+	valid = 1;
+	while (i < tolken->numb_redir && str[j] != '\0')
 	{
-		fd_pipe[i] = (int) malloc (2 * sizeof(int));
-		if (pipe(fd_pipe[i]) < 0)
-			Error
-		i++;
+		if (str[j] == '>' || str[j] == '<')
+		{
+			if (tolken->redir[i] == 0)
+			{
+				while (str[j] != ' ' && str[j + 1] != '\0')
+					j++;
+				i++;
+			}
+			if (tolken->redir[i] == 1)
+			{
+				valid = ft_check_string(mem, tolken, str, &j);
+				if (!valid)
+					return (-1);
+			}
+		}
+		j++;
 	}
+	return (1);
+}
 
-	/-----------------------------/
-			Execution (3 Pipes)
-	/-----------------------------/
-	STDIN_FILENO
-	STDOUT_FILENO
-
-	CMD 01									i = 0
-	In > Original
-	Out > fd_pipe[0][1]
-
-	dup2(fd_pipe[0][1], STDOUT_FILENO);
-	Executar CMD 1
-
-	CMD 02									i = 1
-	In > fd_pipe[0][0]
-	Out > fd_pipe[1][1]
-	
-	dup2(fd_pipe[0][0], STDIN_FILENO);
-	dup2(fd_pipe[1][1], STDOUT_FILENO);
-	Executar CMD 2
-
-	CMD 03									i = 2
-	In > fd_pipe[1][0]
-	Out > fd_pipe[2][1]
-
-	dup2(fd_pipe[1][0], STDIN_FILENO);
-	dup2(fd_pipe[2][1], STDOUT_FILENO);
-	Executar CMD 3
-
-	(Last)
-	CMD 04									i = 3
-	In > fd_pipe[2][0]
-	Out > Original
-
-	dup2(fd_pipe[2][0], STDIN_FILENO);
-	dup2(mem->std_pipe[1], STDOUT_FILENO);
-	Executar CMD 4
-
-	dup2(mem->std_pipe[0], STDIN_FILENO);
-
-	/-----------------------------/
-			Pipe Free
-	/-----------------------------/
-	i = 0;
-	while (fd_pipe[i])
-	{
-		free(fd_pipe[i]);
-		i++;
-	}
-	free(fd_pipe);
-
-
-*/
 void	ft_send_tolken(t_mem *mem)
 {
 	size_t i;
 	int **fd_pipe;
 	t_tolken *tolken;
-	// char	bufs[100];
 
 	tolken = mem->tolken_list->last;
 	fd_pipe = (int **) malloc ((mem->tolken_list->total - 1) * sizeof(int *));
@@ -170,44 +261,17 @@ void	ft_send_tolken(t_mem *mem)
 		if (i > 0)
 		{
 			dup2(fd_pipe[i - 1][0], STDIN_FILENO);
-			// read(fd_pipe[i - 1][0], bufs, 100);
-			// dup2(mem->std_pipe[1], STDOUT_FILENO);
-			// ft_putstr_fd("The buffer is ", 1);
-			// ft_putstr_fd(bufs, 1);
-			// ft_putstr_fd("\n", 1);
 			close(fd_pipe[i - 1][0]);
 		}
-		/*
-		i = 0  in = STDIN
-		i = 1  in = 0  Abriu e fecho
-		i = 2  in = 1  Fecha
-		fd[2][0]
-		*/
 		if (i != mem->tolken_list->total - 1)
 		{
 			dup2(fd_pipe[i][1], STDOUT_FILENO);
 			close(fd_pipe[i][1]);
 		} 
-		/*
-		i = 0  out = 0 Abriu fecho
-		i = 1  out = 1 Abriu fecho
-		i = 2  out = 2 Fecha
-		*/
 		else
-		{
 			dup2(mem->std_pipe[1], STDOUT_FILENO);
-			// read(fd_pipe[i - 1][0], bufs, 100);
-			// ft_putstr_fd("The buffer is ", 1);
-			// ft_putstr_fd(bufs, 1);
-			// ft_putstr_fd("\n", 1);
-			// exit(0);
-		/*
-				i = 0				i = 1				i = 2				i = 3
-				echo a		|		echo b		|		echo c		|		echo d
-		In	0	STDIN				P[0][0]				P[1][0]				P[2][0]
-		Out	1	P[0][1]				P[1][1]				P[2][1]				STDOUT
-		*/
-		}
+		if (ft_redirects(mem, tolken, tolken->content) == -1)
+			break ;
 		ft_make_commands(mem, mem->tolken_list, tolken);
 		tolken = tolken->prev;
 		i++;
@@ -240,7 +304,10 @@ void	ft_create_shell(t_mem *mem)
 			if (mem->tolken_list->total > 1)
 				ft_send_tolken(mem);
 			else
-				ft_make_commands(mem, mem->tolken_list, mem->tolken_list->first);
+			{
+				if (ft_redirects(mem, mem->tolken_list->first, mem->tolken_list->first->content) != -1)
+					ft_make_commands(mem, mem->tolken_list, mem->tolken_list->first);
+			}
 			ft_free_tolken_list(mem->tolken_list);
 			free(input);
 		}

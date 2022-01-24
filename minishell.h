@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:16:58 by Rarodrig          #+#    #+#             */
-/*   Updated: 2022/01/20 16:02:29 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/24 12:22:52 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 #include <sys/stat.h>
-# define MAX_KEYS 11
+# define MAX_KEYS 12
 
 typedef int	(*t_funct)();
 
@@ -107,7 +107,8 @@ void			ft_redirect_check(char *ret, t_tolken *tolken);
 void			ft_get_numb_redirect(t_tolken *tolken, t_parse parser, char *ret);
 
 int				ft_check_key(char *str, char **keys);
-int				ft_use_built_in(int (*funct)(), t_mem *mem, char *key);
+// int				ft_use_built_in(int (*funct)(), t_mem *mem, char *key);
+int				ft_use_built_in(int (*funct)(), t_mem *mem, char *str, int key);
 
 void			ft_free_tolken_list(t_tolken_list *tolken_list);
 void			ft_free_env_list(t_env_list *env_list);

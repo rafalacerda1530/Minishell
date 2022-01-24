@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redir_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 12:06:03 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/18 17:09:08 by rarodrig         ###   ########.fr       */
+/*   Updated: 2022/01/24 11:11:13 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_get_numb_redirect(t_tolken *tolken, t_parse parser, char *ret)
 	{
 		if (ret[parser.index] == '>' || ret[parser.index] == '<')
 		{
-			while (ret[parser.index] != ' ')
+			while (ret[parser.index] != ' ' && ret[parser.index] != '\0')
 				parser.index++;
 			tolken->numb_redir++;
 		}

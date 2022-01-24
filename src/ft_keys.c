@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_keys.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 15:11:52 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/18 18:59:18 by rarodrig         ###   ########.fr       */
+/*   Updated: 2022/01/24 16:36:34 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ char	**ft_set_keys(t_mem *mem)
 	keys[++i] = "exit";
 	keys[++i] = "<";
 	keys[++i] = ">";
-	keys[++i] = "<<";
 	keys[++i] = ">>";
+	keys[++i] = "<<";
+	keys[++i] = "<>";
 	keys[++i] = "\0";
 	return (keys);
 }

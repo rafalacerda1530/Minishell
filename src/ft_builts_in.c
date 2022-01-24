@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builts_in.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 15:13:06 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/18 19:30:47 by rarodrig         ###   ########.fr       */
+/*   Updated: 2022/01/24 16:34:03 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,8 @@ void	ft_get_built_in(t_funct *function)
 	function[++i] = &ft_exit;
 	function[++i] = &ft_arrow_left;
 	function[++i] = &ft_arrow_right;
-	function[++i] = &ft_d_arrow_left;
 	function[++i] = &ft_d_arrow_right;
-	function[++i] = &ft_execv;
+	function[++i] = &ft_d_arrow_left;
 }
 
 t_built_in	*ft_alloc_built_in(t_mem *mem)
@@ -45,8 +44,19 @@ t_built_in	*ft_alloc_built_in(t_mem *mem)
 	return (built);
 }
 
-int	ft_use_built_in(int (*funct)(), t_mem *mem, char *key)
+int	ft_use_built_in(int (*funct)(), t_mem *mem, char *str, int key)
 {
-	funct(mem, mem->env_list, key);
+	char **split;
+
+	if (key == 10)
+	{
+		split = ft_split(str, ' ');
+		funct(split);
+		ft_free_split(split);
+	}
+	else if (key > 6)
+		funct(str);
+	else
+		funct(mem, mem->env_list, str);
 	return (0);
 }

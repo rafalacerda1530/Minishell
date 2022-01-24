@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:42:41 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/20 14:38:04 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/24 10:50:33 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,13 +157,155 @@ while (i < mem->tolken_list->total)
 
 
 
+	/*
+				i = 0				i = 1				i = 2				i = 3
+				echo a		|		echo b		|		echo c		|		echo d
+		In	0	STDIN				P[0][0]				P[1][0]				P[2][0]
+		Out	1	P[0][1]				P[1][1]				P[2][1]				STDOUT
+	
+	*/
 
 
 
 
 
+/*
+	int *fd_pipe
+
+	/-----------------------------/
+			Pipe Creation
+	/-----------------------------/
+	int	i;
+
+	fd_pipe = (int *) malloc (check * sizeof(int));
+	i = 0;
+	while (fd_pipe[i])
+	{
+		fd_pipe[i] = (int) malloc (2 * sizeof(int));
+		if (pipe(fd_pipe[i]) < 0)
+			Error
+		i++;
+	}
+
+	/-----------------------------/
+			Execution (3 Pipes)
+	/-----------------------------/
+	STDIN_FILENO
+	STDOUT_FILENO
+
+	CMD 01									i = 0
+	In > Original
+	Out > fd_pipe[0][1]
+
+	dup2(fd_pipe[0][1], STDOUT_FILENO);
+	Executar CMD 1
+
+	CMD 02									i = 1
+	In > fd_pipe[0][0]
+	Out > fd_pipe[1][1]
+	
+	dup2(fd_pipe[0][0], STDIN_FILENO);
+	dup2(fd_pipe[1][1], STDOUT_FILENO);
+	Executar CMD 2
+
+	CMD 03									i = 2
+	In > fd_pipe[1][0]
+	Out > fd_pipe[2][1]
+
+	dup2(fd_pipe[1][0], STDIN_FILENO);
+	dup2(fd_pipe[2][1], STDOUT_FILENO);
+	Executar CMD 3
+
+	(Last)
+	CMD 04									i = 3
+	In > fd_pipe[2][0]
+	Out > Original
+
+	dup2(fd_pipe[2][0], STDIN_FILENO);
+	dup2(mem->std_pipe[1], STDOUT_FILENO);
+	Executar CMD 4
+
+	dup2(mem->std_pipe[0], STDIN_FILENO);
+
+	/-----------------------------/
+			Pipe Free
+	/-----------------------------/
+	i = 0;
+	while (fd_pipe[i])
+	{
+		free(fd_pipe[i]);
+		i++;
+	}
+	free(fd_pipe);
 
 
+
+	>
+	>>
+	<<
+	<
+
+	>>>>>>>>>>>>>>>>>>>>
+
+	int *redirs
+
+	redirs[X]
+	0 - String entre aspas
+	1 - Possivel redirect
+
+	------------------
+	Keys
+	--------------
+	< 7
+	> 8
+	<< 9
+	>> 10
+	<> 12
+
+	---------------
+
+
+	
+
+
+		key == aux
+		--------------------
+		aux[0] = '>'
+		aux[1] = '\0'
+		
+		aux[0] = '<'
+		aux[1] = '\0'
+
+		key == aux
+		--------------------
+		aux[0] = '>'
+		aux[1] = '>'
+		aux[2] = '\0'
+		
+
+
+		aux[0] = '<'
+		aux[1] = '<'
+		aux[2] = '\0'
+
+		aux[0] = '<'
+		aux[1] = '>'
+		aux[2] = '\0'
+
+
+
+
+
+		INVALID
+		aux[0] = '>'
+		aux[1] = '<'
+		aux[2] = '\0'
+
+
+
+
+
+*/
 
 void	ft_create_shell(t_mem *mem)
 {
