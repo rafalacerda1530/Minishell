@@ -6,7 +6,7 @@
 #    By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/01 00:57:37 by coder             #+#    #+#              #
-#    Updated: 2022/01/18 17:07:04 by rarodrig         ###   ########.fr        #
+#    Updated: 2022/01/25 19:48:56 by rarodrig         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ FILE = $(PATH_SRC)minishell.c $(PATH_SRC)ft_prompt.c \
 		$(PATH_SRC)ft_d_arrow_left.c $(PATH_SRC)ft_d_arrow_right.c \
 		$(PATH_SRC)ft_cd.c $(PATH_SRC)ft_env.c $(PATH_SRC)ft_execv.c \
 		$(PATH_SRC)ft_exit.c $(PATH_SRC)ft_unset.c \
-		$(PATH_SRC)ft_export.c $(PATH_SRC)ft_export_utils.c $(PATH_SRC)ft_redir_utils.c\
+		$(PATH_SRC)ft_export.c $(PATH_SRC)ft_export_utils.c $(PATH_SRC)ft_redir_utils.c \
+		$(PATH_SRC)ft_signals.c \
 
 LIBFT = $(PATH_LIBFT)libft.a
 CC = clang

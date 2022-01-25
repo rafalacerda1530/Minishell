@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:16:58 by Rarodrig          #+#    #+#             */
-/*   Updated: 2022/01/24 12:22:52 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/25 19:51:43 by rarodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "./includes/42_libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
+# include <signal.h>
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -158,5 +159,7 @@ void			ft_content_error(void);
 void			ft_memory_error(void);
 
 int				ft_execv(t_mem *mem, t_env_list *env_list, char *command, t_tolken *tolken);
+void			ft_signals(struct sigaction *act, void (*handler)(int), int sig, t_mem *mem);
+void			sigint_handler(int sig);
 
 #endif

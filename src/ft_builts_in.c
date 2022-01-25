@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builts_in.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 15:13:06 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/24 16:34:03 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/25 18:18:43 by rarodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	ft_use_built_in(int (*funct)(), t_mem *mem, char *str, int key)
 
 	if (key == 10)
 	{
+		dup2(mem->std_pipe[0], STDIN_FILENO);
 		split = ft_split(str, ' ');
 		funct(split);
 		ft_free_split(split);

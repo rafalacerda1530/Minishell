@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_prompt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:42:41 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/24 18:52:27 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/25 19:54:22 by rarodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,16 +289,20 @@ void	ft_send_tolken(t_mem *mem)
 void	ft_create_shell(t_mem *mem)
 {
 	char	*input;
+	struct sigaction act;
 
+	ft_bzero(&act, sizeof(struct sigaction));
 	mem->std_pipe[0] = dup(STDIN_FILENO);
 	mem->std_pipe[1] = dup(STDOUT_FILENO);
 	while (1)
 	{
 		input = NULL;
+		ft_signals(&act, sigint_handler, SIGINT, mem);
 		ft_read_input(&input);
 		ft_create_history(input);
 		if (input)
 		{
+
 			ft_fill_tolken_list(mem, mem->tolken_list, input);
 			// print_tolken(mem->tolken_list);
 			if (mem->tolken_list->total > 1)
