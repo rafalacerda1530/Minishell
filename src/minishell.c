@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:04:41 by Rarodrig          #+#    #+#             */
-/*   Updated: 2022/01/03 14:49:43 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/26 15:17:31 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 /*
 	Codar o ?para o echo
 	Coletar o retorno de todos as funções
-	
+	Precisa fazer retorno dos erros possiveis
 */
 void	ft_alloc_mem(t_mem *mem)
 {

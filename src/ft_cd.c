@@ -6,31 +6,11 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:04:21 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/20 13:46:23 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/26 15:43:08 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	ft_check_cd_arguments(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == ' ')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-void	ft_swap_pwd(char *pwd, char *oldpwd, t_env_list *env_list)
-{
-	ft_search_and_change(pwd, "OLDPWD", env_list);
-	ft_search_and_change(oldpwd, "PWD", env_list);
-}
 
 char	*ft_change_path(char *path, t_env_list *env_list)
 {
@@ -56,13 +36,30 @@ void	ft_go_to_path(char *path, t_env_list *env_list)
 		path = ft_change_path(path, env_list);
 	if (chdir(path) != 0)
 	{
-		ft_putstr_fd("Error no path\n", 2);
+		ft_putstr_fd("No such file or directory\n", 2);
 		return ;
 	}
 	new = getcwd(new_pwd, 4096);
 	pwd = ft_get_env("PWD", env_list);
 	ft_swap_pwd(pwd, new, env_list);
 	free(pwd);
+}
+
+char	*ft_get_path(t_env_list *env_list, char *str)
+{
+	char	*path;
+
+	if (str[0] == '~' && str[1] == '\0')
+		path = ft_get_env("HOME", env_list);
+	else if (str[0] == '-' && str[1] == '\0')
+	{
+		path = ft_get_env("OLDPWD", env_list);
+		ft_putstr_fd(path, 1);
+		ft_putchar_fd('\n', 1);
+	}
+	else
+		path = ft_strdup(str);
+	return (path);
 }
 
 int	ft_cd(t_mem *mem, t_env_list *env_list, char *str)
@@ -84,16 +81,7 @@ int	ft_cd(t_mem *mem, t_env_list *env_list, char *str)
 		ft_putstr_fd("Too many arguments\n", 1);
 		return (1);
 	}
-	if (str[0] == '~' && str[1] == '\0')
-		path = ft_get_env("HOME", env_list);
-	else if (str[0] == '-' && str[1] == '\0')
-	{
-		path = ft_get_env("OLDPWD", env_list);
-		ft_putstr_fd(path, 1);
-		ft_putchar_fd('\n', 1);
-	}
-	else
-		path = ft_strdup(str);
+	path = ft_get_path(env_list, str);
 	if (path)
 		ft_go_to_path(path, env_list);
 	free(path);

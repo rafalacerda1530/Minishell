@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_arrow_left.c                                    :+:      :+:    :+:   */
+/*   ft_std.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/21 16:04:02 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/26 15:05:49 by fbonini          ###   ########.fr       */
+/*   Created: 2022/01/26 14:02:59 by fbonini           #+#    #+#             */
+/*   Updated: 2022/01/26 14:03:14 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_arrow_left(char *file)
+void	ft_copy_stds(t_mem *mem)
 {
-	int	fd_file;
+	mem->std_pipe[0] = dup(STDIN_FILENO);
+	mem->std_pipe[1] = dup(STDOUT_FILENO);
+}
 
-	fd_file = open(file, O_RDONLY);
-	if (fd_file == -1)
-		return (-1);
-	else
-	{
-		dup2(fd_file, STDIN_FILENO);
-		close(fd_file);
-	}
-	return (0);
+void	ft_reset_stds(t_mem *mem)
+{
+	dup2(mem->std_pipe[0], STDIN_FILENO);
+	dup2(mem->std_pipe[1], STDOUT_FILENO);
+}
+
+void	ft_close_copy_stds(t_mem *mem)
+{
+	close(mem->std_pipe[1]);
+	close(mem->std_pipe[0]);
 }

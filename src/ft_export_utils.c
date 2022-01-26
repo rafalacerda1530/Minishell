@@ -6,25 +6,11 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 17:54:38 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/29 18:14:02 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/26 14:59:25 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	ft_free_split(char **split)
-{
-	int	i;
-
-	i = 0;
-	while (split[i])
-	{
-		free(split[i]);
-		i++;
-	}
-	if (split)
-		free(split);
-}
 
 int	ft_print_export(t_mem *mem, t_env_list *env_list)
 {

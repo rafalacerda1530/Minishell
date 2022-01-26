@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builts_in.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 15:13:06 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/25 18:18:43 by rarodrig         ###   ########.fr       */
+/*   Updated: 2022/01/26 15:46:06 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_built_in	*ft_alloc_built_in(t_mem *mem)
 	return (built);
 }
 
-int	ft_use_built_in(int (*funct)(), t_mem *mem, char *str, int key)
+int	ft_built_in(int (*funct)(), t_mem *mem, char *str, int key)
 {
 	char **split;
 

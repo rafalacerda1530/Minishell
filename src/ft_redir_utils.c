@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 12:06:03 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/24 11:11:13 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/26 14:27:01 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,13 @@ void	ft_redirect_check(char *ret, t_tolken *tolken)
 		}
 		parser.index++;
 	}
+}
+
+int	ft_valid_redir(char *key)
+{
+	if (ft_strlen(key) > 2)
+		return (0);
+	if (key[0] == '>' && key[1] == '<')
+		return (0);
+	return (1);
 }

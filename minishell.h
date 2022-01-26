@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:16:58 by Rarodrig          #+#    #+#             */
-/*   Updated: 2022/01/25 19:51:43 by rarodrig         ###   ########.fr       */
+/*   Updated: 2022/01/26 15:54:27 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "./includes/42_libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
-# include <signal.h>
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -24,10 +23,18 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-#include <sys/stat.h>
+# include <sys/stat.h>
 # define MAX_KEYS 12
 
 typedef int	(*t_funct)();
+
+typedef struct s_redir
+{
+	int		i;
+	char	*aux;
+	char	*key;
+	char	*tmp;
+}			t_redir;
 
 typedef struct s_parse
 {
@@ -58,7 +65,6 @@ typedef struct s_env_list
 	unsigned int	total;
 }			t_env_list;
 
-
 typedef struct s_tolken
 {
 	struct s_tolken	*next;
@@ -81,7 +87,7 @@ typedef struct s_tolken_list
 typedef struct s_mem
 {
 	char			**keys;
-	int 			all_return;
+	int				all_return;
 	int				std_pipe[2];
 	t_built_in		*built_in;
 	t_env_list		*env_list;
@@ -108,8 +114,7 @@ void			ft_redirect_check(char *ret, t_tolken *tolken);
 void			ft_get_numb_redirect(t_tolken *tolken, t_parse parser, char *ret);
 
 int				ft_check_key(char *str, char **keys);
-// int				ft_use_built_in(int (*funct)(), t_mem *mem, char *key);
-int				ft_use_built_in(int (*funct)(), t_mem *mem, char *str, int key);
+int				ft_built_in(int (*funct)(), t_mem *mem, char *str, int key);
 
 void			ft_free_tolken_list(t_tolken_list *tolken_list);
 void			ft_free_env_list(t_env_list *env_list);
@@ -133,9 +138,14 @@ void			ft_redirect_check(char *ret, t_tolken *tolken);
 
 int				ft_echo(t_mem *mem, t_env_list *env_list, char *str);
 
+/*
+	Built-in cd functions
+*/
 int				ft_cd(t_mem *mem, t_env_list *env_list, char *str);
+void			ft_swap_pwd(char *pwd, char *oldpwd, t_env_list *env_list);
+int				ft_check_cd_arguments(char *str);
 
-int 			ft_pwd(void);
+int				ft_pwd(void);
 
 int				ft_arrow_left(char *file);
 int				ft_arrow_right(char *file);
@@ -150,7 +160,9 @@ int				ft_invalid_key(char *str, int i, int quoted);
 void			ft_export_string(t_mem *mem, t_env_list *env_list, char *content);
 int				ft_new_env(t_mem *mem, char *key, char *content, int i);
 int				ft_print_export(t_mem *mem, t_env_list *env_list);
+
 void			ft_free_split(char **split);
+void			ft_free_two_to_four(char *s1, char *s2, char *s3, char *s4);
 
 int				ft_unset(t_mem *mem, t_env_list *env_list, char *key);
 
@@ -159,7 +171,32 @@ void			ft_content_error(void);
 void			ft_memory_error(void);
 
 int				ft_execv(t_mem *mem, t_env_list *env_list, char *command, t_tolken *tolken);
+
+void			ft_make_commands(t_mem *mem, t_tolken *tolken);
+
+/*
+	Signal Functions
+*/
 void			ft_signals(struct sigaction *act, void (*handler)(int), int sig, t_mem *mem);
 void			sigint_handler(int sig);
+
+/*
+	Pipe Functions
+*/
+void			ft_copy_stds(t_mem *mem);
+void			ft_reset_stds(t_mem *mem);
+void			ft_close_copy_stds(t_mem *mem);
+void			ft_pipe_cmd(t_mem *mem);
+
+/*
+	Redirect functions
+*/
+int				ft_redirects(t_mem *mem, t_tolken *tolken, char *str);
+int				ft_valid_redir(char *key);
+char			*ft_str_remove(char *key, char *aux, char *file);
+char			*ft_create_content(char *copy, char *remove, int len);
+void			ft_new_content(t_tolken *tolken, char *aux, char *key, char *file);
+char			*ft_get_file_name(char *str, int index);
+int				ft_break_str(t_redir *vars, char *str, int j);
 
 #endif

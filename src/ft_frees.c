@@ -1,28 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_arrow_left.c                                    :+:      :+:    :+:   */
+/*   ft_frees.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/21 16:04:02 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/26 15:05:49 by fbonini          ###   ########.fr       */
+/*   Created: 2022/01/26 14:49:38 by fbonini           #+#    #+#             */
+/*   Updated: 2022/01/26 14:58:47 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_arrow_left(char *file)
+void	ft_free_split(char **split)
 {
-	int	fd_file;
+	int	i;
 
-	fd_file = open(file, O_RDONLY);
-	if (fd_file == -1)
-		return (-1);
-	else
+	i = 0;
+	while (split[i])
 	{
-		dup2(fd_file, STDIN_FILENO);
-		close(fd_file);
+		free(split[i]);
+		i++;
 	}
-	return (0);
+	if (split)
+		free(split);
+}
+
+void	ft_free_two_to_four(char *s1, char *s2, char *s3, char *s4)
+{
+	if (s1)
+		free(s1);
+	if (s2)
+		free(s2);
+	if (s3)
+		free(s3);
+	if (s4)
+		free(s4);
 }

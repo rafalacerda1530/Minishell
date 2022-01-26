@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:04:25 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/24 18:52:33 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/26 15:14:51 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,15 @@
 void	start_prompt(int fd, char **eof)
 {
 	char	*input;
-	int		i = 0;
+	int		i;
 
+	i = 0;
 	while (1)
 	{
 		input = readline("> ");
 		if (input)
 		{
-			if (ft_strcmp(input, eof[i]))
-			{
-				ft_putendl_fd(input, fd);
-			}
-			else
+			if (ft_strcmp(input, eof[i]) == 0)
 			{
 				i++;
 				if (eof[i] == NULL)
@@ -35,25 +32,25 @@ void	start_prompt(int fd, char **eof)
 					free(input);
 					break ;
 				}
-				ft_putendl_fd(input, fd);
 			}
+			ft_putendl_fd(input, fd);
 			free(input);
 		}
 	}
 	exit(0);
 }
 
-int create_temporary(void)
+int	create_temporary(void)
 {
-	int fd;
+	int	fd;
 
 	fd = open("./tmp_file", O_WRONLY | O_CREAT | O_TRUNC, 0600);
 	if (fd == -1)
-		return -1;
+		return (-1);
 	return (fd);
 }
 
-int ft_d_arrow_left(char **eof)
+int	ft_d_arrow_left(char **eof)
 {
 	int		tmp_fd;
 	int		pid;
@@ -61,7 +58,7 @@ int ft_d_arrow_left(char **eof)
 
 	tmp_fd = create_temporary();
 	if (tmp_fd == -1)
-		return (0);
+		return (-1);
 	pid = fork();
 	if (pid == 0)
 		start_prompt(tmp_fd, eof);

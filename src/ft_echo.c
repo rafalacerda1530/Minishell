@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 14:41:43 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/24 13:07:44 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/26 14:33:34 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ int	ft_echo(t_mem *mem, t_env_list *env_list, char *str)
 
 	(void) env_list;
 	if (!str)
-		return(0);
+	{
+		ft_putchar_fd('\n', 1);
+		return (0);
+	}
 	i = 0;
 	while (*str == ' ')
 		str++;

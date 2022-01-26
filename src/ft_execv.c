@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:08:27 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/20 16:05:33 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/26 15:45:19 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,21 @@ char	*ft_find_path(t_mem *mem, char *command)
 	return (ret);
 }
 
+char	**ft_cmd_split(t_tolken *tolken, char *command)
+{
+	char	**split;
+
+	if (tolken->content)
+		split = ft_split(tolken->str, ' ');
+	else
+	{
+		split = (char **) malloc (sizeof(char *) * 2);
+		split[0] = ft_strdup(command);
+		split[1] = NULL;
+	}
+	return (split);
+}
+
 int	ft_execv(t_mem *mem, t_env_list *env_list, char *command, t_tolken *tolken)
 {
 	pid_t	pid;
@@ -91,21 +106,14 @@ int	ft_execv(t_mem *mem, t_env_list *env_list, char *command, t_tolken *tolken)
 
 	envs = ft_get_env_list(env_list);
 	path = ft_find_path(mem, command);
-	if (tolken->content)
-		split = ft_split(tolken->str, ' ');
-	else
-	{
-		split = (char **) malloc (sizeof(char *) * 2);
-		split[0] = ft_strdup(command);
-		split[1] = NULL;
-	}
+	split = ft_cmd_split(tolken, command);
 	pid = fork();
 	if (pid == -1)
 		ft_putstr_fd("Failed forking child\n", 2);
 	else if (pid == 0)
 	{
 		if (execve(path, split, envs) == -1)
-			ft_putstr_fd("Aqui command\n", 2);
+			ft_putstr_fd("command not found\n", 2);
 	}
 	if (path)
 		free(path);
@@ -116,13 +124,3 @@ int	ft_execv(t_mem *mem, t_env_list *env_list, char *command, t_tolken *tolken)
 	waitpid(pid, &result, 0);
 	return (0);
 }
-/*
-	Coloca check de Pipe
-		- Antes de executar o execve (dentro do fork)
-		- Se tiver pipe, os Fd vao ser enviados
-		- Usar dup2
-			dup2(pipe_fd[0], STDIN Padrao);
-			dup2(pipe_fd[1], STDOUT Padrao);
-
-
-*/
