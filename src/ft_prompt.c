@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_prompt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:42:41 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/26 15:04:07 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/26 20:02:31 by rarodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ void	ft_read_input(char **input)
 	prompt = getcwd(prompt, 0);
 	msg = ft_strjoin(prompt, intro);
 	*input = readline(msg);
+	if (!*input)
+	{
+		printf(" exit\n");
+		exit(0);
+	}
 	free(msg);
 	free(prompt);
 }

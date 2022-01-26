@@ -6,7 +6,7 @@
 /*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 19:30:01 by rarodrig          #+#    #+#             */
-/*   Updated: 2022/01/25 19:54:56 by rarodrig         ###   ########.fr       */
+/*   Updated: 2022/01/26 19:49:13 by rarodrig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void sigint_handler(int sig)
 		rl_redisplay();
 		// g_sh_status = 130;
 	}
+	else if(sig == SIGINT)
+      exit(0);
 }
 
 void	ft_signals(struct sigaction *act, void (*handler)(int), int sig, t_mem *mem)
