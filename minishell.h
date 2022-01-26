@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:16:58 by Rarodrig          #+#    #+#             */
-/*   Updated: 2022/01/26 15:54:27 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/26 17:25:24 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,10 @@ typedef struct s_mem
 
 t_tolken_list	*ft_alloc_tolken_list(t_mem *mem);
 t_env_list		*ft_alloc_env_list(t_mem *mem);
-t_env			*ft_alloc_env(t_mem *mem, char *envp, char tag);
+t_env			*ft_alloc_env(t_mem *mem, char *envp);
 t_built_in		*ft_alloc_built_in(t_mem *mem);
-void			ft_fill_env_list(t_mem *mem, t_env_list *env_list, char *envp, char tag);
-void			ft_create_env_strings(t_env *env, int key, int content, char *envp);
+void			ft_fill_env_list(t_mem *mem, t_env_list *env_list, char *envp);
+void			ft_create_env_str(t_env *env, int key, int content, char *envp);
 void			ft_get_env_sizes(int *key, int *content, char *envp);
 char			**ft_set_keys(t_mem *mem);
 

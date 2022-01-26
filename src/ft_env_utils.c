@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:10:07 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/03 15:46:52 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/26 17:22:12 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_get_env_sizes(int *key_size, int *size, char *envp)
 		(*size)++;
 }
 
-void	ft_create_env_strings(t_env *env, int key_size, int size, char *envp)
+void	ft_create_env_str(t_env *env, int key_size, int size, char *envp)
 {
 	env->key = (char *) malloc ((key_size + 1) * sizeof(char));
 	if (!env->key)

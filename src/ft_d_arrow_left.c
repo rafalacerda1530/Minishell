@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:04:25 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/26 15:14:51 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/26 17:48:05 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	create_temporary(void)
 {
 	int	fd;
 
-	fd = open("./tmp_file", O_WRONLY | O_CREAT | O_TRUNC, 0600);
+	fd = open("/tmp/file.tmp", O_WRONLY | O_CREAT | O_TRUNC, 0600);
 	if (fd == -1)
 		return (-1);
 	return (fd);

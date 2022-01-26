@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:04:41 by Rarodrig          #+#    #+#             */
-/*   Updated: 2022/01/26 15:17:31 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/26 17:09:09 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int argc, char **argv, char **envp)
 	i = 0;
 	while (envp[i] != (void *)0)
 	{
-		ft_fill_env_list(&mem, mem.env_list, envp[i], 'A');
+		ft_fill_env_list(&mem, mem.env_list, envp[i]);
 		i++;
 	}
 	ft_create_shell(&mem);

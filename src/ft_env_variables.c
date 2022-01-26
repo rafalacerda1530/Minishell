@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:08:08 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/03 15:46:01 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/26 17:24:18 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_env_list	*ft_alloc_env_list(t_mem *mem)
 	return (env_list);
 }
 
-t_env	*ft_alloc_env(t_mem *mem, char *envp, char tag)
+t_env	*ft_alloc_env(t_mem *mem, char *envp)
 {
 	t_env	*env;
 	int		key_size;
@@ -43,7 +43,7 @@ t_env	*ft_alloc_env(t_mem *mem, char *envp, char tag)
 		ft_memory_error();
 		ft_exit(mem, 2);
 	}
-	ft_create_env_strings(env, key_size, content_size, envp);
+	ft_create_env_str(env, key_size, content_size, envp);
 	if (!env->key || !env->content)
 	{
 		ft_memory_error();
@@ -51,15 +51,14 @@ t_env	*ft_alloc_env(t_mem *mem, char *envp, char tag)
 	}
 	env->next = env;
 	env->prev = env;
-	env->tag = tag;
 	return (env);
 }
 
-void	ft_fill_env_list(t_mem *mem, t_env_list *env_list, char *envp, char tag)
+void	ft_fill_env_list(t_mem *mem, t_env_list *env_list, char *envp)
 {
 	t_env	*env;
 
-	env = ft_alloc_env(mem, envp, tag);
+	env = ft_alloc_env(mem, envp);
 	if (env_list->total == 0)
 		env_list->last = env;
 	else
