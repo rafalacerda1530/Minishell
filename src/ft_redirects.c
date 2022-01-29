@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 14:04:26 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/26 14:05:16 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/29 12:57:13 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,26 @@ void	ft_call_redirect(t_mem *mem, t_tolken *tolken, char *str, t_redir *vars)
 	free(file);
 }
 
+char	*ft_new_tmp(char *str, char *aux, char *key)
+{
+	int		i;
+	char	*ret;
+	char	*tmp;
+
+	ret = NULL;
+	tmp = NULL;
+	if (ft_strcmp(aux, key) == 0)
+		i = 3;
+	else
+		i = 1;
+	while (str[i] != ' ' && str[i] != '\0')
+	{
+		ft_add_char(&tmp, &ret, str[i]);
+		i++;
+	}
+	return (ret);
+}
+
 int	ft_check_string(t_mem *mem, t_tolken *tolken, char *str, int *j)
 {
 	t_redir	vars;
@@ -44,14 +64,13 @@ int	ft_check_string(t_mem *mem, t_tolken *tolken, char *str, int *j)
 	*j = ft_break_str(&vars, str, *j);
 	if (ft_strcmp(vars.key, "<<") == 0)
 	{
-		if (ft_strlen(vars.aux) == 2)
-			(*j)++;
-		ft_built_in(mem->built_in->function[10], mem, &str[*j], 10);
-		ft_free_two_to_four(vars.key, vars.aux, tolken->content, NULL);
-		tolken->content = NULL;
-		return (1);
+		vars.tmp = ft_new_tmp(&str[*j - 2], vars.aux, vars.key);
+		ft_built_in(mem->built_in->function[10], mem, vars.tmp, 10);
+		ft_new_content(tolken, vars.aux, vars.key, vars.tmp);
+		free(vars.tmp);
 	}
-	ft_call_redirect(mem, tolken, str, &vars);
+	else
+		ft_call_redirect(mem, tolken, str, &vars);
 	ft_free_two_to_four(vars.key, vars.aux, NULL, NULL);
 	return (1);
 }

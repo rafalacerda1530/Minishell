@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:16:58 by Rarodrig          #+#    #+#             */
-/*   Updated: 2022/01/26 17:25:24 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/29 15:20:50 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ typedef struct s_env
 	struct s_env	*prev;
 	char			*key;
 	char			*content;
-	char			tag;
 }			t_env;
 
 typedef struct s_env_list
@@ -125,6 +124,7 @@ void			ft_free_env(t_env_list *env_list, t_env *env);
 
 char			*ft_strjoin_first(char c);
 char			*ft_strjoin_char(char *s1, char const c);
+void			ft_join_string(char **tmp, char **ret, char *str);
 
 int				ft_quote_check(char *str, int *i, int quote);
 void			ft_add_char(char **tmp, char **ret, char c);
@@ -134,7 +134,6 @@ int				ft_space_remove(char *str, int i, int quote);
 void			ft_strjoin_env(char **ret, char *content);
 int				ft_true_dollar(char *str, t_parse *parser);
 int				ft_true_home(char *str, t_parse *parser);
-void			ft_redirect_check(char *ret, t_tolken *tolken);
 
 int				ft_echo(t_mem *mem, t_env_list *env_list, char *str);
 
@@ -149,7 +148,7 @@ int				ft_pwd(void);
 
 int				ft_arrow_left(char *file);
 int				ft_arrow_right(char *file);
-int				ft_d_arrow_left(char **eof);
+int				ft_d_arrow_left(t_mem *mem, char *eof);
 int				ft_d_arrow_right(char *file);
 
 int				ft_env(t_mem *mem, t_env_list *env_list);
@@ -198,5 +197,7 @@ char			*ft_create_content(char *copy, char *remove, int len);
 void			ft_new_content(t_tolken *tolken, char *aux, char *key, char *file);
 char			*ft_get_file_name(char *str, int index);
 int				ft_break_str(t_redir *vars, char *str, int j);
+char			*ft_str_remove(char *key, char *aux, char *file);
+char			*ft_remove_extra_spaces(char *str);
 
 #endif

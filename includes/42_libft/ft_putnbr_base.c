@@ -14,7 +14,7 @@
 
 void 	ft_putnbr_base(unsigned int num, char *base, int fd)
 {
-	size_t len_base;
+	size_t	len_base;
 
 	len_base = ft_strlen(base);
 	if (num / len_base > 0)

@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 15:13:06 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/26 15:46:06 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/29 12:56:46 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,10 @@ t_built_in	*ft_alloc_built_in(t_mem *mem)
 
 int	ft_built_in(int (*funct)(), t_mem *mem, char *str, int key)
 {
-	char **split;
-
 	if (key == 10)
 	{
 		dup2(mem->std_pipe[0], STDIN_FILENO);
-		split = ft_split(str, ' ');
-		funct(split);
-		ft_free_split(split);
+		funct(mem, str);
 	}
 	else if (key > 6)
 		funct(str);

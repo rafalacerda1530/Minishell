@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:00:31 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/20 13:42:08 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/29 13:55:59 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ t_tolken	*ft_alloc_tolken(t_mem *mem, char *input)
 	ft_tolken_key(mem, tolken, key, input);
 	if (content > 0)
 	{
-		ft_tolken_content(mem, tolken, content, &input[key + 1]);
-		if (tolken->content != NULL)
-			ft_tolken_string(&tolken->str, tolken->key, tolken->content);
+		if (input[key] == ' ')
+			ft_tolken_content(mem, tolken, content, &input[key + 1]);
+		else
+			ft_tolken_content(mem, tolken, content, &input[key]);
+		ft_tolken_string(&tolken->str, tolken->key, tolken->content);
 	}
 	tolken->size = key + content;
-	tolken->next = tolken;
-	tolken->prev = tolken;
 	return (tolken);
 }
 

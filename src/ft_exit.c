@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:04:40 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/29 17:54:01 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/29 14:29:29 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	ft_free_mem(t_mem *mem)
 
 int	ft_exit(t_mem *mem, int ret)
 {
+	if (mem->tolken_list->total > 1)
+		return (0);
 	ft_free_mem(mem);
 	rl_clear_history();
 	exit(ret);

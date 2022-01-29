@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 12:27:57 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/03 14:55:48 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/29 15:11:22 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,14 @@ char	*ft_strjoin_char(char *s1, char const c)
 void	ft_add_char(char **tmp, char **ret, char c)
 {
 	*tmp = ft_strjoin_char(*ret, c);
+	free(*ret);
+	*ret = ft_strdup(*tmp);
+	free(*tmp);
+}
+
+void	ft_join_string(char **tmp, char **ret, char *str)
+{
+	*tmp = ft_strjoin(*ret, str);
 	free(*ret);
 	*ret = ft_strdup(*tmp);
 	free(*tmp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_prompt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rarodrig < rarodrig@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:42:41 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/26 20:02:31 by rarodrig         ###   ########.fr       */
+/*   Updated: 2022/01/29 10:47:48 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_read_input(char **input)
 	*input = readline(msg);
 	if (!*input)
 	{
-		printf(" exit\n");
+		ft_putstr_fd("exit\n", 2);
 		exit(0);
 	}
 	free(msg);
@@ -49,7 +49,7 @@ void	ft_create_history(char *input)
 
 void	ft_make_commands(t_mem *mem, t_tolken *tolken)
 {
-	int	i;
+	int		i;
 
 	i = ft_check_key(tolken->key, mem->keys);
 	if (i < 12)
@@ -65,6 +65,8 @@ void	ft_make_commands(t_mem *mem, t_tolken *tolken)
 
 void	ft_exec_cmd(t_mem *mem, t_tolken *tolken)
 {
+	if (!tolken)
+		return ;
 	if (mem->tolken_list->total > 1)
 		ft_pipe_cmd(mem);
 	else

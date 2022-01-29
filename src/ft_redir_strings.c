@@ -6,57 +6,44 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 14:27:46 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/26 14:28:40 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/29 14:15:39 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*ft_str_remove(char *key, char *aux, char *file)
-{
-	char	*remove;
-	char	*tmp;
-	int		i;
-
-	remove = ft_strdup(key);
-	if (ft_strcmp(aux, key) == 0)
-		ft_add_char(&tmp, &remove, ' ');
-	i = 0;
-	while (file[i] != '\0')
-	{
-		ft_add_char(&tmp, &remove, file[i]);
-		i++;
-	}
-	return (remove);
-}
-
 char	*ft_create_content(char *copy, char *remove, int len)
 {
-	int		i;
 	int		j;
-	char	*new_content;
-	char	*tmp;
+	t_redir	strings;
 
-	i = 0;
 	j = 0;
-	new_content = NULL;
-	while (copy[i + j] != '\0')
+	ft_bzero(&strings, sizeof(t_redir));
+	while (copy[strings.i + j] != '\0')
 	{
-		if (ft_strncmp(&copy[i + j], remove, len) == 0)
+		if (ft_strncmp(&copy[strings.i + j], remove, len) == 0)
 			j += len;
-		if (copy[i + j] != '\0')
+		if (copy[strings.i + j] != '\0')
 		{
-			ft_add_char(&tmp, &new_content, copy[i + j]);
-			i++;
+			ft_add_char(&strings.tmp, &strings.aux, copy[strings.i + j]);
+			strings.i++;
 		}
 	}
-	return (new_content);
+	if (strings.aux)
+	{
+		strings.tmp = ft_strdup(strings.aux);
+		free(strings.aux);
+		strings.aux = ft_remove_extra_spaces(strings.tmp);
+		free(strings.tmp);
+	}
+	return (strings.aux);
 }
 
 void	ft_new_content(t_tolken *tolken, char *aux, char *key, char *file)
 {
 	char	*remove;
 	char	*copy;
+	char	*tmp;
 	size_t	len;
 
 	remove = ft_str_remove(key, aux, file);
@@ -64,8 +51,16 @@ void	ft_new_content(t_tolken *tolken, char *aux, char *key, char *file)
 	free(tolken->content);
 	len = ft_strlen(remove);
 	tolken->content = ft_create_content(copy, remove, len);
-	free(copy);
-	free(remove);
+	tmp = NULL;
+	if (tolken->content)
+	{
+		free(tolken->str);
+		tolken->str = ft_strdup(tolken->key);
+		tmp = ft_strjoin(tolken->str, tolken->content);
+		free(tolken->str);
+		tolken->str = ft_strdup(tmp);
+	}
+	ft_free_two_to_four(tmp, copy, remove, NULL);
 }
 
 char	*ft_get_file_name(char *str, int index)
