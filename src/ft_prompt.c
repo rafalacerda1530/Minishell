@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:42:41 by fbonini           #+#    #+#             */
-/*   Updated: 2022/02/01 17:02:37 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/01 19:52:32 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	ft_make_commands(t_mem *mem, t_tolken *tolken)
 {
 	int		i;
 
+	if (tolken->key == NULL)
+		return ;
 	i = ft_check_key(tolken->key, mem->keys);
 	if (i < 12)
 	{
