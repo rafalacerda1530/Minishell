@@ -6,11 +6,11 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 12:27:57 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/29 15:11:22 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/01 17:05:01 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 char	*ft_strjoin_first(char c)
 {
@@ -57,8 +57,27 @@ void	ft_add_char(char **tmp, char **ret, char c)
 
 void	ft_join_string(char **tmp, char **ret, char *str)
 {
-	*tmp = ft_strjoin(*ret, str);
-	free(*ret);
-	*ret = ft_strdup(*tmp);
-	free(*tmp);
+	if (*ret)
+	{
+		*tmp = ft_strjoin(*ret, str);
+		free(*ret);
+		*ret = ft_strdup(*tmp);
+		free(*tmp);
+	}
+	else
+		*ret = ft_strdup(str);
+}
+
+void	ft_strjoin_env(char **ret, char *content)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	tmp = NULL;
+	while (content[i] != '\0')
+	{
+		ft_add_char(&tmp, ret, content[i]);
+		i++;
+	}
 }

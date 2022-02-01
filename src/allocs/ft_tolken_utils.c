@@ -6,11 +6,11 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:02:17 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/29 15:17:50 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/01 17:18:26 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 void	ft_get_tolken_sizes(int *i, int *j, char *input)
 {
@@ -41,18 +41,18 @@ void	ft_get_tolken_sizes(int *i, int *j, char *input)
 	*j = n.index - *i;
 }
 
-void	ft_tolken_key(t_mem *mem, t_tolken *tolken, int size, char *input)
+void	ft_tolken_key(t_mem *mem, t_tolken *tlk, int len, char *str)
 {
 	char	*tmp;
 
-	tmp = (char *) malloc ((size + 1) * sizeof(char));
+	tmp = (char *) malloc ((len + 1) * sizeof(char));
 	if (!tmp)
 	{
 		ft_memory_error();
 		ft_exit(mem, 2);
 	}
-	ft_strlcpy(tmp, input, size + 1);
-	tolken->key = ft_parse_string(tmp, mem->env_list);
+	ft_strlcpy(tmp, str, len + 1);
+	tlk->key = ft_parse_string(mem, tmp, mem->env_list);
 	free(tmp);
 }
 
@@ -85,7 +85,7 @@ char	*ft_check_swap_str(t_tolken *tolken, char *key, char *content)
 	return (ret);
 }
 
-void	ft_tolken_content(t_mem *mem, t_tolken *tolken, int size, char *input)
+void	ft_tolken_content(t_mem *m, t_tolken *tlk, int len, char *str)
 {
 	int		i;
 	char	*tmp;
@@ -93,17 +93,17 @@ void	ft_tolken_content(t_mem *mem, t_tolken *tolken, int size, char *input)
 
 	i = 0;
 	ret = NULL;
-	while (input[i] != '\0' && i < size)
+	while (str[i] != '\0' && i < len)
 	{
-		if (input[i] != '\0')
-			ft_add_char(&tmp, &ret, input[i]);
+		if (str[i] != '\0')
+			ft_add_char(&tmp, &ret, str[i]);
 		i++;
 	}
-	i = ft_check_key(tolken->key, mem->keys);
+	i = ft_check_key(tlk->key, m->keys);
 	if (i > 6 && i < 12)
-		ret = ft_check_swap_str(tolken, tolken->key, ret);
-	ft_redirect_check(ret, tolken);
-	tolken->content = ft_parse_string(ret, mem->env_list);
+		ret = ft_check_swap_str(tlk, tlk->key, ret);
+	ft_redirect_check(ret, tlk);
+	tlk->content = ft_parse_string(m, ret, m->env_list);
 	free(ret);
 }
 

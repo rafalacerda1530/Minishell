@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_cd_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/21 16:04:36 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/29 15:21:01 by fbonini          ###   ########.fr       */
+/*   Created: 2022/01/26 15:30:47 by fbonini           #+#    #+#             */
+/*   Updated: 2022/02/01 17:23:01 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
-int	ft_env(t_mem *mem, t_env_list *env_list)
+int	ft_check_cd_arguments(char *str)
 {
-	int			i;
-	t_env_list	aux;
+	int	i;
 
-	i = env_list->total;
-	ft_bzero(&aux, sizeof(aux));
-	aux.last = env_list->last;
-	while (i > 0)
+	i = 0;
+	while (str[i] != '\0')
 	{
-		ft_putstr_fd(aux.last->key, 1);
-		ft_putchar_fd('=', 1);
-		ft_putstr_fd(aux.last->content, 1);
-		ft_putchar_fd('\n', 1);
-		aux.last = aux.last->prev;
-		i--;
+		if (str[i] == ' ')
+			return (1);
+		i++;
 	}
-	mem->all_return = 0;
 	return (0);
+}
+
+void	ft_swap_pwd(char *pwd, char *oldpwd, t_env_list *env_list)
+{
+	ft_srch_and_change(pwd, "OLDPWD", env_list);
+	ft_srch_and_change(oldpwd, "PWD", env_list);
 }

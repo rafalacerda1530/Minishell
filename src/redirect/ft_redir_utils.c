@@ -6,13 +6,13 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 12:06:03 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/29 14:16:29 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/01 17:19:34 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
-void	ft_get_numb_redirect(t_tolken *tolken, t_parse parser, char *ret)
+void	ft_get_nb_redirect(t_tolken *tolken, t_parse parser, char *ret)
 {
 	while (ret[parser.index] != '\0')
 	{
@@ -32,7 +32,7 @@ void	ft_redirect_check(char *ret, t_tolken *tolken)
 	t_parse	parser;
 
 	ft_bzero(&parser, sizeof(t_parse));
-	ft_get_numb_redirect(tolken, parser, ret);
+	ft_get_nb_redirect(tolken, parser, ret);
 	tolken->redir = (int *) malloc (sizeof(int) * tolken->numb_redir);
 	i = 0;
 	while (ret[parser.index] != '\0')
@@ -87,6 +87,8 @@ char	*ft_remove_extra_spaces(char *str)
 
 	i = 0;
 	ret = NULL;
+	while (str[i] == ' ')
+		i++;
 	while (str[i] != '\0')
 	{
 		while (str[i] == ' ' && str[i + 1] == ' ')

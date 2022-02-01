@@ -6,11 +6,11 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 19:30:01 by rarodrig          #+#    #+#             */
-/*   Updated: 2022/01/27 09:55:38 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/01 17:34:37 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 void	sigint_handler(int sig)
 {
@@ -20,17 +20,15 @@ void	sigint_handler(int sig)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-		// g_sh_status = 130;
+		g_last_return = 130;
 	}
-	else if (sig == SIGINT)
-		exit(0);
 }
 
-void	ft_signals(struct sigaction *act, void (*handler)(int), int sig, t_mem *mem)
+void	ft_signals(struct sigaction *act, void (*hand)(int), int sig)
 {
-	act->sa_handler = handler;
+	act->sa_handler = hand;
 	act->sa_flags = 0;
 	sigemptyset(&act->sa_mask);
+	sigaddset(&act->sa_mask, SIGINT);
 	sigaction(sig, act, NULL);
-	(void)mem;
 }

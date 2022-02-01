@@ -6,11 +6,11 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 14:27:46 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/29 14:15:39 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/01 17:35:36 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 char	*ft_create_content(char *copy, char *remove, int len)
 {
@@ -39,7 +39,7 @@ char	*ft_create_content(char *copy, char *remove, int len)
 	return (strings.aux);
 }
 
-void	ft_new_content(t_tolken *tolken, char *aux, char *key, char *file)
+void	ft_new_str(t_tolken *tolken, char *aux, char *key, char *file)
 {
 	char	*remove;
 	char	*copy;

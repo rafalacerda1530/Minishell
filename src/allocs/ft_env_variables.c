@@ -6,11 +6,11 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:08:08 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/26 17:24:18 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/01 17:45:27 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 t_env_list	*ft_alloc_env_list(t_mem *mem)
 {

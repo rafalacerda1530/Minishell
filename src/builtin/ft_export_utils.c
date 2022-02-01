@@ -6,11 +6,11 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 17:54:38 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/26 17:08:13 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/01 17:42:55 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 int	ft_print_export(t_mem *mem, t_env_list *env_list)
 {
@@ -62,7 +62,7 @@ int	ft_new_env(t_mem *mem, char *key, char *content, int i)
 	return (0);
 }
 
-void	ft_export_string(t_mem *mem, t_env_list *env_list, char *content)
+void	ft_export_str(t_mem *mem, t_env_list *env_list, char *content)
 {
 	char	*key;
 	int		i;

@@ -6,11 +6,11 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 15:13:06 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/29 12:56:46 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/01 16:34:16 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 void	ft_get_built_in(t_funct *function)
 {
@@ -49,11 +49,11 @@ int	ft_built_in(int (*funct)(), t_mem *mem, char *str, int key)
 	if (key == 10)
 	{
 		dup2(mem->std_pipe[0], STDIN_FILENO);
-		funct(mem, str);
+		g_last_return = funct(mem, str);
 	}
 	else if (key > 6)
-		funct(str);
+		g_last_return = funct(str);
 	else
-		funct(mem, mem->env_list, str);
+		g_last_return = funct(mem, mem->env_list, str);
 	return (0);
 }

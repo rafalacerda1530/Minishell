@@ -6,11 +6,11 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 18:04:28 by fbonini           #+#    #+#             */
-/*   Updated: 2021/12/29 17:56:00 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/31 14:14:38 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 void	ft_memory_error(void)
 {

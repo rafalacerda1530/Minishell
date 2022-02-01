@@ -6,11 +6,11 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:08:27 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/26 15:45:19 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/01 17:33:43 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 char	**ft_get_env_list(t_env_list *env_list)
 {
@@ -96,31 +96,31 @@ char	**ft_cmd_split(t_tolken *tolken, char *command)
 	return (split);
 }
 
-int	ft_execv(t_mem *mem, t_env_list *env_list, char *command, t_tolken *tolken)
+int	ft_execv(t_mem *mem, t_env_list *lst, char *cmd, t_tolken *tlk)
 {
-	pid_t	pid;
-	char	**envs;
-	char	**split;
-	char	*path;
-	int		result;
+	t_exec	exec;
 
-	envs = ft_get_env_list(env_list);
-	path = ft_find_path(mem, command);
-	split = ft_cmd_split(tolken, command);
-	pid = fork();
-	if (pid == -1)
-		ft_putstr_fd("Failed forking child\n", 2);
-	else if (pid == 0)
+	ft_bzero(&exec, sizeof(t_exec));
+	exec.path = ft_find_path(mem, cmd);
+	if (exec.path == NULL)
 	{
-		if (execve(path, split, envs) == -1)
-			ft_putstr_fd("command not found\n", 2);
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": command not found\n", 2);
+		return (127);
 	}
-	if (path)
-		free(path);
-	if (envs)
-		ft_free_split(envs);
-	if (split)
-		ft_free_split(split);
-	waitpid(pid, &result, 0);
-	return (0);
+	exec.envs = ft_get_env_list(lst);
+	exec.split = ft_cmd_split(tlk, cmd);
+	exec.pid = fork();
+	if (exec.pid == -1)
+		ft_putstr_fd("Failed forking child\n", 2);
+	else if (exec.pid == 0)
+	{
+		if (execve(exec.path, exec.split, exec.envs) == -1)
+			ft_putendl_fd(strerror(errno), 2);
+	}
+	ft_free_execv(exec.envs, exec.split, exec.path);
+	waitpid(exec.pid, &exec.result, 0);
+	if (WIFEXITED(exec.result))
+		return (WEXITSTATUS(exec.result));
+	return (exec.result);
 }

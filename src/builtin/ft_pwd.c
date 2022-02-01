@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_std.c                                           :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/26 14:02:59 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/26 14:03:14 by fbonini          ###   ########.fr       */
+/*   Created: 2021/12/21 16:09:19 by coder             #+#    #+#             */
+/*   Updated: 2022/01/31 14:16:01 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
-void	ft_copy_stds(t_mem *mem)
+int	ft_pwd(void)
 {
-	mem->std_pipe[0] = dup(STDIN_FILENO);
-	mem->std_pipe[1] = dup(STDOUT_FILENO);
-}
+	char	path[4096];
+	char	*result;
 
-void	ft_reset_stds(t_mem *mem)
-{
-	dup2(mem->std_pipe[0], STDIN_FILENO);
-	dup2(mem->std_pipe[1], STDOUT_FILENO);
-}
-
-void	ft_close_copy_stds(t_mem *mem)
-{
-	close(mem->std_pipe[1]);
-	close(mem->std_pipe[0]);
+	result = getcwd(path, 4096);
+	ft_putendl_fd(result, 1);
+	return (0);
 }

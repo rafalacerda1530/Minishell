@@ -6,11 +6,11 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:42:41 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/29 10:47:48 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/01 17:02:37 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 void	ft_read_input(char **input)
 {
@@ -60,7 +60,7 @@ void	ft_make_commands(t_mem *mem, t_tolken *tolken)
 			ft_built_in(mem->built_in->function[i], mem, NULL, i);
 	}
 	else
-		ft_execv(mem, mem->env_list, tolken->key, tolken);
+		g_last_return = ft_execv(mem, mem->env_list, tolken->key, tolken);
 }
 
 void	ft_exec_cmd(t_mem *mem, t_tolken *tolken)
@@ -86,12 +86,12 @@ void	ft_create_shell(t_mem *mem)
 	while (1)
 	{
 		input = NULL;
-		ft_signals(&act, sigint_handler, SIGINT, mem);
+		ft_signals(&act, sigint_handler, SIGINT);
 		ft_read_input(&input);
 		ft_create_history(input);
 		if (input)
 		{
-			ft_fill_tolken_list(mem, mem->tolken_list, input);
+			ft_fill_tlkn_list(mem, mem->tolken_list, input);
 			ft_exec_cmd(mem, mem->tolken_list->first);
 			ft_free_tolken_list(mem->tolken_list);
 			free(input);

@@ -6,11 +6,11 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:04:21 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/26 15:43:08 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/01 14:28:04 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 char	*ft_change_path(char *path, t_env_list *env_list)
 {
@@ -26,7 +26,7 @@ char	*ft_change_path(char *path, t_env_list *env_list)
 	return (new_path);
 }
 
-void	ft_go_to_path(char *path, t_env_list *env_list)
+int	ft_go_to_path(char *path, t_env_list *env_list)
 {
 	char	*pwd;
 	char	new_pwd[4096];
@@ -36,13 +36,16 @@ void	ft_go_to_path(char *path, t_env_list *env_list)
 		path = ft_change_path(path, env_list);
 	if (chdir(path) != 0)
 	{
-		ft_putstr_fd("No such file or directory\n", 2);
-		return ;
+		ft_putstr_fd("Minishell: cd: ", 2);
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		return (1);
 	}
 	new = getcwd(new_pwd, 4096);
 	pwd = ft_get_env("PWD", env_list);
 	ft_swap_pwd(pwd, new, env_list);
 	free(pwd);
+	return (0);
 }
 
 char	*ft_get_path(t_env_list *env_list, char *str)
@@ -65,25 +68,27 @@ char	*ft_get_path(t_env_list *env_list, char *str)
 int	ft_cd(t_mem *mem, t_env_list *env_list, char *str)
 {
 	char	*path;
+	int		ret;
 
 	(void)mem;
 	if (str == NULL)
 	{
 		path = ft_get_env("HOME", env_list);
-		ft_go_to_path(path, env_list);
+		ret = ft_go_to_path(path, env_list);
 		free(path);
-		return (0);
+		return (ret);
 	}
 	while (*str == ' ')
 		str++;
-	if (ft_check_cd_arguments(str))
-	{
+	ret = ft_check_cd_arguments(str);
+	if (ret == 1)
 		ft_putstr_fd("Too many arguments\n", 1);
-		return (1);
+	else
+	{
+		path = ft_get_path(env_list, str);
+		if (path)
+			ret = ft_go_to_path(path, env_list);
+		free(path);
 	}
-	path = ft_get_path(env_list, str);
-	if (path)
-		ft_go_to_path(path, env_list);
-	free(path);
-	return (0);
+	return (ret);
 }

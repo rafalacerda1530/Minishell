@@ -6,31 +6,35 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 17:44:59 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/29 15:32:25 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/01 17:05:14 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
-int	ft_quote_check(char *str, int *i, int quote)
+void	ft_check_return(char **ret, char *str, int *i)
 {
-	if (str[*i] == '"' && (quote == 0 || quote == 2))
+	int		j;
+	int		quote;
+	char	*numb;
+	char	*tmp;
+
+	j = 0;
+	quote = 0;
+	if (str[*i] != '?')
+		return ;
+	numb = ft_itoa(g_last_return);
+	ft_join_string(&tmp, ret, numb);
+	while (str[*i + j] != '\0')
 	{
-		(*i)++;
-		if (quote == 0)
-			return (2);
-		else
-			return (0);
+		quote = ft_quote_check(&str[*i], &j, quote);
+		if ((str[*i + j] == ' ' || str[*i + j] != '\0') && quote == 0)
+			break ;
+		ft_add_char(&tmp, ret, str[*i + j]);
+		j++;
 	}
-	else if (str[*i] == '\'' && (quote == 0 || quote == 1))
-	{
-		(*i)++;
-		if (quote == 0)
-			return (1);
-		else
-			return (0);
-	}
-	return (quote);
+	*i = *i + j;
+	free(numb);
 }
 
 void	ft_check_env(char **ret, char *str, t_env_list *env_list, int *i)
@@ -74,11 +78,12 @@ void	ft_get_home(char **tmp, char **ret, t_env_list *env_list)
 	free(*tmp);
 }
 
-void	ft_env_checks(char *str, t_parse *parser, t_env_list *env_list)
+void	ft_env_checks(t_mem *mem, char *str, t_parse *parser, t_env_list *list)
 {
+	(void)mem;
 	if (str[parser->index] == '~' && ft_true_home(str, parser))
 	{
-		ft_get_home(&parser->aux, &parser->ret, env_list);
+		ft_get_home(&parser->aux, &parser->ret, list);
 		if (str[parser->index + 1] == '/')
 		{
 			parser->index++;
@@ -89,11 +94,12 @@ void	ft_env_checks(char *str, t_parse *parser, t_env_list *env_list)
 	if (str[parser->index] == '$' && ft_true_dollar(str, parser))
 	{
 		parser->index++;
-		ft_check_env(&parser->ret, str, env_list, &parser->index);
+		ft_check_return(&parser->ret, str, &parser->index);
+		ft_check_env(&parser->ret, str, list, &parser->index);
 	}
 }
 
-char	*ft_parse_string(char *str, t_env_list *env_list)
+char	*ft_parse_string(t_mem *mem, char *str, t_env_list *env_list)
 {
 	t_parse	parser;
 
@@ -110,7 +116,7 @@ char	*ft_parse_string(char *str, t_env_list *env_list)
 			if (str[parser.index] != '\0')
 				ft_add_char(&parser.aux, &parser.ret, str[parser.index - 1]);
 		}
-		ft_env_checks(str, &parser, env_list);
+		ft_env_checks(mem, str, &parser, env_list);
 		parser.quote = ft_quote_check(str, &parser.index, parser.quote);
 		if (str[parser.index] != '\0')
 		{

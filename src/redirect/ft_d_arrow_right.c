@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cd_utils.c                                      :+:      :+:    :+:   */
+/*   ft_d_arrow_right.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/26 15:30:47 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/26 15:31:08 by fbonini          ###   ########.fr       */
+/*   Created: 2021/12/21 16:04:29 by fbonini           #+#    #+#             */
+/*   Updated: 2022/01/31 14:14:54 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
-int	ft_check_cd_arguments(char *str)
+int	ft_d_arrow_right(char *file)
 {
-	int	i;
+	int	fd_file;
 
-	i = 0;
-	while (str[i] != '\0')
+	fd_file = open(file, O_WRONLY | O_CREAT | O_APPEND, 0777);
+	if (fd_file == -1)
+		return (-1);
+	else
 	{
-		if (str[i] == ' ')
-			return (1);
-		i++;
+		dup2(fd_file, STDOUT_FILENO);
+		close(fd_file);
 	}
 	return (0);
-}
-
-void	ft_swap_pwd(char *pwd, char *oldpwd, t_env_list *env_list)
-{
-	ft_search_and_change(pwd, "OLDPWD", env_list);
-	ft_search_and_change(oldpwd, "PWD", env_list);
 }

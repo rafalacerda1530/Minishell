@@ -6,11 +6,11 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 14:41:43 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/26 14:33:34 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/01 14:34:02 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 int	ft_flag_n(char **str)
 {
@@ -33,6 +33,7 @@ int	ft_echo(t_mem *mem, t_env_list *env_list, char *str)
 	int		i;
 	int		flag_n;
 
+	(void) mem;
 	(void) env_list;
 	if (!str)
 	{
@@ -46,6 +47,5 @@ int	ft_echo(t_mem *mem, t_env_list *env_list, char *str)
 	ft_putstr_fd(str, 1);
 	if (flag_n == 0)
 		ft_putchar_fd('\n', 1);
-	mem->all_return = 0;
 	return (0);
 }

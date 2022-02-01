@@ -6,11 +6,11 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:04:44 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/29 15:26:31 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/01 17:26:15 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 int	ft_export_key(char *str, char **ret, int i, int *quote)
 {
@@ -121,7 +121,7 @@ int	ft_export(t_mem *mem, t_env_list *env_list, char *content)
 				mem->all_return = -1;
 				return (-1);
 			}
-			ft_export_string(mem, env_list, split[i]);
+			ft_export_str(mem, env_list, split[i]);
 			i++;
 		}
 		ft_free_split(split);

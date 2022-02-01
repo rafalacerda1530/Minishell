@@ -6,11 +6,11 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 15:11:52 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/24 16:36:34 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/31 13:44:01 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 char	**ft_set_keys(t_mem *mem)
 {

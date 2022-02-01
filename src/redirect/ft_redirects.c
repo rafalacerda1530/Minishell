@@ -6,11 +6,11 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 14:04:26 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/29 12:57:13 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/01 17:36:04 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 void	ft_call_redirect(t_mem *mem, t_tolken *tolken, char *str, t_redir *vars)
 {
@@ -24,7 +24,7 @@ void	ft_call_redirect(t_mem *mem, t_tolken *tolken, char *str, t_redir *vars)
 	else
 		file = ft_get_file_name(str, vars->i + i);
 	value = ft_check_key(vars->key, mem->keys);
-	ft_new_content(tolken, vars->aux, vars->key, file);
+	ft_new_str(tolken, vars->aux, vars->key, file);
 	if (value != 11)
 		ft_built_in(mem->built_in->function[value], mem, file, value);
 	else
@@ -66,7 +66,7 @@ int	ft_check_string(t_mem *mem, t_tolken *tolken, char *str, int *j)
 	{
 		vars.tmp = ft_new_tmp(&str[*j - 2], vars.aux, vars.key);
 		ft_built_in(mem->built_in->function[10], mem, vars.tmp, 10);
-		ft_new_content(tolken, vars.aux, vars.key, vars.tmp);
+		ft_new_str(tolken, vars.aux, vars.key, vars.tmp);
 		free(vars.tmp);
 	}
 	else

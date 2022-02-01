@@ -6,11 +6,11 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:10:07 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/26 17:22:12 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/01 17:22:22 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 void	ft_get_env_sizes(int *key_size, int *size, char *envp)
 {
@@ -66,7 +66,7 @@ char	*ft_get_env(char *key, t_env_list *env_list)
 	return (path);
 }
 
-void	ft_search_and_change(char *str, char *key, t_env_list *env_list)
+void	ft_srch_and_change(char *str, char *key, t_env_list *env_list)
 {
 	t_env_list	aux;
 	int			i;
@@ -74,7 +74,6 @@ void	ft_search_and_change(char *str, char *key, t_env_list *env_list)
 	i = env_list->total;
 	ft_bzero(&aux, sizeof(aux));
 	aux.first = env_list->first;
-	(void)str;
 	while (i > 0)
 	{
 		if (!ft_strcmp(aux.first->key, key))

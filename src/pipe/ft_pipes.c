@@ -6,11 +6,11 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 13:40:21 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/26 14:32:49 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/31 14:15:13 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 int	**ft_create_pipes(t_mem *mem)
 {

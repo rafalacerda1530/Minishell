@@ -6,11 +6,11 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:00:31 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/29 13:55:59 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/31 13:44:19 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 t_tolken_list	*ft_alloc_tolken_list(t_mem *mem)
 {
@@ -57,7 +57,7 @@ t_tolken	*ft_alloc_tolken(t_mem *mem, char *input)
 	return (tolken);
 }
 
-void	ft_fill_tolken_list(t_mem *mem, t_tolken_list *tolken_list, char *input)
+void	ft_fill_tlkn_list(t_mem *mem, t_tolken_list *list, char *input)
 {
 	t_tolken	*tolken;
 	size_t		i;
@@ -68,18 +68,18 @@ void	ft_fill_tolken_list(t_mem *mem, t_tolken_list *tolken_list, char *input)
 		while (input[i] == ' ')
 			input++;
 		tolken = ft_alloc_tolken(mem, &input[i]);
-		if (tolken_list->total == 0)
-			tolken_list->last = tolken;
+		if (list->total == 0)
+			list->last = tolken;
 		else
 		{
-			tolken->next = tolken_list->first;
-			tolken_list->first->prev = tolken;
-			tolken->prev = tolken_list->last;
-			tolken_list->last->next = tolken;
+			tolken->next = list->first;
+			list->first->prev = tolken;
+			tolken->prev = list->last;
+			list->last->next = tolken;
 		}
-		tolken_list->first = tolken;
-		tolken_list->total++;
-		i = i + tolken_list->first->size + 2;
+		list->first = tolken;
+		list->total++;
+		i = i + list->first->size + 2;
 	}
 }
 

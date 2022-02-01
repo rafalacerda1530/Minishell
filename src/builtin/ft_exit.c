@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_arrow_left.c                                    :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/21 16:04:02 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/26 15:05:49 by fbonini          ###   ########.fr       */
+/*   Created: 2021/12/21 16:04:40 by fbonini           #+#    #+#             */
+/*   Updated: 2022/02/01 16:32:23 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
-int	ft_arrow_left(char *file)
+void	ft_free_mem(t_mem *mem)
 {
-	int	fd_file;
+	if (mem->tolken_list)
+		ft_free_tolken_list(mem->tolken_list);
+	ft_free_env_list(mem->env_list);
+	free(mem->built_in);
+	free(mem->keys);
+}
 
-	fd_file = open(file, O_RDONLY);
-	if (fd_file == -1)
-		return (-1);
-	else
-	{
-		dup2(fd_file, STDIN_FILENO);
-		close(fd_file);
-	}
-	return (0);
+int	ft_exit(t_mem *mem, int ret)
+{
+	if (mem->tolken_list->total > 1)
+		return (0);
+	ft_free_mem(mem);
+	rl_clear_history();
+	exit(ret);
 }

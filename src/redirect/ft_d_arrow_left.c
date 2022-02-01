@@ -6,11 +6,11 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:04:25 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/29 12:48:03 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/01/31 14:14:49 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 void	ft_read_here_input(char **input, char *eof)
 {
