@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tolken_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
+/*   By: coder <coder@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:02:17 by fbonini           #+#    #+#             */
-/*   Updated: 2022/02/01 19:46:27 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/02 00:37:08 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,14 @@ void	ft_tolken_content(t_mem *m, t_tolken *tlk, int len, char *str)
 			ft_add_char(&tmp, &ret, str[i]);
 		i++;
 	}
-	i = ft_check_key(tlk->key, m->keys);
-	if (i > 6 && i < 12)
-		ret = ft_check_swap_str(tlk, tlk->key, ret);
-	ft_redirect_check(ret, tlk);
-	tlk->content = ft_parse_string(m, ret, m->env_list);
+	if (tlk->key != NULL)
+	{
+		i = ft_check_key(tlk->key, m->keys);
+		if (i > 6 && i < 12)
+			ret = ft_check_swap_str(tlk, tlk->key, ret);
+		ft_redirect_check(ret, tlk);
+		tlk->content = ft_parse_string(m, ret, m->env_list);
+	}
 	free(ret);
 }
 

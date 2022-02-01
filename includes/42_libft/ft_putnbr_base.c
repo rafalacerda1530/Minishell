@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-void 	ft_putnbr_base(unsigned int num, char *base, int fd)
+void	ft_putnbr_base(unsigned int num, char *base, int fd)
 {
 	size_t	len_base;
 
