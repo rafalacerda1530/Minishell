@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:16:58 by Rarodrig          #+#    #+#             */
-/*   Updated: 2022/02/01 17:35:09 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/01 18:03:44 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@
 extern int	g_last_return;
 
 typedef int	(*t_funct)();
+
+typedef struct s_built_in
+{
+	t_funct	function[MAX_KEYS];
+}			t_built_in;
 
 typedef struct s_exec
 {
@@ -55,11 +60,6 @@ typedef struct s_parse
 	char	*ret;
 	char	*aux;
 }			t_parse;
-
-typedef struct s_built_in
-{
-	t_funct	function[MAX_KEYS];
-}			t_built_in;
 
 typedef struct s_env
 {
@@ -105,6 +105,14 @@ typedef struct s_mem
 	t_tolken_list	*tolken_list;
 }			t_mem;
 
+/*
+	Shell
+*/
+void			ft_create_shell(t_mem *mem);
+
+/*
+	Alloc functions
+*/
 t_tolken_list	*ft_alloc_tolken_list(t_mem *mem);
 t_env_list		*ft_alloc_env_list(t_mem *mem);
 t_env			*ft_alloc_env(t_mem *mem, char *envp);
@@ -114,8 +122,9 @@ void			ft_create_env_str(t_env *env, int key, int content, char *envp);
 void			ft_get_env_sizes(int *key, int *content, char *envp);
 char			**ft_set_keys(t_mem *mem);
 
-void			ft_create_shell(t_mem *mem);
-
+/*
+	Tolken list functions
+*/
 void			ft_fill_tlkn_list(t_mem *mem, t_tolken_list *list, char *input);
 void			ft_get_tolken_sizes(int *i, int *j, char *input);
 void			ft_tolken_key(t_mem *mem, t_tolken *tlk, int len, char *str);
@@ -124,16 +133,13 @@ void			ft_tolken_string(char **str, char *key, char *content);
 void			ft_redirect_check(char *ret, t_tolken *tolken);
 void			ft_get_nb_redirect(t_tolken *tolken, t_parse parser, char *ret);
 
-int				ft_check_key(char *str, char **keys);
-int				ft_built_in(int (*funct)(), t_mem *mem, char *str, int key);
-
 void			ft_free_tolken_list(t_tolken_list *tolken_list);
-void			ft_free_env_list(t_env_list *env_list);
 char			*ft_get_env(char *key, t_env_list *env_list);
 void			ft_srch_and_change(char *str, char *key, t_env_list *env_list);
-void			ft_free_mem(t_mem *mem);
-void			ft_free_env(t_env_list *env_list, t_env *env);
 
+/*
+	Parse functions
+*/
 char			*ft_strjoin_first(char c);
 char			*ft_strjoin_char(char *s1, char const c);
 void			ft_join_string(char **tmp, char **ret, char *str);
@@ -148,21 +154,32 @@ int				ft_true_dollar(char *str, t_parse *parser);
 int				ft_true_home(char *str, t_parse *parser);
 int				ft_quote_check(char *str, int *i, int quote);
 
-int				ft_echo(t_mem *mem, t_env_list *env_list, char *str);
+/*
+	Free functions
+*/
+void			ft_free_env(t_env_list *env_list, t_env *env);
+void			ft_free_env_list(t_env_list *env_list);
+void			ft_free_split(char **split);
+void			ft_free_two_to_four(char *s1, char *s2, char *s3, char *s4);
+void			ft_free_mem(t_mem *mem);
 
 /*
-	Built-in cd functions
+	Execute Built-in functions
 */
+int				ft_check_key(char *str, char **keys);
+int				ft_built_in(int (*funct)(), t_mem *mem, char *str, int key);
+void			ft_make_commands(t_mem *mem, t_tolken *tolken);
+
+/*
+	Built-in functions
+*/
+int				ft_echo(t_mem *mem, t_env_list *env_list, char *str);
+
 int				ft_cd(t_mem *mem, t_env_list *env_list, char *str);
 void			ft_swap_pwd(char *pwd, char *oldpwd, t_env_list *env_list);
 int				ft_check_cd_arguments(char *str);
 
 int				ft_pwd(void);
-
-int				ft_arrow_left(char *file);
-int				ft_arrow_right(char *file);
-int				ft_d_arrow_left(t_mem *mem, char *eof);
-int				ft_d_arrow_right(char *file);
 
 int				ft_env(t_mem *mem, t_env_list *env_list);
 int				ft_exit(t_mem *mem, int ret);
@@ -173,19 +190,21 @@ void			ft_export_str(t_mem *mem, t_env_list *env_list, char *content);
 int				ft_new_env(t_mem *mem, char *key, char *content, int i);
 int				ft_print_export(t_mem *mem, t_env_list *env_list);
 
-void			ft_free_split(char **split);
-void			ft_free_two_to_four(char *s1, char *s2, char *s3, char *s4);
-void			ft_free_execv(char **env, char **split, char *path);
-
 int				ft_unset(t_mem *mem, t_env_list *env_list, char *key);
 
+/*
+	Execve Functions
+*/
+
+int				ft_execv(t_mem *mem, t_env_list *lst, char *cmd, t_tolken *tlk);
+void			ft_free_execv(char **env, char **split, char *path);
+
+/*
+	Error Functions
+*/
 void			ft_key_error(char *str);
 void			ft_content_error(void);
 void			ft_memory_error(void);
-
-int				ft_execv(t_mem *mem, t_env_list *lst, char *cmd, t_tolken *tlk);
-
-void			ft_make_commands(t_mem *mem, t_tolken *tolken);
 
 /*
 	Signal Functions
@@ -204,6 +223,11 @@ void			ft_pipe_cmd(t_mem *mem);
 /*
 	Redirect functions
 */
+int				ft_arrow_left(char *file);
+int				ft_arrow_right(char *file);
+int				ft_d_arrow_left(t_mem *mem, char *eof);
+int				ft_d_arrow_right(char *file);
+
 int				ft_redirects(t_mem *mem, t_tolken *tolken, char *str);
 int				ft_valid_redir(char *key);
 char			*ft_str_remove(char *key, char *aux, char *file);
