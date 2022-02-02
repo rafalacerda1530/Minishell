@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 12:06:03 by fbonini           #+#    #+#             */
-/*   Updated: 2022/02/01 17:19:34 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/01 21:02:29 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_redirect_check(char *ret, t_tolken *tolken)
 	i = 0;
 	while (ret[parser.index] != '\0')
 	{
-		ft_quote_check(ret, &parser.index, parser.quote);
+		parser.quote = ft_quote_check(ret, &parser.index, parser.quote);
 		if (ret[parser.index] == '>' || ret[parser.index] == '<')
 		{
 			if (parser.quote == 0)
