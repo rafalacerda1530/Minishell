@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:04:55 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/31 14:16:05 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/02 15:28:46 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	ft_unset(t_mem *mem, t_env_list *env_list, char *key)
 	char		**split;
 	int			i;
 
+	(void)mem;
 	ft_bzero(&aux, sizeof(aux));
 	aux.last = env_list->last;
 	split = ft_split(key, ' ');
@@ -47,6 +48,5 @@ int	ft_unset(t_mem *mem, t_env_list *env_list, char *key)
 		i++;
 	}
 	ft_free_split(split);
-	mem->all_return = 0;
 	return (0);
 }

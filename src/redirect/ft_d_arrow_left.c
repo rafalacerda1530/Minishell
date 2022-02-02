@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:04:25 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/31 14:14:49 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/02 14:24:06 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,12 @@ void	ft_read_here_input(char **input, char *eof)
 
 void	start_prompt(int fd, char *eof)
 {
-	char	*input;
+	char				*input;
+	struct sigaction	act;
 
 	while (1)
 	{
+		ft_signals(&act, ft_sigint_heredoc, SIGINT);
 		ft_read_here_input(&input, eof);
 		if (input)
 		{
@@ -80,7 +82,6 @@ int	ft_d_arrow_left(t_mem *mem, char *eof)
 		return (-1);
 	save_fd = dup(STDOUT_FILENO);
 	dup2(mem->std_pipe[1], STDOUT_FILENO);
-	(void)mem;
 	pid = fork();
 	if (pid == 0)
 		start_prompt(tmp_fd, eof);
@@ -88,5 +89,8 @@ int	ft_d_arrow_left(t_mem *mem, char *eof)
 	ft_make_tmp_file_input();
 	dup2(save_fd, STDOUT_FILENO);
 	close(save_fd);
-	return (0);
+	if (WEXITSTATUS(status) == 142)
+		return (130);
+	else
+		return (0);
 }

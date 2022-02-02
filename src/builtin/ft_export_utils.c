@@ -6,13 +6,13 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 17:54:38 by fbonini           #+#    #+#             */
-/*   Updated: 2022/02/01 17:42:55 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/02 15:32:01 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_print_export(t_mem *mem, t_env_list *env_list)
+int	ft_print_export(t_env_list *env_list)
 {
 	int			i;
 	t_env_list	aux;
@@ -34,7 +34,6 @@ int	ft_print_export(t_mem *mem, t_env_list *env_list)
 		aux.last = aux.last->prev;
 		i--;
 	}
-	mem->all_return = 0;
 	return (0);
 }
 

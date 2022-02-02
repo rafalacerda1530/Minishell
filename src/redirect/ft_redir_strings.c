@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 14:27:46 by fbonini           #+#    #+#             */
-/*   Updated: 2022/02/01 17:35:36 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/02 10:51:59 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,25 @@ int	ft_break_str(t_redir *vars, char *str, int j)
 		ft_add_char(&vars->tmp, &vars->key, vars->aux[i]);
 		i++;
 	}
-	if (!ft_valid_redir(vars->key))
-		ft_free_two_to_four(vars->key, vars->aux, NULL, NULL);
 	return (j);
+}
+
+char	*ft_new_tmp(char *str, char *aux, char *key)
+{
+	int		i;
+	char	*ret;
+	char	*tmp;
+
+	ret = NULL;
+	tmp = NULL;
+	if (ft_strcmp(aux, key) == 0)
+		i = 3;
+	else
+		i = 1;
+	while (str[i] != ' ' && str[i] != '\0')
+	{
+		ft_add_char(&tmp, &ret, str[i]);
+		i++;
+	}
+	return (ret);
 }

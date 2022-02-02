@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 12:06:03 by fbonini           #+#    #+#             */
-/*   Updated: 2022/02/01 21:02:29 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/02 15:19:20 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,25 @@ void	ft_redirect_check(char *ret, t_tolken *tolken)
 			else
 				tolken->redir[i] = 0;
 			while (ret[parser.index] != ' ')
+			{
 				parser.index++;
+				parser.quote = ft_quote_check(ret, &parser.index, parser.quote);
+			}
 			i++;
 		}
 		parser.index++;
 	}
 }
 
-int	ft_valid_redir(char *key)
+int	ft_valid_redir(char *key, char *aux)
 {
 	if (ft_strlen(key) > 2)
 		return (0);
 	if (key[0] == '>' && key[1] == '<')
+		return (0);
+	if (aux[0] == '\0')
+		return (0);
+	if (aux[0] == '>' || aux[0] == '<')
 		return (0);
 	return (1);
 }

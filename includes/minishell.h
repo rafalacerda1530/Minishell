@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:16:58 by Rarodrig          #+#    #+#             */
-/*   Updated: 2022/02/01 18:03:44 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/02 15:35:55 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,12 @@ typedef struct s_built_in
 
 typedef struct s_exec
 {
-	pid_t	pid;
-	char	**envs;
-	char	**split;
-	char	*path;
-	int		result;
+	pid_t				pid;
+	char				**envs;
+	char				**split;
+	char				*path;
+	int					result;
+	struct sigaction	act;
 }			t_exec;
 
 typedef struct s_redir
@@ -98,7 +99,6 @@ typedef struct s_tolken_list
 typedef struct s_mem
 {
 	char			**keys;
-	int				all_return;
 	int				std_pipe[2];
 	t_built_in		*built_in;
 	t_env_list		*env_list;
@@ -188,7 +188,7 @@ int				ft_export(t_mem *mem, t_env_list *env_list, char *content);
 int				ft_invalid_key(char *str, int i, int quoted);
 void			ft_export_str(t_mem *mem, t_env_list *env_list, char *content);
 int				ft_new_env(t_mem *mem, char *key, char *content, int i);
-int				ft_print_export(t_mem *mem, t_env_list *env_list);
+int				ft_print_export(t_env_list *env_list);
 
 int				ft_unset(t_mem *mem, t_env_list *env_list, char *key);
 
@@ -203,6 +203,7 @@ void			ft_free_execv(char **env, char **split, char *path);
 	Error Functions
 */
 void			ft_key_error(char *str);
+void			ft_path_error(char *cmd);
 void			ft_content_error(void);
 void			ft_memory_error(void);
 
@@ -210,7 +211,9 @@ void			ft_memory_error(void);
 	Signal Functions
 */
 void			ft_signals(struct sigaction *act, void (*hand)(int), int sig);
-void			sigint_handler(int sig);
+void			ft_sigint_heredoc(int sig);
+void			ft_sigint_handler(int sig);
+void			ft_sigint_exec(int sig);
 
 /*
 	Pipe Functions
@@ -229,9 +232,10 @@ int				ft_d_arrow_left(t_mem *mem, char *eof);
 int				ft_d_arrow_right(char *file);
 
 int				ft_redirects(t_mem *mem, t_tolken *tolken, char *str);
-int				ft_valid_redir(char *key);
+int				ft_valid_redir(char *key, char *aux);
 char			*ft_str_remove(char *key, char *aux, char *file);
 char			*ft_create_content(char *copy, char *remove, int len);
+char			*ft_new_tmp(char *str, char *aux, char *key);
 void			ft_new_str(t_tolken *tolken, char *aux, char *key, char *file);
 char			*ft_get_file_name(char *str, int index);
 int				ft_break_str(t_redir *vars, char *str, int j);

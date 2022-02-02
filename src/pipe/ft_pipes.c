@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 13:40:21 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/31 14:15:13 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/02 15:24:51 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,11 @@ void	ft_pipe_cmd(t_mem *mem)
 	{
 		ft_send_pipes(mem, fd_pipe, i);
 		if (ft_redirects(mem, tolken, tolken->content) == -1)
+		{
+			ft_putendl_fd("bash: syntax error near unexpected token", 2);
+			g_last_return = 2;
 			break ;
+		}
 		ft_make_commands(mem, tolken);
 		tolken = tolken->prev;
 		i++;

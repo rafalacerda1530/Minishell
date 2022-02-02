@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 14:04:26 by fbonini           #+#    #+#             */
-/*   Updated: 2022/02/01 17:36:04 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/02 10:50:35 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	ft_call_redirect(t_mem *mem, t_tolken *tolken, char *str, t_redir *vars)
 		file = ft_get_file_name(str, vars->i + i + 1);
 	else
 		file = ft_get_file_name(str, vars->i + i);
+	if (!file)
+		return ;
 	value = ft_check_key(vars->key, mem->keys);
 	ft_new_str(tolken, vars->aux, vars->key, file);
 	if (value != 11)
@@ -35,27 +37,23 @@ void	ft_call_redirect(t_mem *mem, t_tolken *tolken, char *str, t_redir *vars)
 	free(file);
 }
 
-char	*ft_new_tmp(char *str, char *aux, char *key)
+int	ft_check_string(char *str, int *j)
 {
-	int		i;
-	char	*ret;
-	char	*tmp;
+	t_redir	vars;
 
-	ret = NULL;
-	tmp = NULL;
-	if (ft_strcmp(aux, key) == 0)
-		i = 3;
-	else
-		i = 1;
-	while (str[i] != ' ' && str[i] != '\0')
+	ft_bzero(&vars, sizeof(t_redir));
+	vars.i = *j;
+	*j = ft_break_str(&vars, str, *j);
+	if (!ft_valid_redir(vars.key, &str[*j]))
 	{
-		ft_add_char(&tmp, &ret, str[i]);
-		i++;
+		ft_free_two_to_four(vars.key, vars.aux, NULL, NULL);
+		return (0);
 	}
-	return (ret);
+	ft_free_two_to_four(vars.key, vars.aux, NULL, NULL);
+	return (1);
 }
 
-int	ft_check_string(t_mem *mem, t_tolken *tolken, char *str, int *j)
+int	ft_pick_redir(t_mem *mem, t_tolken *tolken, char *str, int *j)
 {
 	t_redir	vars;
 
@@ -75,6 +73,30 @@ int	ft_check_string(t_mem *mem, t_tolken *tolken, char *str, int *j)
 	return (1);
 }
 
+void	ft_loop_redirs(t_mem *mem, t_tolken *tolken, char *str)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (i < tolken->numb_redir && str[j] != '\0')
+	{
+		if (str[j] == '>' || str[j] == '<')
+		{
+			if (tolken->redir[i] == 0)
+			{
+				while (str[j] != ' ' && str[j + 1] != '\0')
+					j++;
+			}
+			else if (tolken->redir[i] == 1)
+				ft_pick_redir(mem, tolken, str, &j);
+			i++;
+		}
+		j++;
+	}
+}
+
 int	ft_redirects(t_mem *mem, t_tolken *tolken, char *str)
 {
 	int	i;
@@ -90,15 +112,16 @@ int	ft_redirects(t_mem *mem, t_tolken *tolken, char *str)
 			{
 				while (str[j] != ' ' && str[j + 1] != '\0')
 					j++;
-				i++;
 			}
 			else if (tolken->redir[i] == 1)
 			{
-				if (!ft_check_string(mem, tolken, str, &j))
+				if (!ft_check_string(str, &j))
 					return (-1);
 			}
+			i++;
 		}
 		j++;
 	}
+	ft_loop_redirs(mem, tolken, str);
 	return (1);
 }

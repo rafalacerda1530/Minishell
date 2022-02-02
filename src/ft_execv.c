@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:08:27 by fbonini           #+#    #+#             */
-/*   Updated: 2022/02/01 17:33:43 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/02 15:10:06 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,15 @@ char	*ft_find_path(t_mem *mem, char *command)
 	split = ft_split(path, ':');
 	i = 0;
 	ret = NULL;
-	while (split[i])
+	while (split[i] && ret == NULL)
 	{
 		ret = ft_command_check(split[i], command);
-		if (ret)
-			break ;
 		i++;
 	}
 	free(path);
 	ft_free_split(split);
+	if (ret == NULL)
+		ft_path_error(command);
 	return (ret);
 }
 
@@ -98,18 +98,15 @@ char	**ft_cmd_split(t_tolken *tolken, char *command)
 
 int	ft_execv(t_mem *mem, t_env_list *lst, char *cmd, t_tolken *tlk)
 {
-	t_exec	exec;
+	t_exec				exec;
 
 	ft_bzero(&exec, sizeof(t_exec));
 	exec.path = ft_find_path(mem, cmd);
 	if (exec.path == NULL)
-	{
-		ft_putstr_fd(cmd, 2);
-		ft_putstr_fd(": command not found\n", 2);
 		return (127);
-	}
 	exec.envs = ft_get_env_list(lst);
 	exec.split = ft_cmd_split(tlk, cmd);
+	ft_signals(&exec.act, ft_sigint_exec, SIGINT);
 	exec.pid = fork();
 	if (exec.pid == -1)
 		ft_putstr_fd("Failed forking child\n", 2);
