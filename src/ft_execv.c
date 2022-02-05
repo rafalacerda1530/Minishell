@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execv.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbonini- <fbonini-@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:08:27 by fbonini           #+#    #+#             */
-/*   Updated: 2022/02/05 19:51:05 by fbonini-         ###   ########.fr       */
+/*   Updated: 2022/02/05 16:30:43 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,14 @@ char	*ft_command_check(char *split, char *command)
 	char		*begin;
 	char		*full;
 
-	begin = ft_strjoin_char(split, '/');
-	full = ft_strjoin(begin, command);
-	free(begin);
+	if (command[0] != '/')
+	{
+		begin = ft_strjoin_char(split, '/');
+		full = ft_strjoin(begin, command);
+		free(begin);
+	}
+	else
+		full = ft_strdup(command);
 	if (stat(full, &buffer) != 0)
 	{
 		free(full);
