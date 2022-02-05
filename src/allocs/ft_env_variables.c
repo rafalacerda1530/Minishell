@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:08:08 by fbonini           #+#    #+#             */
-/*   Updated: 2022/02/01 17:45:27 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/05 17:05:49 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_env_list	*ft_alloc_env_list(t_mem *mem)
 	if (!env_list)
 	{
 		ft_memory_error();
-		ft_exit(mem, 2);
+		ft_exit(mem, mem->env_list, "2");
 	}
 	env_list->first = NULL;
 	env_list->last = NULL;
@@ -41,13 +41,13 @@ t_env	*ft_alloc_env(t_mem *mem, char *envp)
 	if (!env)
 	{
 		ft_memory_error();
-		ft_exit(mem, 2);
+		ft_exit(mem, mem->env_list, "2");
 	}
 	ft_create_env_str(env, key_size, content_size, envp);
 	if (!env->key || !env->content)
 	{
 		ft_memory_error();
-		ft_exit(mem, 2);
+		ft_exit(mem, mem->env_list, "2");
 	}
 	env->next = env;
 	env->prev = env;

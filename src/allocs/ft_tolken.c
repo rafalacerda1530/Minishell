@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:00:31 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/31 13:44:19 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/05 17:06:16 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_tolken_list	*ft_alloc_tolken_list(t_mem *mem)
 	if (!tolken_list)
 	{
 		ft_memory_error();
-		ft_exit(mem, 2);
+		ft_exit(mem, mem->env_list, "2");
 	}
 	tolken_list->first = NULL;
 	tolken_list->last = NULL;
@@ -41,7 +41,7 @@ t_tolken	*ft_alloc_tolken(t_mem *mem, char *input)
 	if (!tolken)
 	{
 		ft_memory_error();
-		ft_exit(mem, 2);
+		ft_exit(mem, mem->env_list, "2");
 	}
 	ft_bzero(tolken, sizeof(t_tolken));
 	ft_tolken_key(mem, tolken, key, input);

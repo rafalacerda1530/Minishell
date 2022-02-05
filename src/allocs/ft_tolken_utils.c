@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:02:17 by fbonini           #+#    #+#             */
-/*   Updated: 2022/02/02 15:21:15 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/05 17:06:05 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_tolken_key(t_mem *mem, t_tolken *tlk, int len, char *str)
 	if (!tmp)
 	{
 		ft_memory_error();
-		ft_exit(mem, 2);
+		ft_exit(mem, mem->env_list, "2");
 	}
 	ft_strlcpy(tmp, str, len + 1);
 	tlk->key = ft_parse_string(mem, tmp, mem->env_list);

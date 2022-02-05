@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 15:11:52 by fbonini           #+#    #+#             */
-/*   Updated: 2022/01/31 13:44:01 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/05 17:05:55 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**ft_set_keys(t_mem *mem)
 	if (!keys)
 	{
 		ft_memory_error();
-		ft_exit(mem, 2);
+		ft_exit(mem, mem->env_list, "2");
 	}
 	keys[i] = "echo";
 	keys[++i] = "cd";

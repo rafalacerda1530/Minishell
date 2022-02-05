@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:16:58 by Rarodrig          #+#    #+#             */
-/*   Updated: 2022/02/05 15:39:17 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/05 17:04:54 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ int				ft_check_cd_arguments(char *str);
 int				ft_pwd(void);
 
 int				ft_env(t_mem *mem, t_env_list *env_list);
-int				ft_exit(t_mem *mem, int ret);
+int				ft_exit(t_mem *mem, t_env_list *list, char *ret);
 
 int				ft_export(t_mem *mem, t_env_list *env_list, char *content);
 int				ft_invalid_key(char *str, int i, int quoted);

@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:04:40 by fbonini           #+#    #+#             */
-/*   Updated: 2022/02/01 16:32:23 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/05 17:08:17 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,17 @@ void	ft_free_mem(t_mem *mem)
 	free(mem->keys);
 }
 
-int	ft_exit(t_mem *mem, int ret)
+int	ft_exit(t_mem *mem, t_env_list *list, char *ret)
 {
+	int	the_exit;
+
+	(void)list;
+	the_exit = 0;
+	if (ret)
+		the_exit = ft_atoi(ret);
 	if (mem->tolken_list->total > 1)
-		return (0);
+		return (the_exit);
 	ft_free_mem(mem);
 	rl_clear_history();
-	exit(ret);
+	exit(the_exit);
 }

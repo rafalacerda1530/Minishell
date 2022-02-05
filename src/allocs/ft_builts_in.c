@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 15:13:06 by fbonini           #+#    #+#             */
-/*   Updated: 2022/02/01 16:34:16 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/05 17:09:05 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_built_in	*ft_alloc_built_in(t_mem *mem)
 	if (!built)
 	{
 		ft_memory_error();
-		ft_exit(mem, 2);
+		ft_exit(mem, mem->env_list, "2");
 	}
 	ft_get_built_in(&built->function[0]);
 	return (built);
