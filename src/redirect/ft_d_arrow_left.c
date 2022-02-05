@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_d_arrow_left.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fbonini- <fbonini-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:04:25 by fbonini           #+#    #+#             */
-/*   Updated: 2022/02/02 14:24:06 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/02 20:30:41 by fbonini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_read_here_input(char **input, char *eof)
 	}
 }
 
-void	start_prompt(int fd, char *eof)
+void	ft_start_prompt(int fd, char *eof)
 {
 	char				*input;
 	struct sigaction	act;
@@ -50,7 +50,7 @@ void	start_prompt(int fd, char *eof)
 	exit(0);
 }
 
-int	create_temporary(void)
+int	ft_create_temporary(void)
 {
 	int	fd;
 
@@ -72,24 +72,27 @@ void	ft_make_tmp_file_input(void)
 
 int	ft_d_arrow_left(t_mem *mem, char *eof)
 {
-	int		tmp_fd;
-	int		save_fd;
-	int		pid;
-	int		status;
+	int					tmp_fd;
+	int					save_fd;
+	int					pid;
+	int					status;
+	struct sigaction	act;
 
-	tmp_fd = create_temporary();
+	tmp_fd = ft_create_temporary();
 	if (tmp_fd == -1)
 		return (-1);
+	ft_signals(&act, SIG_IGN, SIGINT);
+	ft_signals(&act, SIG_IGN, SIGQUIT);
 	save_fd = dup(STDOUT_FILENO);
 	dup2(mem->std_pipe[1], STDOUT_FILENO);
 	pid = fork();
 	if (pid == 0)
-		start_prompt(tmp_fd, eof);
+		ft_start_prompt(tmp_fd, eof);
 	waitpid(pid, &status, 0);
 	ft_make_tmp_file_input();
 	dup2(save_fd, STDOUT_FILENO);
 	close(save_fd);
-	if (WEXITSTATUS(status) == 142)
+	if (!WIFEXITED(status))
 		return (130);
 	else
 		return (0);

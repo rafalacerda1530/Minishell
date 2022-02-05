@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 01:16:58 by Rarodrig          #+#    #+#             */
-/*   Updated: 2022/02/02 15:35:55 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/05 15:39:17 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,7 @@ void			ft_signals(struct sigaction *act, void (*hand)(int), int sig);
 void			ft_sigint_heredoc(int sig);
 void			ft_sigint_handler(int sig);
 void			ft_sigint_exec(int sig);
+void			ft_sigquit_exec(int sig);
 
 /*
 	Pipe Functions

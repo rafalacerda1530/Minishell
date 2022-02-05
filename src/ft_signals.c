@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signals.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fbonini- <fbonini-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 19:30:01 by rarodrig          #+#    #+#             */
-/*   Updated: 2022/02/02 15:40:15 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/05 19:51:27 by fbonini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,14 @@ void	ft_sigint_exec(int sig)
 {
 	(void)sig;
 	g_last_return = 130;
-	ft_putchar_fd('\n', 3);
+	ft_putchar_fd('\n', 2);
+}
+
+void	ft_sigquit_exec(int sig)
+{
+	(void)sig;
+	g_last_return = 131;
+	ft_putstr_fd("Quit (core dumped)\n", 2);
 }
 
 void	ft_sigint_heredoc(int sig)

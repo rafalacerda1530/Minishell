@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execv.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fbonini- <fbonini-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:08:27 by fbonini           #+#    #+#             */
-/*   Updated: 2022/02/02 15:10:06 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/05 19:51:05 by fbonini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,9 @@ int	ft_execv(t_mem *mem, t_env_list *lst, char *cmd, t_tolken *tlk)
 		return (127);
 	exec.envs = ft_get_env_list(lst);
 	exec.split = ft_cmd_split(tlk, cmd);
-	ft_signals(&exec.act, ft_sigint_exec, SIGINT);
 	exec.pid = fork();
+	ft_signals(&exec.act, ft_sigquit_exec, SIGQUIT);
+	ft_signals(&exec.act, ft_sigint_exec, SIGINT);
 	if (exec.pid == -1)
 		ft_putstr_fd("Failed forking child\n", 2);
 	else if (exec.pid == 0)

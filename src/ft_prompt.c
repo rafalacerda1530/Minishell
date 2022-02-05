@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_prompt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fbonini- <fbonini-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 11:42:41 by fbonini           #+#    #+#             */
-/*   Updated: 2022/02/02 15:25:20 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/02 20:14:18 by fbonini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	ft_create_shell(t_mem *mem)
 	{
 		input = NULL;
 		ft_signals(&act, ft_sigint_handler, SIGINT);
+		ft_signals(&act, SIG_IGN, SIGQUIT);
 		ft_read_input(&input);
 		ft_create_history(input);
 		if (input)

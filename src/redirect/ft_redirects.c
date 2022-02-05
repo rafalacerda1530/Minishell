@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 14:04:26 by fbonini           #+#    #+#             */
-/*   Updated: 2022/02/02 10:50:35 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/05 15:18:24 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,27 @@
 
 void	ft_call_redirect(t_mem *mem, t_tolken *tolken, char *str, t_redir *vars)
 {
-	char	*file;
+	char	*name;
 	size_t	i;
 	int		value;
 
 	i = ft_strlen(vars->key);
 	if (strcmp(vars->aux, vars->key) == 0)
-		file = ft_get_file_name(str, vars->i + i + 1);
+		name = ft_get_file_name(str, vars->i + i + 1);
 	else
-		file = ft_get_file_name(str, vars->i + i);
-	if (!file)
+		name = ft_get_file_name(str, vars->i + i);
+	if (!name)
 		return ;
 	value = ft_check_key(vars->key, mem->keys);
-	ft_new_str(tolken, vars->aux, vars->key, file);
+	ft_new_str(tolken, vars->aux, vars->key, name);
 	if (value != 11)
-		ft_built_in(mem->built_in->function[value], mem, file, value);
+		ft_built_in(mem->built_in->function[value], mem, name, value);
 	else
 	{
-		ft_arrow_left(file);
-		ft_arrow_right(file);
+		ft_arrow_left(name);
+		ft_arrow_right(name);
 	}
-	free(file);
+	free(name);
 }
 
 int	ft_check_string(char *str, int *j)

@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 12:06:03 by fbonini           #+#    #+#             */
-/*   Updated: 2022/02/02 15:19:20 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/05 15:13:14 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_redirect_check(char *ret, t_tolken *tolken)
 				tolken->redir[i] = 1;
 			else
 				tolken->redir[i] = 0;
-			while (ret[parser.index] != ' ')
+			while (ret[parser.index] != ' ' && ret[parser.index] == '\0')
 			{
 				parser.index++;
 				parser.quote = ft_quote_check(ret, &parser.index, parser.quote);
@@ -68,7 +68,7 @@ int	ft_valid_redir(char *key, char *aux)
 	return (1);
 }
 
-char	*ft_str_remove(char *key, char *aux, char *file)
+char	*ft_str_remove(char *key, char *aux, char *name)
 {
 	char	*remove;
 	char	*tmp;
@@ -78,9 +78,9 @@ char	*ft_str_remove(char *key, char *aux, char *file)
 	if (ft_strcmp(aux, key) == 0)
 		ft_add_char(&tmp, &remove, ' ');
 	i = 0;
-	while (file[i] != '\0')
+	while (name[i] != '\0')
 	{
-		ft_add_char(&tmp, &remove, file[i]);
+		ft_add_char(&tmp, &remove, name[i]);
 		i++;
 	}
 	return (remove);

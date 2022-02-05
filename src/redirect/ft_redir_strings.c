@@ -6,7 +6,7 @@
 /*   By: fbonini <fbonini@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 14:27:46 by fbonini           #+#    #+#             */
-/*   Updated: 2022/02/02 10:51:59 by fbonini          ###   ########.fr       */
+/*   Updated: 2022/02/05 15:28:00 by fbonini          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	*ft_create_content(char *copy, char *remove, int len)
 	ft_bzero(&strings, sizeof(t_redir));
 	while (copy[strings.i + j] != '\0')
 	{
+		if (copy[strings.i + j] == '>' || copy[strings.i + j] == '<')
+			break ;
 		if (ft_strncmp(&copy[strings.i + j], remove, len) == 0)
 			j += len;
 		if (copy[strings.i + j] != '\0')
@@ -39,14 +41,14 @@ char	*ft_create_content(char *copy, char *remove, int len)
 	return (strings.aux);
 }
 
-void	ft_new_str(t_tolken *tolken, char *aux, char *key, char *file)
+void	ft_new_str(t_tolken *tolken, char *aux, char *key, char *name)
 {
 	char	*remove;
 	char	*copy;
 	char	*tmp;
 	size_t	len;
 
-	remove = ft_str_remove(key, aux, file);
+	remove = ft_str_remove(key, aux, name);
 	copy = ft_strdup(tolken->content);
 	free(tolken->content);
 	len = ft_strlen(remove);
@@ -65,17 +67,17 @@ void	ft_new_str(t_tolken *tolken, char *aux, char *key, char *file)
 
 char	*ft_get_file_name(char *str, int index)
 {
-	char	*file;
+	char	*name;
 	char	*tmp;
 
-	file = NULL;
+	name = NULL;
 	tmp = NULL;
 	while (str[index] != ' ' && str[index] != '\0')
 	{
-		ft_add_char(&tmp, &file, str[index]);
+		ft_add_char(&tmp, &name, str[index]);
 		index++;
 	}
-	return (file);
+	return (name);
 }
 
 int	ft_break_str(t_redir *vars, char *str, int j)
